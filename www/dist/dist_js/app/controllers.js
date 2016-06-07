@@ -496,44 +496,8 @@ angular.module('MapAble.controllers', [])
 }])
 
 
-.controller("MapController", [ '$scope', '$log', '$http', 'leafletData', function($scope, $log, $http, leafletData) {
-
-		//angular.extend($scope, {
-		//		markers: mountainPeaks,
-		//		overlays: {
-		//			NorthAmerica: {
-		//				name: "North America",
-		//				type: "markercluster",
-		//				visible: true
-		//			},
-		//			eastafrica: {
-		//				name: "East Africa",
-		//				type: "markercluster",
-		//				visible: true
-		//			},
-		//			tibet: {
-		//				name: "East Africa",
-		//				type: "markercluster",
-		//				visible: true
-		//			},
-		//			wasia: {
-		//				name: "East Africa",
-		//				type: "markercluster",
-		//				visible: true
-		//			},
-		//			SouthAmerica: {
-		//				name: "North America",
-		//				type: "markercluster",
-		//				visible: true
-		//			},
-		//			Eurasia: {
-		//				name: "North America",
-		//				type: "markercluster",
-		//				visible: true
-		//			}
-		//		}
-		//	}
-		//);
+.controller("MapController", [ '$scope', '$log', '$http', 'leafletData', 'attrService',
+	function($scope, $log, $http, leafletData, attrService) {
 
 		var _Layerpoly0 = 	geojsonvt(_coastline);
 		var _Layerpoly200 = geojsonvt(_poly200);
@@ -546,37 +510,38 @@ angular.module('MapAble.controllers', [])
 		var _LayerIce = 	geojsonvt(_ice);
 
 
-		CenterMap(_Layerpoly0,	  	"LayerPoly0", 	"map1")
-		CenterMap(_Layerpoly200, 	"LayerPoly200", "map1")
-		CenterMap(_Layerpoly500, 	"LayerPoly500", "map1")
-		CenterMap(_Layerpoly1000, 	"LayerPoly1000", "map1")
-		CenterMap(_Layerpoly2000,	"LayerPoly2000", "map1")
-		CenterMap(_Layerpoly3000, 	"LayerPoly3000", "map1")
-		CenterMap(_Layerpoly4000, 	"LayerPoly4000", "map1")
-		CenterMap(_Layerpoly5000, 	"LayerPoly5000", "map1")
-		CenterMap(_LayerIce, 		"Layerice", 	"map1")
+		CenterMap(_Layerpoly0,	  	"LayerPoly0", 	"map1", attrService);
+		CenterMap(_Layerpoly200, 	"LayerPoly200", "map1", attrService);
+		CenterMap(_Layerpoly500, 	"LayerPoly500", "map1", attrService);
+		CenterMap(_Layerpoly1000, 	"LayerPoly1000", "map1", attrService);
+		CenterMap(_Layerpoly2000,	"LayerPoly2000", "map1", attrService);
+		CenterMap(_Layerpoly3000, 	"LayerPoly3000", "map1", attrService);
+		CenterMap(_Layerpoly4000, 	"LayerPoly4000", "map1", attrService);
+		CenterMap(_Layerpoly5000, 	"LayerPoly5000", "map1", attrService);
+		CenterMap(_LayerIce, 		"Layerice", 	"map1", attrService);
 
 
-		function CenterMap(rawData, layerName, mapid) {
+		function CenterMap(rawData, layerName, mapid, attrService) {
 			var _layer;
-			_layer = getGeojsonVectorTiles(rawData, layerName);
+			_layer = getGeojsonVectorTiles(rawData, layerName, attrService);
 			leafletData.getMap(mapid).then(function(map) {
 				_layer.addTo(map)
 		   });
 		};
 
-		function getGeojsonVectorTiles (rawData, layerName) {
+		function getGeojsonVectorTiles (rawData, layerName, attrService) {
 				return  L.canvasTiles()
-						.params({ debug: false, padding: 5 , layer: rawData, LayerName: layerName })
+						.params({ debug: false, padding: 5 , layer: rawData, LayerName: layerName, attributes: attrService.attrs[layerName] })
 						.drawing(drawingOnCanvas);
 		};
 	}
 ])
 
-.controller("MapControllerPeaks", [ '$scope', '$log', '$http', 'leafletData', function($scope, $log, $http, leafletData) {
+.controller("MapControllerPeaks", [ '$scope', '$log', '$http', 'leafletData', 'attrService',
+	function($scope, $log, $http, leafletData, attrService) {
 
 	angular.extend($scope, {
-			markers: mountainPeaks,
+			markers: attrService.mountainPeaks,
 			overlays: {
 				NorthAmerica: {
 					name: "North America",
@@ -614,19 +579,19 @@ angular.module('MapAble.controllers', [])
 
 
 	var _Layerpoly0 = geojsonvt(_coastline);
-	CenterMap(_Layerpoly0, "LayerPoly0", "MapPeaks")
+	CenterMap(_Layerpoly0, "LayerPoly0", "MapPeaks", attrService);
 
-	function CenterMap(rawData, layerName, mapid) {
+	function CenterMap(rawData, layerName, mapid, attrService) {
 		var _layer;
-		_layer = getGeojsonVectorTiles(rawData, layerName);
+		_layer = getGeojsonVectorTiles(rawData, layerName, attrService);
 		leafletData.getMap(mapid).then(function(map) {
 			_layer.addTo(map)
 		});
 	};
 
-	function getGeojsonVectorTiles (rawData, layerName) {
+	function getGeojsonVectorTiles (rawData, layerName, attrService) {
 		return  L.canvasTiles()
-			.params({ debug: false, padding: 5 , layer: rawData, LayerName: layerName })
+			.params({ debug: false, padding: 5 , layer: rawData, LayerName: layerName, attributes: attrService.attrs[layerName] })
 			.drawing(drawingOnCanvas);
 	};
       }
@@ -698,7 +663,7 @@ function drawingOnCanvas(canvasOverlay, params) {
 
 				for (var j = 0; j < feature.geometry.length; j++) {
 					//window.alert(feature.tags.FIPS_CNTRY)
-					var color = GetFeatureColor(params.layerName, feature.tags)
+					var color = params.options.attributes.color;
 					ctx.fillStyle = feature.tags.color ? feature.tags.color :  color;//'rgba( 12,155,155,0.5)';
 
 					var geom = feature.geometry[j];
@@ -720,41 +685,3 @@ function drawingOnCanvas(canvasOverlay, params) {
 			}
 	};
 
-//apply styles
-function GetFeatureColor(LayerName, tags){
-	var color
-
-		switch(LayerName){
-			 case "LayerPoly0":
-				  color = 'rgba(204,231,140,1)';
-				  break;
-			 case "LayerPoly200":
-					color = 'rgba(245,247,210,1)';
-					break;
-			 case "LayerPoly500":
-				 color = 'rgba(237,242,80,1)';
-				 break;
-			 case "LayerPoly1000":
-				 color = 'rgba(245,226,19,1)';
-				 break;
-			 case "LayerPoly2000":
-				 color = 'rgba(227,207,26,1)';
-				 break;
-			 case "LayerPoly3000":
-				 color = 'rgba(221,191,56,1)';
-				 break;
-			 case "LayerPoly4000":
-				color = 'rgba(214,179,36,1)';
-				break;
-			 case "LayerPoly5000":
-  				color = 'rgba(214,156,36,1)';
-  				break;
-			 case "Layerice":
-				color = 'rgba(214,242,237,1)';
-				break;
-			 default:
-				 color = 'rgba(160,160,160,1)';
-				 break;
-	}
-	return color;
-}
