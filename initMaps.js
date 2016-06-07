@@ -1,6 +1,7 @@
+//node.js script for maps' integration
 var fs = require('fs');
 
-var pathFolder = 'www/json';
+var pathFolder = 'www/json'; //basic maps' folder
 
 fs.stat(pathFolder, function(err, stats){
     read(pathFolder)
@@ -38,7 +39,6 @@ function getContent(varName, fileToRead, fileToWrite) {
 
     fs.readFile(fileToRead, 'utf8', 'r', function (err, contents) {
         var data = 'var ' + '_' + varName + ' = ' + contents + '\n\r';
-        console.log(data.substring(0, 30));
         write(data, fileToWrite);
     });
 
