@@ -1,11 +1,9 @@
 //node.js script for maps' integration
 var fs = require('fs');
 
-var pathFolder = 'www/json'; //basic maps' folder
+var pathFolder = 'www/json';    //basic maps' folder
 
-fs.stat(pathFolder, function(err, stats){
-    read(pathFolder)
-});
+read(pathFolder);
 
 function read(dir) {
 
@@ -20,9 +18,6 @@ function read(dir) {
             var writableFile = mapArr.join('/') + '/map.js';
 
             if (extension == '.geojson'){
-                console.log("fileName: " + fileName);
-                console.log("extension: " + extension);
-                console.log("readableFile: " + dir);
                 getContent(fileName, dir, writableFile);
             }
 
@@ -39,14 +34,12 @@ function getContent(varName, fileToRead, fileToWrite) {
 
     fs.readFile(fileToRead, 'utf8', 'r', function (err, contents) {
         var data = 'var ' + '_' + varName + ' = ' + contents + '\n\r';
-        write(data, fileToWrite);
+        append(data, fileToWrite);
     });
 
 }
 
-
-
-function write(data, pathFile){
+function append(data, pathFile){
 
     fs.appendFile(pathFile, data, function(err){
         if (!err)
@@ -54,5 +47,12 @@ function write(data, pathFile){
     });
 
 }
+
+
+
+
+
+
+
 
 
