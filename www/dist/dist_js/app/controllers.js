@@ -520,7 +520,6 @@ angular.module('MapAble.controllers', [])
 		CenterMap(_Layerpoly5000, 	"LayerPoly5000", "map1", attrService);
 		CenterMap(_LayerIce, 		"Layerice", 	"map1", attrService);
 
-
 		function CenterMap(rawData, layerName, mapid, attrService) {
 			var _layer;
 			_layer = getGeojsonVectorTiles(rawData, layerName, attrService);
