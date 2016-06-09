@@ -882,7 +882,7 @@ function $UrlMatcherFactory() {
    * @name ui.router.util.$urlMatcherFactory#compile
    * @methodOf ui.router.util.$urlMatcherFactory
    *
-   * @description
+   * @description.txt
    * Creates a {@link ui.router.util.type:UrlMatcher} for the specified pattern.
    *   
    * @param {string} pattern  The URL pattern.
@@ -1567,7 +1567,7 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory,           $
    * @name ui.router.state.$stateProvider#state
    * @methodOf ui.router.state.$stateProvider
    *
-   * @description
+   * @description.txt
    * Registers a state configuration under a given state name. The stateConfig object
    * has the following acceptable properties.
    *
@@ -2152,7 +2152,7 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory,           $
      * @name ui.router.state.$state#is
      * @methodOf ui.router.state.$state
      *
-     * @description
+     * @description.txt
      * Similar to {@link ui.router.state.$state#methods_includes $state.includes},
      * but only checks for the full state name. If params is supplied then it will be 
      * tested for strict equality against the current active params object, so all params 
@@ -2190,7 +2190,7 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory,           $
      * @name ui.router.state.$state#includes
      * @methodOf ui.router.state.$state
      *
-     * @description
+     * @description.txt
      * A method to determine if the current active state is equal to or is the child of the 
      * state stateName. If any params are passed then they will be tested for a match as well.
      * Not all the parameters need to be passed, just the ones you'd like to test for equality.
@@ -2206,7 +2206,7 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory,           $
      * $state.includes("about"); // returns false
      * </pre>
      *
-     * @description
+     * @description.txt
      * Basic globing patterns will also work.
      *
      * @example
@@ -3179,7 +3179,7 @@ function $RouteProvider(  $stateProvider,    $urlRouterProvider) {
    * @property {object} params - Current route params as object.
    * @property {string} current - Name of the current route.
    *
-   * @description
+   * @description.txt
    * The `$route` service provides interfaces to access defined routes. It also let's
    * you access route params through `$routeParams` service, so you have fully
    * control over all the stuff you would actually get from angular's core `$route`

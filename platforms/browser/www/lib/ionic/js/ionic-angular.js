@@ -376,13 +376,13 @@ function($document, $timeout) {
     /**
      * @ngdoc method
      * @name $ionicBackdrop#retain
-     * @description Retains the backdrop.
+     * @description.txt Retains the backdrop.
      */
     retain: retain,
     /**
      * @ngdoc method
      * @name $ionicBackdrop#release
-     * @description
+     * @description.txt
      * Releases the backdrop.
      */
     release: release,
@@ -499,7 +499,7 @@ IonicModule
     /**
      * @ngdoc method
      * @name $ionicBody#removeClass
-     * @description Remove a class from the document's body element.
+     * @description.txt Remove a class from the document's body element.
      * @param {string} class Each argument will be removed from the body element.
      * @returns {$ionicBody} The $ionicBody service so methods can be chained.
      */
@@ -512,7 +512,7 @@ IonicModule
     /**
      * @ngdoc method
      * @name $ionicBody#enableClass
-     * @description Similar to the `add` method, except the first parameter accepts a boolean
+     * @description.txt Similar to the `add` method, except the first parameter accepts a boolean
      * value determining if the class should be added or removed. Rather than writing user code,
      * such as "if true then add the class, else then remove the class", this method can be
      * given a true or false value which reduces redundant code.
@@ -533,7 +533,7 @@ IonicModule
     /**
      * @ngdoc method
      * @name $ionicBody#append
-     * @description Append a child to the document's body.
+     * @description.txt Append a child to the document's body.
      * @param {element} element The element to be appended to the body. The passed in element
      * can be either a jqLite element, or a DOM element.
      * @returns {$ionicBody} The $ionicBody service so methods can be chained.
@@ -545,7 +545,7 @@ IonicModule
     /**
      * @ngdoc method
      * @name $ionicBody#get
-     * @description Get the document's body element.
+     * @description.txt Get the document's body element.
      * @returns {element} Returns the document's body element.
      */
     get: function() {
@@ -615,7 +615,7 @@ IonicModule
     /**
      * @ngdoc method
      * @name $ionicGesture#on
-     * @description Add an event listener for a gesture on an element. See {@link ionic.utility:ionic.EventController#onGesture}.
+     * @description.txt Add an event listener for a gesture on an element. See {@link ionic.utility:ionic.EventController#onGesture}.
      * @param {string} eventType The gesture event to listen for.
      * @param {function(e)} callback The function to call when the gesture
      * happens.
@@ -629,7 +629,7 @@ IonicModule
     /**
      * @ngdoc method
      * @name $ionicGesture#off
-     * @description Remove an event listener for a gesture on an element. See {@link ionic.utility:ionic.EventController#offGesture}.
+     * @description.txt Remove an event listener for a gesture on an element. See {@link ionic.utility:ionic.EventController#offGesture}.
      * @param {ionic.Gesture} gesture The gesture that should be removed.
      * @param {string} eventType The gesture event to remove the listener for.
      * @param {function(e)} callback The listener to remove.
@@ -1076,7 +1076,7 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
     /**
      * @ngdoc method
      * @name $ionicHistory#viewHistory
-     * @description The app's view history data, such as all the views and histories, along
+     * @description.txt The app's view history data, such as all the views and histories, along
      * with how they are ordered and linked together within the navigation stack.
      * @returns {object} Returns an object containing the apps view history data.
      */
@@ -1087,7 +1087,7 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
     /**
      * @ngdoc method
      * @name $ionicHistory#currentView
-     * @description The app's current view.
+     * @description.txt The app's current view.
      * @returns {object} Returns the current view.
      */
     currentView: function(view) {
@@ -1100,7 +1100,7 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
     /**
      * @ngdoc method
      * @name $ionicHistory#currentHistoryId
-     * @description The ID of the history stack which is the parent container of the current view.
+     * @description.txt The ID of the history stack which is the parent container of the current view.
      * @returns {string} Returns the current history ID.
      */
     currentHistoryId: function() {
@@ -1110,7 +1110,7 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
     /**
      * @ngdoc method
      * @name $ionicHistory#currentTitle
-     * @description Gets and sets the current view's title.
+     * @description.txt Gets and sets the current view's title.
      * @param {string=} val The title to update the current view with.
      * @returns {string} Returns the current view's title.
      */
@@ -1126,7 +1126,7 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
     /**
      * @ngdoc method
      * @name $ionicHistory#backView
-     * @description Returns the view that was before the current view in the history stack.
+     * @description.txt Returns the view that was before the current view in the history stack.
      * If the user navigated from View A to View B, then View A would be the back view, and
      * View B would be the current view.
      * @returns {object} Returns the back view.
@@ -1141,7 +1141,7 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
     /**
      * @ngdoc method
      * @name $ionicHistory#backTitle
-     * @description Gets the back view's title.
+     * @description.txt Gets the back view's title.
      * @returns {string} Returns the back view's title.
      */
     backTitle: function(view) {
@@ -1152,7 +1152,7 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
     /**
      * @ngdoc method
      * @name $ionicHistory#forwardView
-     * @description Returns the view that was in front of the current view in the history stack.
+     * @description.txt Returns the view that was in front of the current view in the history stack.
      * A forward view would exist if the user navigated from View A to View B, then
      * navigated back to View A. At this point then View B would be the forward view, and View
      * A would be the current view.
@@ -1168,7 +1168,7 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
     /**
      * @ngdoc method
      * @name $ionicHistory#currentStateName
-     * @description Returns the current state name.
+     * @description.txt Returns the current state name.
      * @returns {string}
      */
     currentStateName: function() {
@@ -1199,7 +1199,7 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
     /**
      * @ngdoc method
      * @name $ionicHistory#goBack
-     * @description Navigates the app to the back view, if a back view exists.
+     * @description.txt Navigates the app to the back view, if a back view exists.
      */
     goBack: function() {
       viewHistory.backView && viewHistory.backView.go();
@@ -1214,7 +1214,7 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
     /**
      * @ngdoc method
      * @name $ionicHistory#clearHistory
-     * @description Clears out the app's entire history, except for the current view.
+     * @description.txt Clears out the app's entire history, except for the current view.
      */
     clearHistory: function() {
       var
@@ -1253,7 +1253,7 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
     /**
      * @ngdoc method
      * @name $ionicHistory#clearCache
-     * @description Removes all cached views within every {@link ionic.directive:ionNavView}.
+     * @description.txt Removes all cached views within every {@link ionic.directive:ionNavView}.
      * This both removes the view element from the DOM, and destroy it's scope.
      */
     clearCache: function() {
@@ -1265,7 +1265,7 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
     /**
      * @ngdoc method
      * @name $ionicHistory#nextViewOptions
-     * @description Sets options for the next view. This method can be useful to override
+     * @description.txt Sets options for the next view. This method can be useful to override
      * certain view/transition defaults right before a view transition happens. For example,
      * the {@link ionic.directive:menuClose} directive uses this method internally to ensure
      * an animated view transition does not happen when a side menu is open, and also sets
@@ -2129,7 +2129,7 @@ function($ionicLoadingConfig, $ionicBody, $ionicTemplateLoader, $ionicBackdrop, 
     /**
      * @ngdoc method
      * @name $ionicLoading#show
-     * @description Shows a loading indicator. If the indicator is already shown,
+     * @description.txt Shows a loading indicator. If the indicator is already shown,
      * it will set the options given and keep the indicator shown.
      * @param {object} opts The options for the loading indicator. Available properties:
      *  - `{string=}` `template` The html content of the indicator.
@@ -2146,7 +2146,7 @@ function($ionicLoadingConfig, $ionicBody, $ionicTemplateLoader, $ionicBackdrop, 
     /**
      * @ngdoc method
      * @name $ionicLoading#hide
-     * @description Hides the loading indicator, if shown.
+     * @description.txt Hides the loading indicator, if shown.
      */
     hide: hideLoader,
     /**
@@ -2374,7 +2374,7 @@ function($rootScope, $ionicBody, $compile, $timeout, $ionicPlatform, $ionicTempl
     /**
      * @ngdoc method
      * @name ionicModal#initialize
-     * @description Creates a new modal controller instance.
+     * @description.txt Creates a new modal controller instance.
      * @param {object} options An options object with the following properties:
      *  - `{object=}` `scope` The scope to be a child of.
      *    Default: creates a child of $rootScope.
@@ -2395,7 +2395,7 @@ function($rootScope, $ionicBody, $compile, $timeout, $ionicPlatform, $ionicTempl
     /**
      * @ngdoc method
      * @name ionicModal#show
-     * @description Show this modal instance.
+     * @description.txt Show this modal instance.
      * @returns {promise} A promise which is resolved when the modal is finished animating in.
      */
     show: function(target) {
@@ -2459,7 +2459,7 @@ function($rootScope, $ionicBody, $compile, $timeout, $ionicPlatform, $ionicTempl
     /**
      * @ngdoc method
      * @name ionicModal#hide
-     * @description Hide this modal instance.
+     * @description.txt Hide this modal instance.
      * @returns {promise} A promise which is resolved when the modal is finished animating out.
      */
     hide: function() {
@@ -2495,7 +2495,7 @@ function($rootScope, $ionicBody, $compile, $timeout, $ionicPlatform, $ionicTempl
     /**
      * @ngdoc method
      * @name ionicModal#remove
-     * @description Remove this modal instance from the DOM and clean up.
+     * @description.txt Remove this modal instance from the DOM and clean up.
      * @returns {promise} A promise which is resolved when the modal is finished animating out.
      */
     remove: function() {
@@ -2698,7 +2698,7 @@ IonicModule
         /**
          * @ngdoc method
          * @name $ionicPlatform#onHardwareBackButton
-         * @description
+         * @description.txt
          * Some platforms have a hardware back button, so this is one way to
          * bind to it.
          * @param {function} callback the callback to trigger when this event occurs
@@ -2712,7 +2712,7 @@ IonicModule
         /**
          * @ngdoc method
          * @name $ionicPlatform#offHardwareBackButton
-         * @description
+         * @description.txt
          * Remove an event listener for the backbutton.
          * @param {function} callback The listener function that was
          * originally bound.
@@ -2804,7 +2804,7 @@ IonicModule
         /**
          * @ngdoc method
          * @name $ionicPlatform#on
-         * @description
+         * @description.txt
          * Add Cordova event listeners, such as `pause`, `resume`, `volumedownbutton`, `batterylow`,
          * `offline`, etc. More information about available event types can be found in
          * [Cordova's event documentation](https://cordova.apache.org/docs/en/edge/cordova_events_events.md.html#Events).
@@ -2826,7 +2826,7 @@ IonicModule
         /**
          * @ngdoc method
          * @name $ionicPlatform#ready
-         * @description
+         * @description.txt
          * Trigger a callback once the device is ready,
          * or immediately if the device is already ready.
          * @param {function=} callback The function to call.
@@ -3195,7 +3195,7 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
   var $ionicPopup = {
     /**
      * @ngdoc method
-     * @description
+     * @description.txt
      * Show a complex popup. This is the master show function for all popups.
      *
      * A complex popup has a `buttons` array, with each button having a `text` and `type`
@@ -3242,7 +3242,7 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
     /**
      * @ngdoc method
      * @name $ionicPopup#alert
-     * @description Show a simple alert popup with a message and one button that the user can
+     * @description.txt Show a simple alert popup with a message and one button that the user can
      * tap to close the popup.
      *
      * @param {object} options The options for showing the alert, of the form:
@@ -3268,7 +3268,7 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
     /**
      * @ngdoc method
      * @name $ionicPopup#confirm
-     * @description
+     * @description.txt
      * Show a simple confirm popup with a Cancel and OK button.
      *
      * Resolves the promise with true if the user presses the OK button, and false if the
@@ -3299,7 +3299,7 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
     /**
      * @ngdoc method
      * @name $ionicPopup#prompt
-     * @description Show a simple prompt popup, which has an input, OK button, and Cancel button.
+     * @description.txt Show a simple prompt popup, which has an input, OK button, and Cancel button.
      * Resolves the promise with the value of the input if the user presses OK, and with undefined
      * if the user presses Cancel.
      *
@@ -3612,7 +3612,7 @@ IonicModule
     /**
      * @ngdoc method
      * @name $ionicPosition#position
-     * @description Get the current coordinates of the element, relative to the offset parent.
+     * @description.txt Get the current coordinates of the element, relative to the offset parent.
      * Read-only equivalent of [jQuery's position function](http://api.jquery.com/position/).
      * @param {element} element The element to get the position of.
      * @returns {object} Returns an object containing the properties top, left, width and height.
@@ -3639,7 +3639,7 @@ IonicModule
     /**
      * @ngdoc method
      * @name $ionicPosition#offset
-     * @description Get the current coordinates of the element, relative to the document.
+     * @description.txt Get the current coordinates of the element, relative to the document.
      * Read-only equivalent of [jQuery's offset function](http://api.jquery.com/offset/).
      * @param {element} element The element to get the offset of.
      * @returns {object} Returns an object containing the properties top, left, width and height.
@@ -5841,7 +5841,7 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
   /**
    * @ngdoc method
    * @name $ionicNavBar#showBackButton
-   * @description Show/hide the nav bar back button when there is a
+   * @description.txt Show/hide the nav bar back button when there is a
    * back view. If the back button is not possible, for example, the
    * first view in the stack, then this will not force the back button
    * to show.
@@ -5858,7 +5858,7 @@ function($scope, $element, $attrs, $compile, $timeout, $ionicNavBarDelegate, $io
   /**
    * @ngdoc method
    * @name $ionicNavBar#showActiveBackButton
-   * @description Show/hide only the active header bar's back button.
+   * @description.txt Show/hide only the active header bar's back button.
    */
   self.showActiveBackButton = function(shouldShow) {
     var headerBar = getOnScreenHeaderBar();
@@ -6237,7 +6237,7 @@ function($scope, $element, $attrs, $compile, $controller, $ionicNavBarDelegate, 
   /**
    * @ngdoc method
    * @name $ionicNavView#enableBackButton
-   * @description Enable/disable if the back button can be shown or not. For
+   * @description.txt Enable/disable if the back button can be shown or not. For
    * example, the very first view in the navigation stack would not have a
    * back view, so the back button would be disabled.
    */
@@ -6250,7 +6250,7 @@ function($scope, $element, $attrs, $compile, $controller, $ionicNavBarDelegate, 
   /**
    * @ngdoc method
    * @name $ionicNavView#showBackButton
-   * @description Show/hide the nav bar active back button. If the back button
+   * @description.txt Show/hide the nav bar active back button. If the back button
    * is not possible this will not force the back button to show. The
    * `enableBackButton()` method handles if a back button is even possible or not.
    */

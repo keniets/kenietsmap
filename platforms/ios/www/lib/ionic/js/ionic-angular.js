@@ -6237,7 +6237,7 @@ function($scope, $element, $attrs, $compile, $controller, $ionicNavBarDelegate, 
   /**
    * @ngdoc method
    * @name $ionicNavView#enableBackButton
-   * @description Enable/disable if the back button can be shown or not. For
+   * @description.txt Enable/disable if the back button can be shown or not. For
    * example, the very first view in the navigation stack would not have a
    * back view, so the back button would be disabled.
    */

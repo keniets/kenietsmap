@@ -22931,7 +22931,7 @@ function $SceDelegateProvider() {
    *     provided.  This must be an array or null.  A snapshot of this array is used so further
    *     changes to the array are ignored.
    *
-   *     Follow {@link ng.$sce#resourceUrlPatternItem this link} for a description of the items
+   *     Follow {@link ng.$sce#resourceUrlPatternItem this link} for a description.txt of the items
    *     allowed in this array.
    *
    *     Note: **an empty whitelist array will block all URLs**!
@@ -22941,7 +22941,7 @@ function $SceDelegateProvider() {
    * The **default value** when no whitelist has been explicitly set is `['self']` allowing only
    * same origin resource requests.
    *
-   * @description
+   * @description.txt
    * Sets/Gets the whitelist of trusted resource URLs.
    */
   this.resourceUrlWhitelist = function(value) {
@@ -22960,7 +22960,7 @@ function $SceDelegateProvider() {
    *     provided.  This must be an array or null.  A snapshot of this array is used so further
    *     changes to the array are ignored.
    *
-   *     Follow {@link ng.$sce#resourceUrlPatternItem this link} for a description of the items
+   *     Follow {@link ng.$sce#resourceUrlPatternItem this link} for a description.txt of the items
    *     allowed in this array.
    *
    *     The typical usage for the blacklist is to **block
@@ -22974,7 +22974,7 @@ function $SceDelegateProvider() {
    * The **default value** when no whitelist has been explicitly set is the empty array (i.e. there
    * is no blacklist.)
    *
-   * @description
+   * @description.txt
    * Sets/Gets the blacklist of trusted resource URLs.
    */
 

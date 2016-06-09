@@ -424,13 +424,13 @@ function($document) {
     /**
      * @ngdoc method
      * @name $ionicBackdrop#retain
-     * @description Retains the backdrop.
+     * @description.txt Retains the backdrop.
      */
     retain: retain,
     /**
      * @ngdoc method
      * @name $ionicBackdrop#release
-     * @description
+     * @description.txt
      * Releases the backdrop.
      */
     release: release,
@@ -1167,7 +1167,7 @@ IonicModule
     /**
      * @ngdoc method
      * @name $ionicGesture#on
-     * @description Add an event listener for a gesture on an element. See {@link ionic.utility:ionic.EventController#onGesture}.
+     * @description.txt Add an event listener for a gesture on an element. See {@link ionic.utility:ionic.EventController#onGesture}.
      * @param {string} eventType The gesture event to listen for.
      * @param {function(e)} callback The function to call when the gesture
      * happens.
@@ -1180,7 +1180,7 @@ IonicModule
     /**
      * @ngdoc method
      * @name $ionicGesture#off
-     * @description Remove an event listener for a gesture on an element. See {@link ionic.utility:ionic.EventController#offGesture}.
+     * @description.txt Remove an event listener for a gesture on an element. See {@link ionic.utility:ionic.EventController#offGesture}.
      * @param {ionic.Gesture} gesture The gesture that should be removed.
      * @param {string} eventType The gesture event to remove the listener for.
      * @param {function(e)} callback The listener to remove.
@@ -1270,7 +1270,7 @@ function($ionicLoadingConfig, $document, $ionicTemplateLoader, $ionicBackdrop, $
     /**
      * @ngdoc method
      * @name $ionicLoading#show
-     * @description Shows a loading indicator. If the indicator is already shown,
+     * @description.txt Shows a loading indicator. If the indicator is already shown,
      * it will set the options given and keep the indicator shown.
      * @param {object} opts The options for the loading indicator. Available properties:
      *  - `{string=}` `template` The html content of the indicator.
@@ -1284,7 +1284,7 @@ function($ionicLoadingConfig, $document, $ionicTemplateLoader, $ionicBackdrop, $
     /**
      * @ngdoc method
      * @name $ionicLoading#hide
-     * @description Hides the loading indicator, if shown.
+     * @description.txt Hides the loading indicator, if shown.
      */
     hide: hideLoader,
     /**
@@ -1497,7 +1497,7 @@ function($rootScope, $document, $compile, $timeout, $ionicPlatform, $ionicTempla
     /**
      * @ngdoc method
      * @name ionicModal#initialize
-     * @description Creates a new modal controller instance.
+     * @description.txt Creates a new modal controller instance.
      * @param {object} options An options object with the following properties:
      *  - `{object=}` `scope` The scope to be a child of.
      *    Default: creates a child of $rootScope.
@@ -1518,7 +1518,7 @@ function($rootScope, $document, $compile, $timeout, $ionicPlatform, $ionicTempla
     /**
      * @ngdoc method
      * @name ionicModal#show
-     * @description Show this modal instance.
+     * @description.txt Show this modal instance.
      * @returns {promise} A promise which is resolved when the modal is finished animating in.
      */
     show: function() {
@@ -1575,7 +1575,7 @@ function($rootScope, $document, $compile, $timeout, $ionicPlatform, $ionicTempla
     /**
      * @ngdoc method
      * @name ionicModal#hide
-     * @description Hide this modal instance.
+     * @description.txt Hide this modal instance.
      * @returns {promise} A promise which is resolved when the modal is finished animating out.
      */
     hide: function() {
@@ -1606,7 +1606,7 @@ function($rootScope, $document, $compile, $timeout, $ionicPlatform, $ionicTempla
     /**
      * @ngdoc method
      * @name ionicModal#remove
-     * @description Remove this modal instance from the DOM and clean up.
+     * @description.txt Remove this modal instance from the DOM and clean up.
      * @returns {promise} A promise which is resolved when the modal is finished animating out.
      */
     remove: function() {
@@ -1892,7 +1892,7 @@ IonicModule
         /**
          * @ngdoc method
          * @name $ionicPlatform#onHardwareBackButton
-         * @description
+         * @description.txt
          * Some platforms have a hardware back button, so this is one way to
          * bind to it.
          * @param {function} callback the callback to trigger when this event occurs
@@ -1906,7 +1906,7 @@ IonicModule
         /**
          * @ngdoc method
          * @name $ionicPlatform#offHardwareBackButton
-         * @description
+         * @description.txt
          * Remove an event listener for the backbutton.
          * @param {function} callback The listener function that was
          * originally bound.
@@ -1985,7 +1985,7 @@ IonicModule
         /**
          * @ngdoc method
          * @name $ionicPlatform#ready
-         * @description
+         * @description.txt
          * Trigger a callback once the device is ready,
          * or immediately if the device is already ready.
          * @param {function=} callback The function to call.
@@ -2126,7 +2126,7 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $docume
   var $ionicPopup = {
     /**
      * @ngdoc method
-     * @description
+     * @description.txt
      * Show a complex popup. This is the master show function for all popups.
      *
      * A complex popup has a `buttons` array, with each button having a `text` and `type`
@@ -2172,7 +2172,7 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $docume
     /**
      * @ngdoc method
      * @name $ionicPopup#alert
-     * @description Show a simple alert popup with a message and one button that the user can
+     * @description.txt Show a simple alert popup with a message and one button that the user can
      * tap to close the popup.
      *
      * @param {object} options The options for showing the alert, of the form:
@@ -2197,7 +2197,7 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $docume
     /**
      * @ngdoc method
      * @name $ionicPopup#confirm
-     * @description
+     * @description.txt
      * Show a simple confirm popup with a Cancel and OK button.
      *
      * Resolves the promise with true if the user presses the OK button, and false if the
@@ -2227,7 +2227,7 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $docume
     /**
      * @ngdoc method
      * @name $ionicPopup#prompt
-     * @description Show a simple prompt popup, which has an input, OK button, and Cancel button.
+     * @description.txt Show a simple prompt popup, which has an input, OK button, and Cancel button.
      * Resolves the promise with the value of the input if the user presses OK, and with undefined
      * if the user presses Cancel.
      *
