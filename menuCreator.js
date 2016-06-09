@@ -21,7 +21,6 @@ function rewriteMaps(file, baseFolder, dirs){
 
 function recursion(path, dirs){
 
-    // dirs = getChilds(path);
     var items = fs.readdirSync(path);
     var counter = 0;
     var txtFile;
