@@ -6,7 +6,7 @@ var pathFolder = 'www/json';    //basic maps' folder
 clearMap(pathFolder); //Preparating map.js folders to possible new configuration by deleting old data
 read(pathFolder);
 
-function read(dir) {
+function read(dir, varNames) {
 
     fs.readdir(dir, function(err, items) {
 
@@ -48,26 +48,19 @@ function getContent(varName, fileToRead, fileToWrite) {
         var data = 'var ' + '_' + varName + ' = ' + contents + '\n\r';
         var test = 'var ' + '_' + varName + ' = ';
 
-        //check if destination file is not exist
-        var existence = fs.existsSync(fileToWrite);
-        if (!existence)
-            fs.writeFileSync(fileToWrite, '', 'utf8');
-
-        //check if a layer is already written in map.js
         var writableText = fs.readFileSync(fileToWrite, 'utf8');
-        var index = writableText.search(test);
+        varName = '_' + varName;
 
-        if (index == -1)
-            append(data, fileToWrite);
+            append(data, fileToWrite, varName);
     });
 
 }
 
-function append(data, pathFile){
+function append(data, pathFile, varName){
 
     fs.appendFile(pathFile, data, function(err){
         if (!err)
-            console.log("appended");
+            console.log(varName + " has been appended to map file");
     });
 
 }

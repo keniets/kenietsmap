@@ -54,5 +54,8 @@
       "platform": "android",
       "locator": "browser"
     }
-  ]
+  ],
+  "scripts": {
+    "build": "NODE_ENV=development node menuCreator.js && NODE_ENV=development node initMaps.js"
+  }
 }

@@ -509,7 +509,6 @@ angular.module('MapAble.controllers', [])
 		var _Layerpoly5000 = geojsonvt(_poly5000);
 		var _LayerIce = 	geojsonvt(_ice);
 
-
 		CenterMap(_Layerpoly0,	  	"LayerPoly0", 	"map1", attrService);
 		CenterMap(_Layerpoly200, 	"LayerPoly200", "map1", attrService);
 		CenterMap(_Layerpoly500, 	"LayerPoly500", "map1", attrService);
@@ -520,25 +519,25 @@ angular.module('MapAble.controllers', [])
 		CenterMap(_Layerpoly5000, 	"LayerPoly5000", "map1", attrService);
 		CenterMap(_LayerIce, 		"Layerice", 	"map1", attrService);
 
+
 		function CenterMap(rawData, layerName, mapid, attrService) {
 			var _layer;
 			_layer = getGeojsonVectorTiles(rawData, layerName, attrService);
 			leafletData.getMap(mapid).then(function(map) {
-				_layer.addTo(map)
+				_layer.addTo(map);
 		   });
-		};
+		}
 
 		function getGeojsonVectorTiles (rawData, layerName, attrService) {
 				return  L.canvasTiles()
 						.params({ debug: false, padding: 5 , layer: rawData, LayerName: layerName, attributes: attrService.attrs[layerName] })
 						.drawing(drawingOnCanvas);
-		};
+		}
 	}
 ])
 
 .controller("MapControllerPeaks", [ '$scope', '$log', '$http', 'leafletData', 'attrService',
 	function($scope, $log, $http, leafletData, attrService) {
-
 	angular.extend($scope, {
 			markers: attrService.mountainPeaks,
 			overlays: {
@@ -576,30 +575,29 @@ angular.module('MapAble.controllers', [])
 		}
 	);
 
-
 	var _Layerpoly0 = geojsonvt(_coastline);
+
 	CenterMap(_Layerpoly0, "LayerPoly0", "MapPeaks", attrService);
 
 	function CenterMap(rawData, layerName, mapid, attrService) {
 		var _layer;
 		_layer = getGeojsonVectorTiles(rawData, layerName, attrService);
 		leafletData.getMap(mapid).then(function(map) {
-			_layer.addTo(map)
+			_layer.addTo(map);
 		});
-	};
+	}
 
 	function getGeojsonVectorTiles (rawData, layerName, attrService) {
 		return  L.canvasTiles()
 			.params({ debug: false, padding: 5 , layer: rawData, LayerName: layerName, attributes: attrService.attrs[layerName] })
 			.drawing(drawingOnCanvas);
-	};
+	}
       }
 	]
-)
+);
 
 
 function drawingOnCanvas(canvasOverlay, params) {
-
     var pad = 0;
 	params.tilePoint.z = params.zoom;
 	var _canvas = params.canvas;
@@ -640,7 +638,7 @@ function drawingOnCanvas(canvasOverlay, params) {
 		  _canvas.height *=2;
 		  ctx.scale(2,2);
 	  }
-  };
+  }
 	var tile = params.layer.getTile(zParam, xParam, params.tilePoint.y);
 
     if (!tile) {
@@ -662,8 +660,7 @@ function drawingOnCanvas(canvasOverlay, params) {
 
 				for (var j = 0; j < feature.geometry.length; j++) {
 					//window.alert(feature.tags.FIPS_CNTRY)
-					var color = params.options.attributes.color;
-					ctx.fillStyle = feature.tags.color ? feature.tags.color :  color;//'rgba( 12,155,155,0.5)';
+					ctx.fillStyle = feature.tags.color ? feature.tags.color :  params.options.attributes.color;//'rgba( 12,155,155,0.5)';
 
 					var geom = feature.geometry[j];
 					if (type === 1) {

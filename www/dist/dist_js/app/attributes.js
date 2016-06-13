@@ -7,43 +7,48 @@ angular.module('dataStorage', [])
         var layerAttrs = {
 
             LayerPoly0: {
-                color: "rgba(204,231,140,1)"
+                color: "rgba(204,231,140,1)",
+                dataName: "_coastline"
             },
 
             LayerPoly200: {
-                color: "rgba(245,247,210,1)"
+                color: "rgba(245,247,210,1)",
+                dataName: "_poly200"
             },
 
             LayerPoly500: {
-                color: "rgba(237,242,80,1)"
+                color: "rgba(237,242,80,1)",
+                dataName: "_poly500"
             },
 
             LayerPoly1000: {
-                color: "rgba(245,226,19,1)"
+                color: "rgba(245,226,19,1)",
+                dataName: "_poly1000"
             },
 
             LayerPoly2000: {
-                color: "rgba(227,207,26,1)"
+                color: "rgba(227,207,26,1)",
+                dataName: "_poly2000"
             },
 
             LayerPoly3000: {
-                color: "rgba(221,191,56,1)"
+                color: "rgba(221,191,56,1)",
+                dataName: "_poly3000"
             },
 
             LayerPoly4000: {
-                color: "rgba(214,179,36,1)"
+                color: "rgba(214,179,36,1)",
+                dataName: "_poly4000"
             },
 
             LayerPoly5000: {
-                color: "rgba(214,156,36,1)"
+                color: "rgba(214,156,36,1)",
+                dataName: "_poly5000"
             },
 
             Layerice: {
-                color: "rgba(214,242,237,1)"
-            },
-
-            default: {
-                color: "rgba(160,160,160,1)"
+                color: "rgba(214,242,237,1)",
+                dataName: "_ice"
             }
         };
 
@@ -751,6 +756,5 @@ angular.module('dataStorage', [])
         this.attrs = layerAttrs;
         this.mountainPeaks = mountainPeaks;
         this.marValleys = marValleys;
-
     });
 

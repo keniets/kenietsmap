@@ -5,6 +5,7 @@ var menuPath = 'www/templates/side-menu.html';  //side menu file
 var dirs = [];
 
 rewriteMaps(menuPath, pathFolder, dirs);
+console.log("The menu has been rewritten");
 
 function rewriteMaps(file, baseFolder, dirs){
 
