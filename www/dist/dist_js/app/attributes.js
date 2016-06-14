@@ -16,8 +16,9 @@ angular.module('dataStorage', [])
             },
 
             LayerPolyCountries: {
-                color: "rgba(204,231,140,1)",
+                color: "grey",
                 fillColor: "#f5e213",
+                fillOpacity: 0.5,
                 weight: "1",
                 dataName: "_countries"
             },

@@ -649,16 +649,24 @@ angular.module('MapAble.controllers', [])
 
 			var countries = attrService.attrs.LayerPolyCountries;
 
-			L.geoJson(_countries, {
-				style: function (feature) {
-					return {
-						fillColor: countries.fillColor,
-						weight: countries.weight,
-						color: countries.color
-					};
-				},
+			function style(feature) {
+				return {
+					fillColor: countries.fillColor,
+					fillOpacity: countries.fillOpacity,
+					weight: countries.weight,
+					color: countries.color
+				};
+			}
+
+			geojson = L.geoJson(_countries, {
+				style: style,
+				//Assigning actions to whether all features or certain ones
 				onEachFeature: function (feature, layer) {
 					layer.bindPopup(feature.properties.CNTRY_NAME);
+					layer.on({
+						mouseover: highlightFeature,
+						mouseout: resetHighlight
+					});
 				}
 			}).addTo(map);
 
@@ -667,8 +675,26 @@ angular.module('MapAble.controllers', [])
 					layer.bindPopup(feature.properties.Name);
 				}
 			}).addTo(map);
-			
+
 		});
+
+		function highlightFeature(e){
+			var layer = e.target;
+
+			layer.setStyle({
+				color: '#666',
+				dashArray: '',
+				fillOpacity: 0.9
+			});
+
+			if (!L.Browser.ie && !L.Browser.opera) {
+				layer.bringToFront();
+			}
+		}
+
+		function resetHighlight(e) {
+			geojson.resetStyle(e.target);
+		}
 		
 	}]);
 
