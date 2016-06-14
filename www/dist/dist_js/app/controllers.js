@@ -647,6 +647,23 @@ angular.module('MapAble.controllers', [])
 
 		leafletData.getMap("countriesMap").then(function(map) {
 
+			//Creating a control to display feature parameters
+			info = L.control();
+
+			info.onAdd = function (map) {
+				this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
+				this.update();
+				return this._div;
+			};
+
+			// method that we will use to update the control based on feature properties passed
+			info.update = function (props) {
+				this._div.innerHTML = '<h4>Country state</h4>' +  (props ?
+					'<b>' + props.CNTRY_NAME + '</b><br />' + props.world_bo_1 : 'Define country');
+			};
+
+			info.addTo(map);
+
 			var countries = attrService.attrs.LayerPolyCountries;
 
 			function style(feature) {
@@ -658,6 +675,7 @@ angular.module('MapAble.controllers', [])
 				};
 			}
 
+			//Add an underlying layer
 			geojson = L.geoJson(_countries, {
 				style: style,
 				//Assigning actions to whether all features or certain ones
@@ -670,6 +688,7 @@ angular.module('MapAble.controllers', [])
 				}
 			}).addTo(map);
 
+			//Add some labels of cities
 			L.geoJson(_cities, {
 				onEachFeature: function (feature, layer) {
 					layer.bindPopup(feature.properties.Name);
@@ -690,10 +709,13 @@ angular.module('MapAble.controllers', [])
 			if (!L.Browser.ie && !L.Browser.opera) {
 				layer.bringToFront();
 			}
+
+			info.update(layer.feature.properties);
 		}
 
 		function resetHighlight(e) {
 			geojson.resetStyle(e.target);
+			info.update();
 		}
 		
 	}]);

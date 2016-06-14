@@ -16,4 +16,12 @@ How to automatically define the maps in the side menu
 
 - put .txt file with the description of the map in the map subfolder (/www/json/mapsubfolder)
 - perform "npm run build"  in terminal
-- Map items and its descriptions will be appear in the side-menu  
+- Map items and its descriptions will be appeared in the side-menu  
+
+To add some labels to a map, assemble all labels in labels.geojson and put into a map subfolder.
+Then run "npm run build" and use variable _labels in any place of your application.
+See Countries map for example in which _cities labels been added.
+
+To know country name do one click within its bounds
+
+
