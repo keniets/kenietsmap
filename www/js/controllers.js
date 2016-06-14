@@ -579,6 +579,16 @@ angular.module('MapAble.controllers', [])
 
 	CenterMap(_Layerpoly0, "LayerPoly0", "MapPeaks", attrService);
 
+		fonts = attrService.fonts;
+
+		//Defining parameters of map
+		angular.element(document).ready(function () {
+			var labels = document.getElementsByClassName("leaflet-label");
+			for (var i = 0; i < labels.length; i++){
+				labels.item(i).style.fontSize = fonts.fontSize;
+			}
+		});
+
 	function CenterMap(rawData, layerName, mapid, attrService) {
 		var _layer;
 		_layer = getGeojsonVectorTiles(rawData, layerName, attrService);
@@ -594,8 +604,67 @@ angular.module('MapAble.controllers', [])
 	}
       }
 	]
-);
+)
 
+	.controller('CountriesController', ['$scope', 'leafletData', 'attrService',
+	function($scope, leafletData, attrService){
+		angular.extend($scope, {
+				markers: attrService.mountainPeaks,
+				overlays: {
+					NorthAmerica: {
+						name: "North America",
+						type: "markercluster",
+						visible: true
+					},
+					eastafrica: {
+						name: "East Africa",
+						type: "markercluster",
+						visible: true
+					},
+					tibet: {
+						name: "East Africa",
+						type: "markercluster",
+						visible: true
+					},
+					wasia: {
+						name: "East Africa",
+						type: "markercluster",
+						visible: true
+					},
+					SouthAmerica: {
+						name: "North America",
+						type: "markercluster",
+						visible: true
+					},
+					Eurasia: {
+						name: "North America",
+						type: "markercluster",
+						visible: true
+					}
+				}
+			}
+		);
+
+		leafletData.getMap("countriesMap").then(function(map) {
+
+			var countries = attrService.attrs.LayerPolyCountries;
+
+			L.geoJson(_countries, {
+				style: function (feature) {
+					return {
+						fillColor: countries.fillColor,
+						weight: countries.weight,
+						color: countries.color
+					};
+				},
+				onEachFeature: function (feature, layer) {
+					layer.bindPopup(feature.properties.CNTRY_NAME);
+				}
+			}).addTo(map);
+			
+		});
+		
+	}]);
 
 function drawingOnCanvas(canvasOverlay, params) {
     var pad = 0;
@@ -650,10 +719,12 @@ function drawingOnCanvas(canvasOverlay, params) {
 			ctx.strokeStyle = '#b9b991';
 			ctx.lineWidth = 0.5;
 
+
 			var features = tile.features;
 
 			for (var i = 0; i < features.length; i++) {
-				var feature = features[i],
+				var feature = features[i];
+
 				type = feature.type;
 
 				ctx.beginPath();
@@ -679,5 +750,5 @@ function drawingOnCanvas(canvasOverlay, params) {
 				if (type === 3 || type === 1) ctx.fill('evenodd');
 				ctx.stroke();
 			}
-	};
+	}
 

@@ -111,7 +111,15 @@ angular.module('MapAble', ['ionic', 'angularMoment', 'leaflet-directive', 'MapAb
     }
   })
 
-
+.state('app.countries', {
+    url: "/layouts/countries",
+    views: {
+      'menuContent': {
+        templateUrl: "countries.html",
+        controller: "CountriesController"
+      }
+    }
+  })
 
   //FEEDS
   .state('app.feeds-categories', {

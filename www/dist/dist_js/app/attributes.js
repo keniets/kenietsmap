@@ -4,11 +4,22 @@ angular.module('dataStorage', [])
 
     .service('attrService', function(){
 
+        var fonts = {
+          fontSize: "12px"
+        };
+
         var layerAttrs = {
 
             LayerPoly0: {
                 color: "rgba(204,231,140,1)",
                 dataName: "_coastline"
+            },
+
+            LayerPolyCountries: {
+                color: "rgba(204,231,140,1)",
+                fillColor: "#f5e213",
+                weight: "1",
+                dataName: "_countries"
             },
 
             LayerPoly200: {
@@ -756,5 +767,6 @@ angular.module('dataStorage', [])
         this.attrs = layerAttrs;
         this.mountainPeaks = mountainPeaks;
         this.marValleys = marValleys;
+        this.fonts = fonts;
     });
 
