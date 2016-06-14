@@ -661,6 +661,12 @@ angular.module('MapAble.controllers', [])
 					layer.bindPopup(feature.properties.CNTRY_NAME);
 				}
 			}).addTo(map);
+
+			L.geoJson(_cities, {
+				onEachFeature: function (feature, layer) {
+					layer.bindPopup(feature.properties.Name);
+				}
+			}).addTo(map);
 			
 		});
 		
