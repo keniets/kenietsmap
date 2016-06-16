@@ -16,12 +16,21 @@ How to automatically define the maps in the side menu
 
 - put .txt file with the description of the map in the map subfolder (/www/json/mapsubfolder)
 - perform "npm run build"  in terminal
-- Map items and its descriptions will be appeared in the side-menu  
+- map items and its descriptions will be appeared in the side-menu  
+- if you add a new map subfolder you also need to add according state to ui route (app.js for now)
+  The name of a state consist of "app." + the name of a map subfolder in lowercase
+  for example: app.main, app.nationalities, app.countries, etc	
+
+You may rename map folder, then run "npm run build" and this change will appear in
+ui routes file and index.html file. You must rename just one folder at a time and
+then run "npm run build". 
 
 To add some labels to a map, assemble all labels in labels.geojson and put into a map subfolder.
 Then run "npm run build" and use variable _labels in any place of your application.
 See Countries map for example in which _cities labels been added.
 
-To know country name do one click within its bounds
+To know country name in a popup do one click within its bounds
+To know country attributes in top right corner of the map
+mouse over country's bounds
 
 
