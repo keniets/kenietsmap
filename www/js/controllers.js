@@ -678,7 +678,7 @@ angular.module('MapAble.controllers', [])
 			//Add an underlying layer
 			geojson = L.geoJson(_countries, {
 				style: style,
-				//Assigning actions to whether all features or certain ones
+				//Assigning actions to whether all features or certain one
 				onEachFeature: function (feature, layer) {
 					layer.bindPopup(feature.properties.CNTRY_NAME);
 					layer.on({
@@ -692,6 +692,11 @@ angular.module('MapAble.controllers', [])
 			L.geoJson(_cities, {
 				onEachFeature: function (feature, layer) {
 					layer.bindPopup(feature.properties.Name);
+					//Define your condition in which icons will be customized
+					if(feature){
+						var chelyabinskAsteroid = L.icon(attrService.icons.asteroid);
+						L.marker([60.505, 80.57], {icon: chelyabinskAsteroid}).addTo(map);
+					}
 				}
 			}).addTo(map);
 

@@ -23,7 +23,7 @@ How to automatically define the maps in the side menu
 
 You may rename map folder, then run "npm run build" and this change will appear in
 ui routes file and index.html file. You must rename just one folder at a time and
-then run "npm run build". 
+then run "npm run build". After renaming restart the server by means of "ionic serve".
 
 To add some labels to a map, assemble all labels in labels.geojson and put into a map subfolder.
 Then run "npm run build" and use variable _labels in any place of your application.

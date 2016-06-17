@@ -84,6 +84,14 @@ angular.module('dataStorage', [])
                 iconSize: [36, 28],
                 iconAnchor: [35, 18],
                 popupAnchor: [-3, -6]
+            },
+
+            asteroid: {
+                iconUrl: 'img/photo_2016-06-14_16-44-17.jpg',
+                iconRetinaUrl: 'img/photo_2016-06-14_16-44-17.jpg',
+                iconSize: [36, 28],
+                iconAnchor: [35, 18],
+                popupAnchor: [-3, -6]
             }
         };
 
@@ -769,5 +777,6 @@ angular.module('dataStorage', [])
         this.mountainPeaks = mountainPeaks;
         this.marValleys = marValleys;
         this.fonts = fonts;
+        this.icons = icons;
     });
 
