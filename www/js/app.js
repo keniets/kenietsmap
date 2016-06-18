@@ -69,7 +69,7 @@ angular.module('MapAble', ['ionic', 'angularMoment', 'leaflet-directive', 'MapAb
   })
 
   //LAYOUTS
-  .state('app.zones', {
+  .state('app.main', {
     url: "/main",
     views: {
       'menuContent': {

@@ -640,6 +640,11 @@ angular.module('MapAble.controllers', [])
 						name: "North America",
 						type: "markercluster",
 						visible: true
+					},
+					center: {
+						 lat: 20,
+						 lng: -80,
+						 zoom: 2
 					}
 				}
 			}

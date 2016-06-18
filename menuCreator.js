@@ -17,7 +17,8 @@ String.prototype.capitalize = function(){
 }
 
 rewriteMaps(menuPath, pathFolder, dirs);
-console.log("The menu has been rewritten");
+
+rewriteIndex(dirs);
 
 //side menu rewriting
 function rewriteMaps(file, baseFolder, dirs){
@@ -56,10 +57,6 @@ function recursion(path, dirs){
     if (counter != 0)
         dirs[path] = txtFile;
 
-}
-
-function getChilds(path){
-    return fs.readdirSync(path);
 }
 
 function getContent(data){
@@ -112,6 +109,7 @@ function writeMapItems(file, content, dirs) {
                 writeStateItems(oldStates, newStates);
 
     }
+    console.log("The menu has been rewritten");
 }
 
 //Auxiliary parsing function
@@ -172,13 +170,32 @@ function writeStateItems(oldStates, newStates){
         content = pieces.join("app.");
         fs.writeFileSync(statePath, content, 'utf8');
         console.log("The routes have been rewritten");
-
-        var content = fs.readFileSync('www/index.html', 'utf8');
-        pieces = content.split('<script src="json/' + older.capitalize() + '/map.js"></script>');
-        content = pieces.join('<script src="json/' + newer.capitalize() + '/map.js"></script>');
-        fs.writeFileSync('www/index.html', content, 'utf8');
-        console.log("index.html have been rewritten");
     }
+}
+
+function rewriteIndex(dirs){
+    var content = fs.readFileSync('www/index.html', 'utf8');
+    pieces = content.split("<!-- DATA LIBRARY. DON'T TOUCH/REMOVE THIS COMMENT! -->");
+
+    for(var i = 0; i < pieces.length; i++){
+        if(i == 0){
+            fs.writeFileSync('www/index.html', pieces[0] + "<!-- DATA LIBRARY. DON'T TOUCH/REMOVE THIS COMMENT! -->", 'utf8');
+        }
+
+        if(i == 1){
+            pieces[1] = '';
+            for (var dir in dirs) if(dirs.hasOwnProperty(dir)){
+                var pattern = '\n<script src="json/' + dir.split('/').pop() + '/map.js"></script>';
+                pieces[1] += pattern;
+            }
+            fs.appendFileSync('www/index.html', pieces[1] + "\n<!-- DATA LIBRARY. DON'T TOUCH/REMOVE THIS COMMENT! -->", 'utf8');
+        }
+
+        if(i == 2){
+            fs.appendFileSync('www/index.html', pieces[2], 'utf8');
+        }
+    }
+
 }
 
 
