@@ -586,6 +586,7 @@ angular.module('MapAble.controllers', [])
 			var labels = document.getElementsByClassName("leaflet-label");
 			for (var i = 0; i < labels.length; i++){
 				labels.item(i).style.fontSize = fonts.fontSize;
+				console.log(labels.item(i).innerHTML);
 			}
 		});
 
@@ -645,6 +646,14 @@ angular.module('MapAble.controllers', [])
 				//Assigning actions to whether all features or certain one
 				onEachFeature: function (feature, layer) {
 					layer.bindPopup(feature.properties.CNTRY_NAME);
+					//Not working properly
+				    // var label = L.marker(layer.getBounds().getCenter(), {
+				    //   icon: L.divIcon({
+				    //     className: 'label',
+				    //     html: feature.properties.CNTRY_NAME,
+				    //     iconSize: [100, 40]
+				    //   })
+				    // }).addTo(map);
 					layer.on({
 						mouseover: highlightFeature,
 						mouseout: resetHighlight
