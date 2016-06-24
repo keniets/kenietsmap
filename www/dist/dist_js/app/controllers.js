@@ -496,29 +496,15 @@ angular.module('MapAble.controllers', [])
 }])
 
 
-.controller("MapController", [ '$scope', '$log', '$http', 'leafletData', 'attrService',
-	function($scope, $log, $http, leafletData, attrService) {
+.controller("MapController", [ '$scope', '$log', '$http', 'leafletData', 'attrService', 'jsonVars', '$rootScope',
+	function($scope, $log, $http, leafletData, attrService, jsonVars, $rootScope) {
 
-		var _Layerpoly0 = 	geojsonvt(_coastline);
-		var _Layerpoly200 = geojsonvt(_poly200);
-		var _Layerpoly500 = geojsonvt(_poly500);
-		var _Layerpoly1000 = geojsonvt(_poly1000);
-		var _Layerpoly2000 = geojsonvt(_poly2000);
-		var _Layerpoly3000 = geojsonvt(_poly3000);
-		var _Layerpoly4000 = geojsonvt(_poly4000);
-		var _Layerpoly5000 = geojsonvt(_poly5000);
-		var _LayerIce = 	geojsonvt(_ice);
-
-		CenterMap(_Layerpoly0,	  	"LayerPoly0", 	"map1", attrService);
-		CenterMap(_Layerpoly200, 	"LayerPoly200", "map1", attrService);
-		CenterMap(_Layerpoly500, 	"LayerPoly500", "map1", attrService);
-		CenterMap(_Layerpoly1000, 	"LayerPoly1000", "map1", attrService);
-		CenterMap(_Layerpoly2000,	"LayerPoly2000", "map1", attrService);
-		CenterMap(_Layerpoly3000, 	"LayerPoly3000", "map1", attrService);
-		CenterMap(_Layerpoly4000, 	"LayerPoly4000", "map1", attrService);
-		CenterMap(_Layerpoly5000, 	"LayerPoly5000", "map1", attrService);
-		CenterMap(_LayerIce, 		"Layerice", 	"map1", attrService);
-
+			    for (var i = 0; i < jsonVars.zones.length; i++){
+		    		for (var name in jsonVars.zones[i]) if(jsonVars.zones[i].hasOwnProperty(name)){
+		    		var layer = geojsonvt(jsonVars.zones[i][name]);
+		    		CenterMap(layer, "LayerPoly" + '_' + name, "zones", attrService);
+		    		}
+		    	}
 
 		function CenterMap(rawData, layerName, mapid, attrService) {
 			var _layer;
@@ -536,8 +522,8 @@ angular.module('MapAble.controllers', [])
 	}
 ])
 
-.controller("MapControllerPeaks", [ '$scope', '$log', '$http', 'leafletData', 'attrService',
-	function($scope, $log, $http, leafletData, attrService) {
+.controller("MapControllerPeaks", [ '$scope', '$log', '$http', 'leafletData', 'attrService', '$rootScope', 'jsonVars',
+	function($scope, $log, $http, leafletData, attrService, $rootScope, jsonVars) {
 	angular.extend($scope, {
 			markers: attrService.mountainPeaks,
 			overlays: {
@@ -575,9 +561,16 @@ angular.module('MapAble.controllers', [])
 		}
 	);
 
-	var _Layerpoly0 = geojsonvt(_coastline);
+	    for (var i = 0; i < jsonVars.nationalities.length; i++){
+    		for (var name in jsonVars.nationalities[i]) if(jsonVars.nationalities[i].hasOwnProperty(name)){
+		    		var layer = geojsonvt(jsonVars.nationalities[i][name]);
+		    		CenterMap(layer, "LayerPoly" + '_' + name, "nationalities", attrService);
+	    	}
+	    }
 
-	CenterMap(_Layerpoly0, "LayerPoly0", "MapPeaks", attrService);
+	// var _Layerpoly0 = geojsonvt(_coastline);
+
+	// CenterMap(_Layerpoly0, "LayerPoly0", "MapPeaks", attrService);
 
 		fonts = attrService.fonts;
 
@@ -586,7 +579,6 @@ angular.module('MapAble.controllers', [])
 			var labels = document.getElementsByClassName("leaflet-label");
 			for (var i = 0; i < labels.length; i++){
 				labels.item(i).style.fontSize = fonts.fontSize;
-				console.log(labels.item(i).innerHTML);
 			}
 		});
 
@@ -607,71 +599,71 @@ angular.module('MapAble.controllers', [])
 	]
 )
 
-	.controller('CountriesController', ['$scope', 'leafletData', 'attrService',
-	function($scope, leafletData, attrService){
+	.controller('CountriesController', ['$scope', 'leafletData', 'attrService', '$rootScope',
+	function($scope, leafletData, attrService, $rootScope){
 
-		leafletData.getMap("countriesMap").then(function(map) {
+			leafletData.getMap("countries").then(function(map) {
 
-			//Creating a control to display feature parameters
-			info = L.control();
+				//Creating a control to display feature parameters
+				info = L.control();
 
-			info.onAdd = function (map) {
-				this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
-				this.update();
-				return this._div;
-			};
-
-			// method that we will use to update the control based on feature properties passed
-			info.update = function (props) {
-				this._div.innerHTML = '<h4>Country state</h4>' +  (props ?
-					'<b>' + props.CNTRY_NAME + '</b><br />' + props.world_bo_1 : 'Define country');
-			};
-
-			info.addTo(map);
-
-			var countries = attrService.attrs.LayerPolyCountries;
-
-			function style(feature) {
-				return {
-					fillColor: countries.fillColor,
-					fillOpacity: countries.fillOpacity,
-					weight: countries.weight,
-					color: countries.color
+				info.onAdd = function (map) {
+					this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
+					this.update();
+					return this._div;
 				};
-			}
 
-			//Add an underlying layer
-			geojson = L.geoJson(_countries, {
-				style: style,
-				//Assigning actions to whether all features or certain one
-				onEachFeature: function (feature, layer) {
-					layer.bindPopup(feature.properties.CNTRY_NAME);
-					//Not working properly
-				    // var label = L.marker(layer.getBounds().getCenter(), {
-				    //   icon: L.divIcon({
-				    //     className: 'label',
-				    //     html: feature.properties.CNTRY_NAME,
-				    //     iconSize: [100, 40]
-				    //   })
-				    // }).addTo(map);
-					layer.on({
-						mouseover: highlightFeature,
-						mouseout: resetHighlight
-					});
+				// method that we will use to update the control based on feature properties passed
+				info.update = function (props) {
+					this._div.innerHTML = '<h4>Country state</h4>' +  (props ?
+						'<b>' + props.CNTRY_NAME + '</b><br />' + props.world_bo_1 : 'Define country');
+				};
+
+				info.addTo(map);
+
+				var countries = attrService.attrs.LayerPoly_countries;
+
+				function style(feature) {
+					return {
+						fillColor: countries.fillColor,
+						fillOpacity: countries.fillOpacity,
+						weight: countries.weight,
+						color: countries.color
+					};
 				}
-			}).addTo(map);
 
-			//Add some labels of cities
-			L.geoJson(_cities, {
-				onEachFeature: function (feature, layer) {
-					layer.bindPopup(feature.properties.Name);
-					//Define your condition in which icons will be customized
-					if(feature){
-						var chelyabinskAsteroid = L.icon(attrService.icons.asteroid);
-						L.marker([60.505, 80.57], {icon: chelyabinskAsteroid}).addTo(map);
+				//Add an underlying layer
+				geojson = L.geoJson(_countries, {
+					style: style,
+					//Assigning actions to whether all features or certain one
+					onEachFeature: function (feature, layer) {
+						layer.bindPopup(feature.properties.CNTRY_NAME);
+						//Not working properly
+					    // var label = L.marker(layer.getBounds().getCenter(), {
+					    //   icon: L.divIcon({
+					    //     className: 'label',
+					    //     html: feature.properties.CNTRY_NAME,
+					    //     iconSize: [100, 40]
+					    //   })
+					    // }).addTo(map);
+						layer.on({
+							mouseover: highlightFeature,
+							mouseout: resetHighlight
+						});
 					}
-				}
-			}).addTo(map);
+				}).addTo(map);
+
+				//Add some labels of cities
+				L.geoJson(_cities, {
+					onEachFeature: function (feature, layer) {
+						layer.bindPopup(feature.properties.Name);
+						//Define your condition in which icons will be customized
+						if(feature){
+							var chelyabinskAsteroid = L.icon(attrService.icons.asteroid);
+							L.marker([60.505, 80.57], {icon: chelyabinskAsteroid}).addTo(map);
+						}
+					}
+				}).addTo(map);
 
 		});
 

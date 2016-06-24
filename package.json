@@ -56,6 +56,6 @@
     }
   ],
   "scripts": {
-    "build": "NODE_ENV=development node menuCreator.js && NODE_ENV=development node initMaps.js"
+    "build": "NODE_ENV=development node mapper.js"
   }
 }

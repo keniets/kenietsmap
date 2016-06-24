@@ -10,7 +10,7 @@ angular.module('underscore', [])
 // the 2nd parameter is an array of 'requires'
 angular.module('MapAble', ['ionic', 'angularMoment', 'leaflet-directive', 'MapAble.controllers', 'MapAble.directives',
   'MapAble.filters', 'MapAble.services', 'MapAble.factories', 'MapAble.config', 'underscore', 'ngResource', 'ngCordova',
-  'templates', 'slugifier', 'dataStorage'])
+  'templates', 'slugifier', 'dataStorage', 'geoJsonVars'])
 
 .run(['$ionicPlatform', 'PushNotificationsService', function($ionicPlatform, PushNotificationsService) {
 

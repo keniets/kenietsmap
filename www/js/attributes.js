@@ -10,12 +10,13 @@ angular.module('dataStorage', [])
 
         var layerAttrs = {
 
-            LayerPoly0: {
+            LayerPoly_coastline: {
                 color: "rgba(204,231,140,1)",
-                dataName: "_coastline"
+                dataName: "_coastline",
+                data: _coastline
             },
 
-            LayerPolyCountries: {
+            LayerPoly_countries: {
                 color: "grey",
                 fillColor: "#f5e213",
                 fillOpacity: 0.5,
@@ -23,42 +24,42 @@ angular.module('dataStorage', [])
                 dataName: "_countries"
             },
 
-            LayerPoly200: {
+            LayerPoly_poly200: {
                 color: "rgba(245,247,210,1)",
                 dataName: "_poly200"
             },
 
-            LayerPoly500: {
+            LayerPoly_poly500: {
                 color: "rgba(237,242,80,1)",
                 dataName: "_poly500"
             },
 
-            LayerPoly1000: {
+            LayerPoly_poly1000: {
                 color: "rgba(245,226,19,1)",
                 dataName: "_poly1000"
             },
 
-            LayerPoly2000: {
+            LayerPoly_poly2000: {
                 color: "rgba(227,207,26,1)",
                 dataName: "_poly2000"
             },
 
-            LayerPoly3000: {
+            LayerPoly_poly3000: {
                 color: "rgba(221,191,56,1)",
                 dataName: "_poly3000"
             },
 
-            LayerPoly4000: {
+            LayerPoly_poly4000: {
                 color: "rgba(214,179,36,1)",
                 dataName: "_poly4000"
             },
 
-            LayerPoly5000: {
+            LayerPoly_poly5000: {
                 color: "rgba(214,156,36,1)",
                 dataName: "_poly5000"
             },
 
-            Layerice: {
+            LayerPoly_ice: {
                 color: "rgba(214,242,237,1)",
                 dataName: "_ice"
             }
