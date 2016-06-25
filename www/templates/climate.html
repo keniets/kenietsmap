@@ -1,11 +1,12 @@
 <ion-view class="layouts-view">
+    <ion-nav-buttons side="left">
+        <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+    </ion-nav-buttons>
   <ion-nav-title>
     <span>Nationalities</span>
   </ion-nav-title>
-  <ion-nav-back-button>
-  </ion-nav-back-button>
   <ion-content scroll="false" data-tap-disabled="true">
-     <div style="position: absolute; top: 0px; bottom: 0px; left: 0px; right: 0px;">
+     <div style="position: absolute; top: 5px; bottom: 0px; left: 0px; right: 0px;">
       <leaflet
             id="MapPeaks"
             layers="layers"
