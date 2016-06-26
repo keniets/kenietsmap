@@ -1,5 +1,16 @@
 angular.module('MapAble.controllers', [])
 
+	.controller('climateCtrl', ['$scope', 'jsonVars', 'attrService', 'leafletData',
+		function($scope, jsonVars, attrService, leafletData){
+		for (var i = 0; i < jsonVars.climate.length; i++){
+			for (var name in jsonVars.climate[i]) if(jsonVars.climate[i].hasOwnProperty(name)){
+			var layer = geojsonvt(jsonVars.climate[i][name]);
+			CenterMap(layer, 'LayerPoly' + name, 'climate', attrService, leafletData);
+			}
+		}
+	}])
+
+
 /* APP*/
     .controller('AppCtrl', ['$scope', function($scope) {
     angular.extend($scope, {
@@ -496,34 +507,26 @@ angular.module('MapAble.controllers', [])
 }])
 
 
-.controller("MapController", [ '$scope', '$log', '$http', 'leafletData', 'attrService', 'jsonVars', '$rootScope',
+.controller("zonesCtrl", [ '$scope', '$log', '$http', 'leafletData', 'attrService', 'jsonVars', '$rootScope',
 	function($scope, $log, $http, leafletData, attrService, jsonVars, $rootScope) {
 
-			    for (var i = 0; i < jsonVars.zones.length; i++){
-		    		for (var name in jsonVars.zones[i]) if(jsonVars.zones[i].hasOwnProperty(name)){
-		    		var layer = geojsonvt(jsonVars.zones[i][name]);
-		    		CenterMap(layer, "LayerPoly" + '_' + name, "zones", attrService);
-		    		}
-		    	}
+		// linkCreator(zones_config.mapName);
 
-		function CenterMap(rawData, layerName, mapid, attrService) {
-			var _layer;
-			_layer = getGeojsonVectorTiles(rawData, layerName, attrService);
-			leafletData.getMap(mapid).then(function(map) {
-				_layer.addTo(map);
-		   });
-		}
+	    for (var i = 0; i < jsonVars.zones.length; i++){
+    		for (var name in jsonVars.zones[i]) if(jsonVars.zones[i].hasOwnProperty(name)){
+    		var layer = geojsonvt(jsonVars.zones[i][name]);
+    		CenterMap(layer, "LayerPoly" + name, "zones", attrService, leafletData);
+    		}
+    	}
 
-		function getGeojsonVectorTiles (rawData, layerName, attrService) {
-				return  L.canvasTiles()
-						.params({ debug: false, padding: 5 , layer: rawData, LayerName: layerName, attributes: attrService.attrs[layerName] })
-						.drawing(drawingOnCanvas);
-		}
 	}
 ])
 
-.controller("MapControllerPeaks", [ '$scope', '$log', '$http', 'leafletData', 'attrService', '$rootScope', 'jsonVars',
+.controller("nationalitiesCtrl", [ '$scope', '$log', '$http', 'leafletData', 'attrService', '$rootScope', 'jsonVars',
 	function($scope, $log, $http, leafletData, attrService, $rootScope, jsonVars) {
+
+		// linkCreator(nationalities_config.mapName);
+
 	angular.extend($scope, {
 			markers: attrService.mountainPeaks,
 			overlays: {
@@ -563,8 +566,9 @@ angular.module('MapAble.controllers', [])
 
 	    for (var i = 0; i < jsonVars.nationalities.length; i++){
     		for (var name in jsonVars.nationalities[i]) if(jsonVars.nationalities[i].hasOwnProperty(name)){
+    			console.log(name);
 		    		var layer = geojsonvt(jsonVars.nationalities[i][name]);
-		    		CenterMap(layer, "LayerPoly" + '_' + name, "nationalities", attrService);
+		    		CenterMap(layer, "LayerPoly" + name, "nationalities", attrService, leafletData);
 	    	}
 	    }
 
@@ -582,25 +586,14 @@ angular.module('MapAble.controllers', [])
 			}
 		});
 
-	function CenterMap(rawData, layerName, mapid, attrService) {
-		var _layer;
-		_layer = getGeojsonVectorTiles(rawData, layerName, attrService);
-		leafletData.getMap(mapid).then(function(map) {
-			_layer.addTo(map);
-		});
-	}
-
-	function getGeojsonVectorTiles (rawData, layerName, attrService) {
-		return  L.canvasTiles()
-			.params({ debug: false, padding: 5 , layer: rawData, LayerName: layerName, attributes: attrService.attrs[layerName] })
-			.drawing(drawingOnCanvas);
-	}
       }
 	]
 )
 
-	.controller('CountriesController', ['$scope', 'leafletData', 'attrService', '$rootScope',
+	.controller('countriesCtrl', ['$scope', 'leafletData', 'attrService', '$rootScope',
 	function($scope, leafletData, attrService, $rootScope){
+
+			// linkCreator(countries_config.mapName);
 
 			leafletData.getMap("countries").then(function(map) {
 
@@ -689,6 +682,45 @@ angular.module('MapAble.controllers', [])
 		}
 		
 	}]);
+
+function linkCreator(mapName){
+		var mapRef = 'json/' + mapName + '/map.js';
+		var configRef = 'json/' + mapName + '/config.js';
+        var mapElem = document.createElement('script');
+        var configElem = document.createElement('script');
+        mapElem.setAttribute("type","text/javascript");
+        mapElem.setAttribute("src", mapRef);
+        configElem.setAttribute("type","text/javascript");
+        configElem.setAttribute("src", configRef);
+
+        var parent = document.getElementById("data_links");
+        var children = parent.getElementsByTagName("script");
+  
+        for(var i = 0; i < children.length; i++) {
+        	var child = children[i];
+            child = parent.removeChild(child);
+        	console.log(child);
+        } 
+
+        // parent.appendChild(mapElem);
+        // // parent.appendChild('\n');
+        // parent.appendChild(configElem);
+        // // parent.appendChild('\n');
+}	
+
+function CenterMap(rawData, layerName, mapid, attrService, leafletData	) {
+	var _layer;
+	_layer = getGeojsonVectorTiles(rawData, layerName, attrService);
+	leafletData.getMap(mapid).then(function(map) {
+		_layer.addTo(map);
+	});
+}
+
+function getGeojsonVectorTiles (rawData, layerName, attrService) {
+	return  L.canvasTiles()
+		.params({ debug: false, padding: 5 , layer: rawData, LayerName: layerName, attributes: attrService.attrs[layerName] })
+		.drawing(drawingOnCanvas);
+}
 
 function drawingOnCanvas(canvasOverlay, params) {
     var pad = 0;

@@ -36,30 +36,15 @@ angular.module('MapAble', ['ionic', 'angularMoment', 'leaflet-directive', 'MapAb
 .config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
 
-  // //INTRO
-//   .state('walkthrough', {
-//     url: "/",
-//     templateUrl: "walkthrough.html",
-//     controller: 'WalkthroughCtrl'
-//   })
-//
-//   .state('login', {
-//     url: "/login",
-//     templateUrl: "login.html",
-//     controller: 'LoginCtrl'
-//   })
-//
-//   .state('signup', {
-//     url: "/signup",
-//     templateUrl: "signup.html",
-//     controller: 'SignupCtrl'
-//   })
-//
-//   .state('forgot-password', {
-//     url: "/forgot-password",
-//     templateUrl: "forgot-password.html",
-//     controller: 'ForgotPasswordCtrl'
-//   })
+  .state('app.climate', {
+		url: '/layouts/climate',
+		views: {
+		'menuContent': {
+		templateUrl: "climate.html",
+		controller: 'climateCtrl'
+		}
+	}
+})
 
   .state('app', {
     url: "/app",
@@ -73,22 +58,11 @@ angular.module('MapAble', ['ionic', 'angularMoment', 'leaflet-directive', 'MapAb
     url: "/main",
     views: {
       'menuContent': {
-        templateUrl: "main.html",
-        controller: 'MapController'
+        templateUrl: "zones.html",
+        controller: 'zonesCtrl'
       }
     }
   })
-
-  // //LAYOUTS
-  // .state('app.layouts', {
-  //   url: "/layouts",
-  //   views: {
-  //     'menuContent': {
-  //       templateUrl: "layouts.html",
-  //       controller: 'MapController'
-  //     }
-  //   }
-  // })
 
   //LAYOUTS
   .state('app.population', {
@@ -105,8 +79,8 @@ angular.module('MapAble', ['ionic', 'angularMoment', 'leaflet-directive', 'MapAb
     url: "/layouts/nationalities",
     views: {
       'menuContent': {
-        templateUrl: "Map2.html",
-        controller: 'MapControllerPeaks'
+        templateUrl: "nationalities.html",
+        controller: 'nationalitiesCtrl'
       }
     }
   })
@@ -116,7 +90,7 @@ angular.module('MapAble', ['ionic', 'angularMoment', 'leaflet-directive', 'MapAb
     views: {
       'menuContent': {
         templateUrl: "countries.html",
-        controller: "CountriesController"
+        controller: "countriesCtrl"
       }
     }
   })

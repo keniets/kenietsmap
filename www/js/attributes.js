@@ -9,11 +9,14 @@ angular.module('dataStorage', [])
         };
 
         var layerAttrs = {
+			LayerPoly_climate : {
+				color: "rgba(204,231,140,1)",
+				dataName: "_climate "
+			},
 
             LayerPoly_coastline: {
                 color: "rgba(204,231,140,1)",
-                dataName: "_coastline",
-                data: _coastline
+                dataName: "_coastline"
             },
 
             LayerPoly_countries: {
