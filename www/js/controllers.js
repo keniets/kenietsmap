@@ -519,8 +519,10 @@ angular.module('MapAble.controllers', [])
 
 	    for (var i = 0; i < jsonVars.zones.length; i++){
     		for (var name in jsonVars.zones[i]) if(jsonVars.zones[i].hasOwnProperty(name)){
-    			    		console.log(layer);
     		var layer = geojsonvt(jsonVars.zones[i][name]);
+    		// simplification tolerance (higher means simpler)
+    		// you need set it to 30-40 at least to feel the difference
+    		layer.options.tolerance = 5; 
     		CenterMap(layer, "LayerPoly" + name, "zones", attrService, leafletData);
     		}
     	}
@@ -577,7 +579,6 @@ angular.module('MapAble.controllers', [])
 
 	    for (var i = 0; i < jsonVars.nationalities.length; i++){
     		for (var name in jsonVars.nationalities[i]) if(jsonVars.nationalities[i].hasOwnProperty(name)){
-    			console.log(name);
 		    		var layer = geojsonvt(jsonVars.nationalities[i][name]);
 		    		CenterMap(layer, "LayerPoly" + name, "nationalities", attrService, leafletData);
 	    	}
@@ -646,6 +647,8 @@ angular.module('MapAble.controllers', [])
 				//Add an underlying layer
 				geojson = L.geoJson(_countries, {
 					style: style,
+					//set simplification by smoothFactor
+					smoothFactor: 0,
 					//Assigning actions to whether all features or certain one
 					onEachFeature: function (feature, layer) {
 						layer.bindPopup(feature.properties.CNTRY_NAME);
@@ -663,6 +666,7 @@ angular.module('MapAble.controllers', [])
 						});
 					}
 				}).addTo(map);
+				console.dir('geojson: ' + geojson);
 
 				//Add some labels of cities
 				L.geoJson(_cities, {
@@ -731,8 +735,8 @@ function CenterMap(rawData, layerName, mapid, attrService, leafletData	) {
 	_layer = getGeojsonVectorTiles(rawData, layerName, attrService);
 	leafletData.getMap(mapid).then(function(map) {
 		//Zoom level
-		map.options.maxZoom=10;
-		map.options.minZoom=2;
+		map.options.maxZoom = 10;
+		map.options.minZoom = 2;
 		_layer.addTo(map);
 	});
 }
