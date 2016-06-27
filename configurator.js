@@ -161,6 +161,7 @@ function writeMapItems(file, content, dirs) {
             for (var map in dirs) if(dirs.hasOwnProperty(map)) {
 
                 state = map.split('/').pop().toLowerCase();
+                // var config = fs.readFileSync('www/json/' + )
                 var desc = dirs[map].split('description:').pop();
                 desc = desc.split(',');
                 desc[0] = desc[0].trim().substring(1, desc[0].length - 2);

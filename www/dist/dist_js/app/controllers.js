@@ -1,11 +1,11 @@
 angular.module('MapAble.controllers', [])
 
-	.controller('climateCtrl', ['$scope', 'jsonVars', 'attrService', 'leafletData',
+	.controller('lakesCtrl', ['$scope', 'jsonVars', 'attrService', 'leafletData',
 		function($scope, jsonVars, attrService, leafletData){
-		for (var i = 0; i < jsonVars.climate.length; i++){
-			for (var name in jsonVars.climate[i]) if(jsonVars.climate[i].hasOwnProperty(name)){
-			var layer = geojsonvt(jsonVars.climate[i][name]);
-			CenterMap(layer, 'LayerPoly' + name, 'climate', attrService, leafletData);
+		for (var i = 0; i < jsonVars.lakes.length; i++){
+			for (var name in jsonVars.lakes[i]) if(jsonVars.lakes[i].hasOwnProperty(name)){
+			var layer = geojsonvt(jsonVars.lakes[i][name]);
+			CenterMap(layer, 'LayerPoly' + name, 'lakes', attrService, leafletData);
 			}
 		}
 	}])
@@ -510,10 +510,16 @@ angular.module('MapAble.controllers', [])
 .controller("zonesCtrl", [ '$scope', '$log', '$http', 'leafletData', 'attrService', 'jsonVars', '$rootScope',
 	function($scope, $log, $http, leafletData, attrService, jsonVars, $rootScope) {
 
+		leafletData.getMap("zones").then(function(map) {
+			//Add zoom button to the map
+			L.control.zoom().addTo(map);
+		});
+
 		// linkCreator(zones_config.mapName);
 
 	    for (var i = 0; i < jsonVars.zones.length; i++){
     		for (var name in jsonVars.zones[i]) if(jsonVars.zones[i].hasOwnProperty(name)){
+    			    		console.log(layer);
     		var layer = geojsonvt(jsonVars.zones[i][name]);
     		CenterMap(layer, "LayerPoly" + name, "zones", attrService, leafletData);
     		}
@@ -564,6 +570,11 @@ angular.module('MapAble.controllers', [])
 		}
 	);
 
+		leafletData.getMap("nationalities").then(function(map) {
+			//Add zoom button to the map
+			L.control.zoom().addTo(map);
+		});
+
 	    for (var i = 0; i < jsonVars.nationalities.length; i++){
     		for (var name in jsonVars.nationalities[i]) if(jsonVars.nationalities[i].hasOwnProperty(name)){
     			console.log(name);
@@ -596,6 +607,13 @@ angular.module('MapAble.controllers', [])
 			// linkCreator(countries_config.mapName);
 
 			leafletData.getMap("countries").then(function(map) {
+
+				//Add zoom button to the map
+				L.control.zoom().addTo(map);
+
+				//Zoom level
+				map.options.maxZoom=10;
+				map.options.minZoom=2;
 
 				//Creating a control to display feature parameters
 				info = L.control();
@@ -712,6 +730,9 @@ function CenterMap(rawData, layerName, mapid, attrService, leafletData	) {
 	var _layer;
 	_layer = getGeojsonVectorTiles(rawData, layerName, attrService);
 	leafletData.getMap(mapid).then(function(map) {
+		//Zoom level
+		map.options.maxZoom=10;
+		map.options.minZoom=2;
 		_layer.addTo(map);
 	});
 }

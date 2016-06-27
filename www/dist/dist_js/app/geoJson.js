@@ -1,10 +1,10 @@
 angular.module('geoJsonVars', [])
 
 .service('jsonVars', [function(){
-	var climate = [
-		{ _climate : _climate  },
+	var lakes = [
+		{ _Lakes : _Lakes  },
 	];
-	this.climate = climate
+	this.lakes = lakes
 
 	var countries = [
 		{ _cities: _cities },
