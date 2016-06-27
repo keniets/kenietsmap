@@ -523,6 +523,7 @@ angular.module('MapAble.controllers', [])
     		// simplification tolerance (higher means simpler)
     		// you need set it to 30-40 at least to feel the difference
     		layer.options.tolerance = 5; 
+    		console.log(layer);
     		CenterMap(layer, "LayerPoly" + name, "zones", attrService, leafletData);
     		}
     	}
@@ -604,6 +605,43 @@ angular.module('MapAble.controllers', [])
 
 	.controller('countriesCtrl', ['$scope', 'leafletData', 'attrService', '$rootScope',
 	function($scope, leafletData, attrService, $rootScope){
+
+		angular.extend($scope, {
+			markers: attrService.mountainPeaks,
+			overlays: {
+				NorthAmerica: {
+					name: "North America",
+					type: "markercluster",
+					visible: true
+				},
+				eastafrica: {
+					name: "East Africa",
+					type: "markercluster",
+					visible: true
+				},
+				tibet: {
+					name: "East Africa",
+					type: "markercluster",
+					visible: true
+				},
+				wasia: {
+					name: "East Africa",
+					type: "markercluster",
+					visible: true
+				},
+				SouthAmerica: {
+					name: "North America",
+					type: "markercluster",
+					visible: true
+				},
+				Eurasia: {
+					name: "North America",
+					type: "markercluster",
+					visible: true
+				}
+			}
+		}
+	);
 
 			// linkCreator(countries_config.mapName);
 
