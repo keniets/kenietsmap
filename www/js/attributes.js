@@ -9,9 +9,17 @@ angular.module('dataStorage', [])
         };
 
         var layerAttrs = {
-			LayerPoly_Lakes : {
+			LayerPoly_rivers: {
 				color: "rgba(204,231,140,1)",
-				dataName: "_Lakes "
+				dataName: "_rivers"
+			},
+			LayerPoly_lakes: {
+				color: "rgba(204,231,140,1)",
+				dataName: "_lakes"
+			},
+			LayerPoly_labels: {
+				color: "rgba(204,231,140,1)",
+				dataName: "_labels"
 			},
 
             LayerPoly_coastline: {

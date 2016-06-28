@@ -11,6 +11,7 @@ How to integrate a new map to the project:
   This variables will being operated in any part of application to render the map
   associated with them
 - it will create all dependencies which is necessary to out-of-box map appearance
+- it will render one layer of the map and one layer named "labels.geojson"
 - for example see existing map (locating in mainMap subfolder), consisting from 9 layers
 
 

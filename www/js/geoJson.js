@@ -2,9 +2,13 @@ angular.module('geoJsonVars', [])
 
 .service('jsonVars', [function(){
 	var lakes = [
-		{ _Lakes : _Lakes  },
+		{ _rivers: _rivers },
+		{ _lakes: _lakes },
+		{ _labels: _labels },
+		{ _ice: _ice },
+		{ _coastline: _coastline },
 	];
-	this.lakes = lakes
+	this.lakes = lakes;
 
 	var countries = [
 		{ _cities: _cities },

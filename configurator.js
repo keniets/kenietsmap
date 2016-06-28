@@ -275,15 +275,44 @@ function writeStates(statePath, dirs) {
                 if(count == 0){ 
                     content = content.split("angular.module('MapAble.controllers', [])");
 
-                    content[1] = "\n\n\t.controller('" + stateWord + "Ctrl', ['$scope', 'jsonVars', 'attrService', 'leafletData',\n" +
-                                            "\t\tfunction($scope, jsonVars, attrService, leafletData){\n" +
-                                            "\t\tfor (var i = 0; i < jsonVars." + stateWord + ".length; i++){\n" +
-                                                "\t\t\tfor (var name in jsonVars." + stateWord + "[i]) if(jsonVars." + stateWord + "[i].hasOwnProperty(name)){\n" +
-                                                "\t\t\tvar layer = geojsonvt(jsonVars."+ stateWord + "[i][name]);\n" +
-                                                "\t\t\tCenterMap(layer, 'LayerPoly' + name, '" + stateWord + "', attrService, leafletData);\n" +
-                                                "\t\t\t}\n" +
-                                            "\t\t}\n" +  
-                                 "\t}])" + content[1];
+                    content[1] =    '\n\t\t.controller("' + stateWord + 'Ctrl", ["$scope", "jsonVars", "leafletData", \n' +
+                                                '\t\t\tfunction($scope, jsonVars, leafletData){\n' +
+                                                            '\t\t\tleafletData.getMap("' + stateWord + '").then(function(map) {\n' +
+                                            '\t\t\t\tvar layer;\n' +
+                                            '\t\t\t\tvar index;\n' +
+                                            '\t\t\t\tvar layerLabel;\n' +
+                                            '\t\t\t\tvar indexLabel;\n' +
+                                            '\t\t\t\tfor(var i = 0; i < jsonVars.' + stateWord + '.length; i++){\n' +
+                                                '\t\t\t\t\tfor (var name in jsonVars.' + stateWord + '[i]) if(jsonVars.' + stateWord + '[i].hasOwnProperty(name)){\n' +
+                                                    '\t\t\t\t\t\tif(name != "_labels"){\n' +
+                                                        '\t\t\t\t\t\t\tlayer = name;\n' +
+                                                        '\t\t\t\t\t\t\tindex = i;\n' +
+                                                    '\t\t\t\t\t\t}\n' +
+                                                    '\t\t\t\t\t\telse if(name == "_labels"){\n' +
+                                                        '\t\t\t\t\t\t\tlayerLabel = name;\n' +
+                                                        '\t\t\t\t\t\t\tindexLabel = i;\n' +
+                                                    '\t\t\t\t\t\t}\n' +
+                                                '\t\t\t\t\t}\n' +
+                                            '\t\t\t\t}\n' +
+                                            '\t\t\t\tL.geoJson(jsonVars.' + stateWord + '[index][layer], {\n' +
+                                                '\t\t\t\t\tstyle: {\n' +
+                                                    '\t\t\t\t\t\tcolor: "grey",\n' +
+                                                    '\t\t\t\t\t\tfillColor: "#f5e213",\n' +
+                                                    '\t\t\t\t\t\tfillOpacity: 0.5,\n' +
+                                                    '\t\t\t\t\t\tweight: "1"\n' +
+                                                '\t\t\t\t\t}\n' +
+                                            '\t\t\t\t}).addTo(map);\n' +
+                                            '\t\t\t\tL.geoJson(jsonVars.' + stateWord + '[indexLabel][layerLabel], {\n' +
+                                                '\t\t\t\t\tstyle: {\n' +
+                                                    '\t\t\t\t\t\tcolor: "grey",\n' +
+                                                    '\t\t\t\t\t\tfillColor: "#f5e213",\n' +
+                                                    '\t\t\t\t\t\tfillOpacity: 0.5,\n' +
+                                                    '\t\t\t\t\t\tweight: "1"\n' +
+                                                '\t\t\t\t\t}\n' +
+                                            "\t\t\t\t}).addTo(map);\n" +
+                                        '\t\t\t})\n' + 
+                                    '\t\t}])' + content[1];
+
 
                     content = content.join("angular.module('MapAble.controllers', [])");
                     fs.writeFileSync(ctrlPath, content, 'utf8');
@@ -291,32 +320,39 @@ function writeStates(statePath, dirs) {
                 count = 0;
 
                 //Add geoJson variables to geoJsonVars service
-
                 content = fs.readFileSync('www/json/' + dir.split('/').pop() + '/map.js', 'utf8');
-                var regexp = new RegExp("var(.*)+(?==)", 'gim');
+
+                var regexp = new RegExp("_(.*)(?==)", 'gim');
                 var variables = content.match(regexp);
                 console.log('vars: ' + variables);
 
-                //Write geoJson variables in geoJsonVars service
-                //Add a properties object in attributes.js and set a default color
-                contentAttrs = fs.readFileSync('www/js/attributes.js', 'utf8');
                 content = fs.readFileSync('www/js/geoJson.js', 'utf8');
                 content = content.split(".service('jsonVars', [function(){");
-                contentAttrs = contentAttrs.split('var layerAttrs = {');
                 var begin = "\n\tvar " + stateWord + " = [";
-                var end = "\n\t];\n\tthis." + stateWord + " = " + stateWord;
+                var end = "\n\t];\n\tthis." + stateWord + " = " + stateWord + ";";
                 content[1] = end + content[1];
                 for(var k = 0; k < variables.length; k++){
-                    content[1] = '\n\t\t' + "{ " + variables[k].substring(4) + ": " + variables[k].substring(4) + " }," + content[1];
-                    contentAttrs[1] = "\n\t\t\tLayerPoly" + variables[k].substring(4) + ": {" +
-                                        '\n\t\t\t\tcolor: "rgba(204,231,140,1)",' +
-                                        '\n\t\t\t\tdataName: "' + variables[k].substring(4) + '"' +
-                                      '\n\t\t\t},' + contentAttrs[1];
+                    content[1] = '\n\t\t' + "{ " + variables[k].trim() + ": " + variables[k].trim() + " }," + content[1];
                 }
                 content[1] = begin + content[1];
                 content = content.join(".service('jsonVars', [function(){");
-                contentAttrs = contentAttrs.join('var layerAttrs = {');
                 fs.writeFileSync('www/js/geoJson.js', content, 'utf8');
+
+                // Add a properties object in attributes.js and set a default color
+                contentAttrs = fs.readFileSync('www/js/attributes.js', 'utf8');
+                var contentSplitted = contentAttrs.split('var layerAttrs = {');
+
+                for(var z = 0; z < variables.length; z++){
+                    var targetVar = "LayerPoly" + variables[z].trim();
+                    if(contentAttrs.search(targetVar) == -1){
+                        contentSplitted[1] = "\n\t\t\tLayerPoly" + variables[z].trim() + ": {" +
+                                          '\n\t\t\t\tcolor: "rgba(204,231,140,1)",' +
+                                          '\n\t\t\t\tdataName: "' + variables[z].trim() + '"' +
+                                          '\n\t\t\t},' + contentSplitted[1];
+                    }
+                }
+
+                contentAttrs = contentSplitted.join('var layerAttrs = {');
                 fs.writeFileSync('www/js/attributes.js', contentAttrs, 'utf8');
 
         }

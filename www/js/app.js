@@ -46,15 +46,6 @@ angular.module('MapAble', ['ionic', 'angularMoment', 'leaflet-directive', 'MapAb
 	}
 })
 
-  .state('app.climate', {
-		url: '/layouts/climate',
-		views: {
-		'menuContent': {
-		templateUrl: "climate.html",
-		controller: 'climateCtrl'
-		}
-	}
-})
 
   .state('app', {
     url: "/app",

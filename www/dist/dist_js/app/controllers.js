@@ -1,14 +1,41 @@
 angular.module('MapAble.controllers', [])
-
-	.controller('lakesCtrl', ['$scope', 'jsonVars', 'attrService', 'leafletData',
-		function($scope, jsonVars, attrService, leafletData){
-		for (var i = 0; i < jsonVars.lakes.length; i++){
-			for (var name in jsonVars.lakes[i]) if(jsonVars.lakes[i].hasOwnProperty(name)){
-			var layer = geojsonvt(jsonVars.lakes[i][name]);
-			CenterMap(layer, 'LayerPoly' + name, 'lakes', attrService, leafletData);
-			}
-		}
-	}])
+		.controller("lakesCtrl", ["$scope", "jsonVars", "leafletData", 
+			function($scope, jsonVars, leafletData){
+			leafletData.getMap("lakes").then(function(map) {
+				var layer;
+				var index;
+				var layerLabel;
+				var indexLabel;
+				for(var i = 0; i < jsonVars.lakes.length; i++){
+					for (var name in jsonVars.lakes[i]) if(jsonVars.lakes[i].hasOwnProperty(name)){
+						if(name != "_labels"){
+							layer = name;
+							index = i;
+						}
+						else if(name == "_labels"){
+							layerLabel = name;
+							indexLabel = i;
+						}
+					}
+				}
+				L.geoJson(jsonVars.lakes[index][layer], {
+					style: {
+						color: "grey",
+						fillColor: "#f5e213",
+						fillOpacity: 0.5,
+						weight: "1"
+					}
+				}).addTo(map);
+				L.geoJson(jsonVars.lakes[indexLabel][layerLabel], {
+					style: {
+						color: "grey",
+						fillColor: "#f5e213",
+						fillOpacity: 0.5,
+						weight: "1"
+					}
+				}).addTo(map);
+			})
+		}])
 
 
 /* APP*/
@@ -523,7 +550,6 @@ angular.module('MapAble.controllers', [])
     		// simplification tolerance (higher means simpler)
     		// you need set it to 30-40 at least to feel the difference
     		layer.options.tolerance = 5; 
-    		console.log(layer);
     		CenterMap(layer, "LayerPoly" + name, "zones", attrService, leafletData);
     		}
     	}
@@ -853,10 +879,10 @@ function drawingOnCanvas(canvasOverlay, params) {
 					ctx.fillStyle = feature.tags.color ? feature.tags.color :  params.options.attributes.color;//'rgba( 12,155,155,0.5)';
 
 					var geom = feature.geometry[j];
-					if (type === 1) {
-							ctx.arc(geom[0] * ratio + pad, geom[1] * ratio + pad, 2, 0, 2 * Math.PI, false);
-							continue;
-					}
+					// if (type === 1) {
+					// 		ctx.arc(geom[0] * ratio + pad, geom[1] * ratio + pad, 2, 0, 2 * Math.PI, false);
+					// 		continue;
+					// }
 					for (var k = 0; k < geom.length; k++) {
 							var p = geom[k];
 							var extent = 4096;
