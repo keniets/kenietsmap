@@ -327,10 +327,50 @@ angular.module('MapAble.controllers', [])
 	$scope.checkOpt3 = false;
 
 	// $scope.radioChoice = 'en';
+	console.log(localStorage.getItem("language"));
+
+	if(localStorage.getItem("language") == 'ru'){
+		var element = document.getElementById("change_lang");
+		element.innerHTML = lang.langs.ru.settings[element.innerHTML];
+
+		var menu = lang.langs.ru.menu;
+
+		var map = document.getElementById("countries_item");
+		var desc = document.getElementById("countries_desc");
+		// localStorage.setItem("countries_item", map.innerHTML);
+		// localStorage.setItem("countries_desc", desc.innerHTML);
+		console.log(localStorage.getItem("countries_item"));
+		console.log(localStorage.getItem("countries_desc"));
+		map.innerHTML = menu["Countries"];
+		desc.innerHTML = menu["Countries map"];
+		// for(var item in menu){
+		// 	if(map.innerHTML == item)
+		// 		map.innerHTML = menu[item];
+		// 	if(desc.innerHTML = item)
+		// 		desc.innerHTML = menu[item];
+		// }
+	}
+
+	if(localStorage.getItem("language") == 'en' || localStorage.getItem("language") === undefined){
+		var elem = document.getElementById("change_lang");
+		elem.innerHTML = localStorage.getItem("change_lang");
+
+		var menu = lang.langs.ru.menu;
+
+		var map = document.getElementById("countries_item");
+		var desc = document.getElementById("countries_desc");
+		// localStorage.setItem("countries_item", map.innerHTML);
+		// localStorage.setItem("countries_desc", map.innerHTML);
+		// map.innerHTML = localStorage.getItem("countries_item");
+		// desc.innerHTML = localStorage.getItem("countries_desc");
+		map.innerHTML = "Countries";
+		desc.innerHTML = "Countries map";
+	}
 
 	$scope.changeLang = function(value){
 		localStorage.setItem('language', value);
-		if(value != 'en'){
+
+		if(value == 'ru'){
 			var elem = document.getElementById("change_lang");
 			localStorage.setItem("change_lang", elem.innerHTML);
 			elem.innerHTML = lang.langs[value].settings[elem.innerHTML];
@@ -338,18 +378,23 @@ angular.module('MapAble.controllers', [])
 		var menu = lang.langs[localStorage.getItem('language')].menu;
 
 		//change language of labels
-		angular.element(document).ready(function () {
+		// angular.element(document).ready(function () {
 			var map = document.getElementById("countries_item");
 			var desc = document.getElementById("countries_desc");
-			localStorage.setItem("countries_item", map.innerHTML);
-			localStorage.setItem("countries_desc", map.innerHTML);
-			for(var item in menu){
-				if(map.innerHTML == item)
-					map.innerHTML = menu[item];
-				if(desc.innerHTML = item)
-					desc.innerHTML = menu[item];
-			}
-		});
+			// console.log('map: ' + map.innerHTML);
+			// console.log('desc: ' + desc.innerHTML);
+			// localStorage.setItem("countries_item", map.innerHTML);
+			// localStorage.setItem("countries_desc", map.innerHTML);
+			// for(var item in menu){
+			// 	if(map.innerHTML == item)
+			// 		map.innerHTML = menu[item];
+			// 	if(desc.innerHTML = item)
+			// 		desc.innerHTML = menu[item];
+			// }
+		// });
+			map.innerHTML = menu["Countries"];
+			desc.innerHTML = menu["Countries map"];
+
 		}
 		else if(value == 'en'){
 			var elem = document.getElementById("change_lang");
@@ -357,9 +402,15 @@ angular.module('MapAble.controllers', [])
 
 		var map = document.getElementById("countries_item");
 		var desc = document.getElementById("countries_desc");
-		map.innerHTML = localStorage.getItem("countries_item");
-		desc.innerHTML = localStorage.getItem("countries_desc");
-		console.log('test: ' + localStorage.getItem('countries_desc'));
+		// console.log('map: ' + map.innerHTML);
+		// console.log('desc: ' + desc.innerHTML);
+		// map.innerHTML = localStorage.getItem("countries_item");
+		// desc.innerHTML = localStorage.getItem("countries_desc");
+		// localStorage.setItem("countries_item", map.innerHTML);
+		// localStorage.setItem("countries_desc", map.innerHTML);
+		// console.log('test: ' + localStorage.getItem('countries_desc'));
+		map.innerHTML = "Countries";
+		desc.innerHTML = "Countries map";
 		}
 		
 	}
@@ -681,15 +732,37 @@ angular.module('MapAble.controllers', [])
 		}
 	);
 
-			if(localStorage.getItem('language') != 'en'){
-				var translations = lang.langs[localStorage.getItem('language')];
+		// angular.element(document).ready(function () {
+			if(localStorage.getItem("language") == 'ru'){
+				// var element = document.getElementById("change_lang");
+				// element.innerHTML = lang.langs.ru.settings[element.innerHTML];
+
+				// var menu = lang.langs.ru.menu;
+
+				// var map = document.getElementById("countries_item");
+				// var desc = document.getElementById("countries_desc");
+				// localStorage.setItem("countries_item", map.innerHTML);
+				// localStorage.setItem("countries_desc", desc.innerHTML);
+				// console.log(localStorage.getItem("countries_item"));
+				// console.log(localStorage.getItem("countries_desc"));
+				// for(var item in menu){
+				// 	if(map.innerHTML == item)
+				// 		map.innerHTML = menu[item];
+				// 	if(desc.innerHTML = item)
+				// 		desc.innerHTML = menu[item];
+				// }
+			}
+
+
+
+			if(localStorage.getItem('language') == 'ru'){
+				var translations = lang.langs.ru;
 
 				//change language of labels
 				angular.element(document).ready(function () {
 					var leafletLabels = document.getElementsByClassName("leaflet-label");
 					for (var i = 0; i < leafletLabels.length; i++){
 						
-						// console.log(translations.labels);
 						for(var item in translations.labels) if(translations.labels.hasOwnProperty(item)){
 							if(leafletLabels.item(i).innerHTML == item){
 								leafletLabels.item(i).innerHTML = translations.labels[item];
@@ -701,9 +774,43 @@ angular.module('MapAble.controllers', [])
 					//Change language of map name
 					var mapName = document.getElementById("map_name");
 					mapName.innerHTML = translations.mapNames[mapName.innerHTML];
+
+					//Change language of menu
+					var map = document.getElementById("countries_item");
+					var desc = document.getElementById("countries_desc");
+					// console.log('map: ' + map.innerHTML);
+					// console.log('desc: ' + desc.innerHTML);
+					// localStorage.setItem("countries_item", map.innerHTML);
+					// localStorage.setItem("countries_desc", map.innerHTML);
+					var menu = lang.langs.ru.menu;
+					// for(var item in menu){
+					// 	if(map.innerHTML == item)
+					// 		map.innerHTML = menu[item];
+					// 	if(desc.innerHTML = item)
+					// 		desc.innerHTML = menu[item];
+					// }
+					map.innerHTML = menu["Countries"];
+					desc.innerHTML = menu["Countries map"];
 				});
 
 			}
+
+			if(localStorage.getItem("language") == 'en' || localStorage.getItem("language") === undefined){
+				angular.element(document).ready(function(){
+
+					var map = document.getElementById("countries_item");
+					var desc = document.getElementById("countries_desc");
+					// console.log('map: ' + map.innerHTML);
+					// console.log('desc: ' + desc.innerHTML);
+					// localStorage.setItem("countries_item", map.innerHTML);
+					// localStorage.setItem("countries_desc", map.innerHTML);
+					// map.innerHTML = localStorage.getItem("countries_item");
+					// desc.innerHTML = localStorage.getItem("countries_desc");
+					map.innerHTML = "Countries";
+					desc.innerHTML = "Countries map";
+				});
+			}
+
 
 			// linkCreator(countries_config.mapName);
 
