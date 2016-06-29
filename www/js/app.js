@@ -38,16 +38,6 @@ angular.module('MapAble', ['ionic', 'angularMoment', 'leaflet-directive', 'MapAb
   $ionicConfigProvider.views.maxCache(0);
   $stateProvider
 
-  .state('app.lakes', {
-		url: '/layouts/lakes',
-		views: {
-		'menuContent': {
-		templateUrl: "lakes.html",
-		controller: 'lakesCtrl'
-		}
-	}
-})
-
 
   .state('app', {
     url: "/app",
