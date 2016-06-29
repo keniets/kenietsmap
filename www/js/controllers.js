@@ -331,7 +331,7 @@ angular.module('MapAble.controllers', [])
 
 	if(localStorage.getItem("language") == 'ru'){
 		var element = document.getElementById("change_lang");
-		element.innerHTML = lang.langs.ru.settings[element.innerHTML];
+		element.innerHTML = "Язык";
 
 		var menu = lang.langs.ru.menu;
 
@@ -347,7 +347,7 @@ angular.module('MapAble.controllers', [])
 
 	if(localStorage.getItem("language") == 'en' || localStorage.getItem("language") === undefined){
 		var elem = document.getElementById("change_lang");
-		elem.innerHTML = localStorage.getItem("change_lang");
+		elem.innerHTML = "Language";
 
 		var menu = lang.langs.ru.menu;
 
