@@ -1,6 +1,6 @@
 angular.module('MapAble.controllers', [])
-		.controller("lakesCtrl", ["$scope", "jsonVars", "leafletData", 
-			function($scope, jsonVars, leafletData){
+		.controller("lakesCtrl", ["$scope", "jsonVars", "leafletData", 'lang',
+			function($scope, jsonVars, leafletData, lang){
 			leafletData.getMap("lakes").then(function(map) {
 				var layer;
 				var index;
@@ -35,11 +35,26 @@ angular.module('MapAble.controllers', [])
 					}
 				}).addTo(map);
 			})
+
+			if(localStorage.getItem('language') != 'en'){
+				var translations = lang.langs[localStorage.getItem('language')];
+
+				//change language of labels
+				angular.element(document).ready(function () {
+
+					//Change language of map name
+					var mapName = document.getElementById("map_name");
+					mapName.innerHTML = translations.mapNames[mapName.innerHTML];
+				});
+
+			}
+
 		}])
 
 
 /* APP*/
-    .controller('AppCtrl', ['$scope', function($scope) {
+    .controller('AppCtrl', ['$scope', 'lang',
+     function($scope, lang) {
     angular.extend($scope, {
 		center: {
 			 lat: 20,
@@ -352,7 +367,8 @@ angular.module('MapAble.controllers', [])
 }])
 
 // SETTINGS
-.controller('SettingsCtrl', ['$scope', '$ionicActionSheet', '$state', function($scope, $ionicActionSheet, $state) {
+.controller('SettingsCtrl', ['$scope', '$ionicActionSheet', '$state', '$rootScope', 'lang',
+ function($scope, $ionicActionSheet, $state, $rootScope, lang) {
 	$scope.airplaneMode = true;
 	$scope.wifi = false;
 	$scope.bluetooth = true;
@@ -362,7 +378,43 @@ angular.module('MapAble.controllers', [])
 	$scope.checkOpt2 = true;
 	$scope.checkOpt3 = false;
 
-	$scope.radioChoice = 'B';
+	// $scope.radioChoice = 'en';
+
+	$scope.changeLang = function(value){
+		localStorage.setItem('language', value);
+		if(value != 'en'){
+			var elem = document.getElementById("change_lang");
+			localStorage.setItem("change_lang", elem.innerHTML);
+			elem.innerHTML = lang.langs[value].settings[elem.innerHTML];
+
+		var menu = lang.langs[localStorage.getItem('language')].menu;
+
+		//change language of labels
+		angular.element(document).ready(function () {
+			var map = document.getElementById("countries_item");
+			var desc = document.getElementById("countries_desc");
+			localStorage.setItem("countries_item", map.innerHTML);
+			localStorage.setItem("countries_desc", map.innerHTML);
+			for(var item in menu){
+				if(map.innerHTML == item)
+					map.innerHTML = menu[item];
+				if(desc.innerHTML = item)
+					desc.innerHTML = menu[item];
+			}
+		});
+		}
+		else if(value == 'en'){
+			var elem = document.getElementById("change_lang");
+			elem.innerHTML = localStorage.getItem("change_lang");
+
+		var map = document.getElementById("countries_item");
+		var desc = document.getElementById("countries_desc");
+		map.innerHTML = localStorage.getItem("countries_item");
+		desc.innerHTML = localStorage.getItem("countries_desc");
+		console.log('test: ' + localStorage.getItem('countries_desc'));
+		}
+		
+	}
 
 	// Triggered on a the logOut button click
 	$scope.showLogOutMenu = function() {
@@ -557,8 +609,8 @@ angular.module('MapAble.controllers', [])
 	}
 ])
 
-.controller("nationalitiesCtrl", [ '$scope', '$log', '$http', 'leafletData', 'attrService', '$rootScope', 'jsonVars',
-	function($scope, $log, $http, leafletData, attrService, $rootScope, jsonVars) {
+.controller("nationalitiesCtrl", [ '$scope', '$log', '$http', 'leafletData', 'attrService', '$rootScope', 'jsonVars', 'lang',
+	function($scope, $log, $http, leafletData, attrService, $rootScope, jsonVars, lang) {
 
 		// linkCreator(nationalities_config.mapName);
 
@@ -611,26 +663,38 @@ angular.module('MapAble.controllers', [])
 	    	}
 	    }
 
-	// var _Layerpoly0 = geojsonvt(_coastline);
+			fonts = attrService.fonts;
 
-	// CenterMap(_Layerpoly0, "LayerPoly0", "MapPeaks", attrService);
+			if(localStorage.getItem('language') != 'en'){
+				var translations = lang.langs[localStorage.getItem('language')];
 
-		fonts = attrService.fonts;
+				//change language of labels
+				angular.element(document).ready(function () {
+					var leafletLabels = document.getElementsByClassName("leaflet-label");
+					for (var i = 0; i < leafletLabels.length; i++){
+						//Defining parameters of map
+						leafletLabels.item(i).style.fontSize = fonts.fontSize;
+						
+						// console.log(translations.labels);
+						for(var item in translations.labels) if(translations.labels.hasOwnProperty(item)){
+							if(leafletLabels.item(i).innerHTML == item){
+								leafletLabels.item(i).innerHTML = translations.labels[item];
+							}
+						}
 
-		//Defining parameters of map
-		angular.element(document).ready(function () {
-			var labels = document.getElementsByClassName("leaflet-label");
-			for (var i = 0; i < labels.length; i++){
-				labels.item(i).style.fontSize = fonts.fontSize;
+					}
+
+					//Change language of map name
+					var mapName = document.getElementById("map_name");
+					mapName.innerHTML = translations.mapNames[mapName.innerHTML];
+				});
+
 			}
-		});
 
-      }
-	]
-)
+      }])
 
-	.controller('countriesCtrl', ['$scope', 'leafletData', 'attrService', '$rootScope',
-	function($scope, leafletData, attrService, $rootScope){
+	.controller('countriesCtrl', ['$scope', 'leafletData', 'attrService', '$rootScope', 'lang',
+	function($scope, leafletData, attrService, $rootScope, lang){
 
 		angular.extend($scope, {
 			markers: attrService.mountainPeaks,
@@ -668,6 +732,30 @@ angular.module('MapAble.controllers', [])
 			}
 		}
 	);
+
+			if(localStorage.getItem('language') != 'en'){
+				var translations = lang.langs[localStorage.getItem('language')];
+
+				//change language of labels
+				angular.element(document).ready(function () {
+					var leafletLabels = document.getElementsByClassName("leaflet-label");
+					for (var i = 0; i < leafletLabels.length; i++){
+						
+						// console.log(translations.labels);
+						for(var item in translations.labels) if(translations.labels.hasOwnProperty(item)){
+							if(leafletLabels.item(i).innerHTML == item){
+								leafletLabels.item(i).innerHTML = translations.labels[item];
+							}
+						}
+
+					}
+
+					//Change language of map name
+					var mapName = document.getElementById("map_name");
+					mapName.innerHTML = translations.mapNames[mapName.innerHTML];
+				});
+
+			}
 
 			// linkCreator(countries_config.mapName);
 
@@ -730,7 +818,6 @@ angular.module('MapAble.controllers', [])
 						});
 					}
 				}).addTo(map);
-				console.dir('geojson: ' + geojson);
 
 				//Add some labels of cities
 				L.geoJson(_cities, {

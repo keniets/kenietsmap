@@ -170,8 +170,8 @@ function writeMapItems(file, content, dirs) {
                             var pattern =
                             '\n              <ion-item class="item-icon-left" nav-clear menu-close ui-sref="app.' +  state + '">' + '\n' +
                             '                <i class="icon ion-wand"></i>' + '\n' +
-                            '                <h2 class="menu-text map_item">' + map.split('/').pop() + '</h2>' + '\n' +
-                            '                <small>' + desc[0] + '</small>' + '\n' +
+                            '                <h2 id="' + state + '_item" class="menu-text map_item">' + map.split('/').pop() + '</h2>' + '\n' +
+                            '                <small id="' + state + '_desc">' + desc[0] + '</small>' + '\n' +
                             '              </ion-item>' + '\n';
                 fs.appendFileSync(file, pattern, 'utf8');
 
@@ -238,7 +238,7 @@ function writeStates(statePath, dirs) {
             
               var content = '\n<ion-view class="layouts-view">\n' +
                                 '\t<ion-nav-title>\n' +
-                                    '\t\t<span style="color: white">' + stateWord.capitalize() + '</span>\n' +
+                                    '\t\t<span id="map_name" style="color: white">' + stateWord.capitalize() + '</span>\n' +
                                 '\t</ion-nav-title>\n' +
                                 '\t<ion-content scroll="false" data-tap-disabled="true">\n' +
                                     '\t\t<div style="position: absolute; top: 5px; bottom: 0px; left: 0px; right: 0px;">\n' +

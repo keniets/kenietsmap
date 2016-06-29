@@ -10,7 +10,7 @@ angular.module('underscore', [])
 // the 2nd parameter is an array of 'requires'
 angular.module('MapAble', ['ionic', 'angularMoment', 'leaflet-directive', 'MapAble.controllers', 'MapAble.directives',
   'MapAble.filters', 'MapAble.services', 'MapAble.factories', 'MapAble.config', 'underscore', 'ngResource', 'ngCordova',
-  'templates', 'slugifier', 'dataStorage', 'geoJsonVars'])
+  'templates', 'slugifier', 'dataStorage', 'geoJsonVars', 'translate'])
 
 .run(function($ionicPlatform, PushNotificationsService) {
 
@@ -33,7 +33,9 @@ angular.module('MapAble', ['ionic', 'angularMoment', 'leaflet-directive', 'MapAb
 })
 
 
-.config(function($stateProvider, $urlRouterProvider) {
+.config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider',
+ function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
+  $ionicConfigProvider.views.maxCache(0);
   $stateProvider
 
   .state('app.lakes', {
@@ -193,6 +195,12 @@ angular.module('MapAble', ['ionic', 'angularMoment', 'leaflet-directive', 'MapAb
 
 ;
 
+// $translateProvider
+//     .translations('en', translations)
+//     .preferredLanguage('en');
+
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/app/main');
-});
+}]);
+
+
