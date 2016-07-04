@@ -36,20 +36,6 @@ module.exports = [
         ]
     },
     {
-        "file": "plugins/cordova-plugin-console/www/logger.js",
-        "id": "cordova-plugin-console.logger",
-        "clobbers": [
-            "cordova.logger"
-        ]
-    },
-    {
-        "file": "plugins/cordova-plugin-console/www/console-via-logger.js",
-        "id": "cordova-plugin-console.console",
-        "clobbers": [
-            "console"
-        ]
-    },
-    {
         "file": "plugins/cordova-plugin-device/www/device.js",
         "id": "cordova-plugin-device.device",
         "clobbers": [
@@ -71,6 +57,26 @@ module.exports = [
         ]
     },
     {
+        "file": "plugins/cordova-plugin-email-composer/www/email_composer.js",
+        "id": "cordova-plugin-email-composer.EmailComposer",
+        "clobbers": [
+            "cordova.plugins.email",
+            "plugin.email"
+        ]
+    },
+    {
+        "file": "plugins/cordova-plugin-geolocation/www/android/geolocation.js",
+        "id": "cordova-plugin-geolocation.geolocation",
+        "clobbers": [
+            "navigator.geolocation"
+        ]
+    },
+    {
+        "file": "plugins/cordova-plugin-geolocation/www/PositionError.js",
+        "id": "cordova-plugin-geolocation.PositionError",
+        "runs": true
+    },
+    {
         "file": "plugins/cordova-plugin-globalization/www/GlobalizationError.js",
         "id": "cordova-plugin-globalization.GlobalizationError",
         "clobbers": [
@@ -85,6 +91,14 @@ module.exports = [
         ]
     },
     {
+        "file": "plugins/cordova-plugin-inappbrowser/www/inappbrowser.js",
+        "id": "cordova-plugin-inappbrowser.inappbrowser",
+        "clobbers": [
+            "cordova.InAppBrowser.open",
+            "window.open"
+        ]
+    },
+    {
         "file": "plugins/cordova-plugin-splashscreen/www/splashscreen.js",
         "id": "cordova-plugin-splashscreen.SplashScreen",
         "clobbers": [
@@ -95,14 +109,6 @@ module.exports = [
         "file": "plugins/cordova-plugin-whitelist/whitelist.js",
         "id": "cordova-plugin-whitelist.whitelist",
         "runs": true
-    },
-    {
-        "file": "plugins/de.appplant.cordova.plugin.email-composer/www/email_composer.js",
-        "id": "de.appplant.cordova.plugin.email-composer.EmailComposer",
-        "clobbers": [
-            "cordova.plugins.email",
-            "plugin.email"
-        ]
     },
     {
         "file": "plugins/nl.x-services.plugins.socialsharing/www/SocialSharing.js",
@@ -122,13 +128,6 @@ module.exports = [
         "file": "plugins/org.pushandplay.cordova.apprate/www/locales.js",
         "id": "org.pushandplay.cordova.apprate.locales",
         "runs": true
-    },
-    {
-        "file": "plugins/org.apache.cordova.inappbrowser/www/inappbrowser.js",
-        "id": "org.apache.cordova.inappbrowser.inappbrowser",
-        "clobbers": [
-            "window.open"
-        ]
     }
 ];
 module.exports.metadata = 
@@ -136,21 +135,22 @@ module.exports.metadata =
 {
     "com.ionic.keyboard": "1.0.4",
     "com.phonegap.plugins.PushPlugin": "2.5.0",
+    "cordova-plugin-extension": "1.5.1",
     "com.rjfun.cordova.iad": "2.0.4",
     "com.synconset.imagepicker": "1.0.6",
-    "cordova-plugin-admobpro": "2.9.9",
-    "cordova-plugin-console": "1.0.1",
-    "cordova-plugin-device": "1.0.1",
-    "cordova-plugin-dialogs": "1.1.1",
-    "cordova-plugin-geolocation": "1.0.1",
-    "cordova-plugin-globalization": "1.0.1",
-    "cordova-plugin-splashscreen": "2.1.0",
+    "cordova-plugin-admobpro": "2.17.0",
+    "cordova-plugin-compat": "1.0.0",
+    "cordova-plugin-console": "1.0.3",
+    "cordova-plugin-device": "1.1.2",
+    "cordova-plugin-dialogs": "1.2.1",
+    "cordova-plugin-email-composer": "0.8.3",
+    "cordova-plugin-geolocation": "2.2.0",
+    "cordova-plugin-globalization": "1.0.3",
+    "cordova-plugin-inappbrowser": "1.4.0",
+    "cordova-plugin-splashscreen": "3.2.2",
     "cordova-plugin-whitelist": "1.0.0",
-    "de.appplant.cordova.plugin.email-composer": "0.8.3dev",
     "nl.x-services.plugins.socialsharing": "4.3.19",
-    "org.pushandplay.cordova.apprate": "1.1.7",
-    "cordova-plugin-extension": "1.2.2",
-    "org.apache.cordova.inappbrowser": "0.6.0"
-}
+    "org.pushandplay.cordova.apprate": "1.1.7"
+};
 // BOTTOM OF METADATA
 });
