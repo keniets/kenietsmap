@@ -597,4 +597,8 @@ var _coastline = {
 ]
 }
 
-
+
+mapDeferred.resolve();
+	nationalities = [
+		{ _coastline: _coastline },
+	]

@@ -338,8 +338,6 @@ angular.module('MapAble.controllers', [])
 		var map = document.getElementById("countries_item");
 		var desc = document.getElementById("countries_desc");
 
-		console.log(localStorage.getItem("countries_item"));
-		console.log(localStorage.getItem("countries_desc"));
 		map.innerHTML = menu["Countries"];
 		desc.innerHTML = menu["Countries map"];
 
@@ -558,19 +556,32 @@ angular.module('MapAble.controllers', [])
 })
 
 
-.controller("zonesCtrl", [ '$scope', '$log', '$http', 'leafletData', 'attrService', 'jsonVars', '$rootScope',
-	function($scope, $log, $http, leafletData, attrService, jsonVars, $rootScope) {
+.controller("zonesCtrl", [ '$scope', '$log', '$http', 'leafletData', 'attrService', '$rootScope', 'links',
+	function($scope, $log, $http, leafletData, attrService, $rootScope, links) {
+
+		links.creator('Zones');
+
+			var zones = [
+		{ _coastline: _coastline },
+		{ _poly200: _poly200 },
+		{ _poly500: _poly500 },
+		{ _poly1000: _poly1000 },
+		{ _poly2000: _poly2000 },
+		{ _poly3000: _poly3000 },
+		{ _poly4000: _poly4000 },
+		{ _poly5000: _poly5000 },
+		{ _ice: _ice }
+		];
 
 		leafletData.getMap("zones").then(function(map) {
 			//Add zoom button to the map
 			L.control.zoom().addTo(map);
 		});
 
-		// linkCreator(zones_config.mapName);
 
-	    for (var i = 0; i < jsonVars.zones.length; i++){
-    		for (var name in jsonVars.zones[i]) if(jsonVars.zones[i].hasOwnProperty(name)){
-    		var layer = geojsonvt(jsonVars.zones[i][name]);
+	    for (var i = 0; i < zones.length; i++){
+    		for (var name in zones[i]) if(zones[i].hasOwnProperty(name)){
+    		var layer = geojsonvt(zones[i][name]);
     		// simplification tolerance (higher means simpler)
     		// you need set it to 30-40 at least to feel the difference
     		layer.options.tolerance = 5; 
@@ -581,12 +592,16 @@ angular.module('MapAble.controllers', [])
 	}
 ])
 
-.controller("nationalitiesCtrl", [ '$scope', '$log', '$http', 'leafletData', 'attrService', '$rootScope', 'jsonVars', 'lang',
-	function($scope, $log, $http, leafletData, attrService, $rootScope, jsonVars, lang) {
+.controller("nationalitiesCtrl", [ '$scope', '$log', '$http', 'leafletData', 'attrService', '$rootScope', 'lang', 'links',
+	function($scope, $log, $http, leafletData, attrService, $rootScope, lang, links) {
 
-		// linkCreator(nationalities_config.mapName);
+		links.creator('Nationalities');
 
-	angular.extend($scope, {
+		var nationalities = [
+			{ _coastline: _coastline }
+		];
+
+		angular.extend($scope, {
 			markers: attrService.mountainPeaks,
 			overlays: {
 				NorthAmerica: {
@@ -628,9 +643,9 @@ angular.module('MapAble.controllers', [])
 			L.control.zoom().addTo(map);
 		});
 
-	    for (var i = 0; i < jsonVars.nationalities.length; i++){
-    		for (var name in jsonVars.nationalities[i]) if(jsonVars.nationalities[i].hasOwnProperty(name)){
-		    		var layer = geojsonvt(jsonVars.nationalities[i][name]);
+	    for (var i = 0; i < nationalities.length; i++){
+    		for (var name in nationalities[i]) if(nationalities[i].hasOwnProperty(name)){
+		    		var layer = geojsonvt(nationalities[i][name]);
 		    		CenterMap(layer, "LayerPoly" + name, "nationalities", attrService, leafletData);
 	    	}
 	    }
@@ -665,9 +680,16 @@ angular.module('MapAble.controllers', [])
 
       }])
 
-	.controller('countriesCtrl', ['$scope', 'leafletData', 'attrService', '$rootScope', 'lang',
-	function($scope, leafletData, attrService, $rootScope, lang){
+	.controller('countriesCtrl', ['$scope', 'leafletData', 'attrService', '$rootScope', 'lang', 'links', '$q', '$compile',
+	function($scope, leafletData, attrService, $rootScope, lang, links, $compile){
+		$scope.mapName = 'Countries';
+		creator('Countries', $scope, $compile);
 
+		var countries = [
+			{ _cities: _cities },
+			{ _countries: _countries }
+		];
+			
 		angular.extend($scope, {
 			markers: attrService.mountainPeaks,
 			overlays: {
@@ -702,8 +724,7 @@ angular.module('MapAble.controllers', [])
 					visible: true
 				}
 			}
-		}
-	);
+		});
 
 			if(localStorage.getItem('language') == 'ru'){
 				var translations = lang.langs.ru;
@@ -742,12 +763,6 @@ angular.module('MapAble.controllers', [])
 
 					var map = document.getElementById("countries_item");
 					var desc = document.getElementById("countries_desc");
-					// console.log('map: ' + map.innerHTML);
-					// console.log('desc: ' + desc.innerHTML);
-					// localStorage.setItem("countries_item", map.innerHTML);
-					// localStorage.setItem("countries_desc", map.innerHTML);
-					// map.innerHTML = localStorage.getItem("countries_item");
-					// desc.innerHTML = localStorage.getItem("countries_desc");
 					map.innerHTML = "Countries";
 					desc.innerHTML = "Countries map";
 				});
@@ -794,7 +809,7 @@ angular.module('MapAble.controllers', [])
 				}
 
 				//Add an underlying layer
-				geojson = L.geoJson(_countries, {
+				geojson =  L.geoJson(_countries, {
 					style: style,
 					//set simplification by smoothFactor
 					smoothFactor: 0,
@@ -853,30 +868,7 @@ angular.module('MapAble.controllers', [])
 		
 	}]);
 
-function linkCreator(mapName){
-		var mapRef = 'json/' + mapName + '/map.js';
-		var configRef = 'json/' + mapName + '/config.js';
-        var mapElem = document.createElement('script');
-        var configElem = document.createElement('script');
-        mapElem.setAttribute("type","text/javascript");
-        mapElem.setAttribute("src", mapRef);
-        configElem.setAttribute("type","text/javascript");
-        configElem.setAttribute("src", configRef);
 
-        var parent = document.getElementById("data_links");
-        var children = parent.getElementsByTagName("script");
-  
-        for(var i = 0; i < children.length; i++) {
-        	var child = children[i];
-            child = parent.removeChild(child);
-        	console.log(child);
-        } 
-
-        // parent.appendChild(mapElem);
-        // // parent.appendChild('\n');
-        // parent.appendChild(configElem);
-        // // parent.appendChild('\n');
-}	
 
 function CenterMap(rawData, layerName, mapid, attrService, leafletData	) {
 	var _layer;
@@ -980,4 +972,29 @@ function drawingOnCanvas(canvasOverlay, params) {
 				ctx.stroke();
 			}
 	}
+
+	var creator = function linkCreator(mapName, $scope, $compile){
+		var mapRef = 'json/' + mapName + '/map.js';
+		var configRef = 'json/' + mapName + '/config.js';
+        var mapElem = document.createElement('script');
+        var configElem = document.createElement('script');
+        mapElem.setAttribute("type","text/javascript");
+        mapElem.setAttribute("src", mapRef);
+        configElem.setAttribute("type","text/javascript");
+        configElem.setAttribute("src", configRef);
+
+        var parent = document.getElementById("data_links");
+        // var children = parent.getElementsByTagName("script");
+
+        while (parent.firstChild) {
+          parent.removeChild(parent.firstChild);
+        }
+
+        parent.appendChild(mapElem);
+        parent.appendChild(configElem);
+
+        // $compile(angular.element(mapElem))($scope);
+        // $compile(angular.element(configElem))($scope);
+
+	};
 

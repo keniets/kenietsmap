@@ -10,7 +10,7 @@ angular.module('underscore', [])
 // the 2nd parameter is an array of 'requires'
 angular.module('MapAble', ['ionic', 'angularMoment', 'leaflet-directive', 'MapAble.controllers', 'MapAble.directives',
   'MapAble.filters', 'MapAble.services', 'MapAble.factories', 'MapAble.config', 'underscore', 'ngResource', 'ngCordova',
-  'templates', 'slugifier', 'dataStorage', 'geoJsonVars', 'translate'])
+  'templates', 'slugifier', 'dataStorage', 'translate', 'linkCreator'])
 
 .run(['$ionicPlatform', 'PushNotificationsService', function($ionicPlatform, PushNotificationsService) {
 
@@ -33,8 +33,7 @@ angular.module('MapAble', ['ionic', 'angularMoment', 'leaflet-directive', 'MapAb
 }])
 
 
-.config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider',
- function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
+.config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider', function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
   $ionicConfigProvider.views.maxCache(0);
   $stateProvider
 
@@ -52,7 +51,15 @@ angular.module('MapAble', ['ionic', 'angularMoment', 'leaflet-directive', 'MapAb
     views: {
       'menuContent': {
         templateUrl: "zones.html",
-        controller: 'zonesCtrl'
+        controller: 'zonesCtrl',
+        resolve: {
+          link: ['$q', function($q){
+            var defer = $q.defer();
+            window.mapDeferred  = defer;
+            linkCreator('Zones');
+            return defer.promise; 
+          }]
+        }
       }
     }
   })
@@ -73,7 +80,15 @@ angular.module('MapAble', ['ionic', 'angularMoment', 'leaflet-directive', 'MapAb
     views: {
       'menuContent': {
         templateUrl: "nationalities.html",
-        controller: 'nationalitiesCtrl'
+        controller: 'nationalitiesCtrl',
+        resolve: {
+          link: ['$q', function($q){
+            var defer = $q.defer();
+            window.mapDeferred  = defer;
+            linkCreator('Nationalities');
+            return defer.promise; 
+          }]
+        }
       }
     }
   })
@@ -83,7 +98,15 @@ angular.module('MapAble', ['ionic', 'angularMoment', 'leaflet-directive', 'MapAb
     views: {
       'menuContent': {
         templateUrl: "countries.html",
-        controller: "countriesCtrl"
+        controller: "countriesCtrl",
+        resolve: {
+          link: ['$q', function($q){
+            var defer = $q.defer();
+            window.mapDeferred  = defer;
+            linkCreator('Countries');
+            return defer.promise; 
+          }]
+        }
       }
     }
   })
@@ -192,5 +215,26 @@ angular.module('MapAble', ['ionic', 'angularMoment', 'leaflet-directive', 'MapAb
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/app/main');
 }]);
+
+function linkCreator(mapName){
+    var mapRef = 'json/' + mapName + '/map.js';
+    var configRef = 'json/' + mapName + '/config.js';
+        var mapElem = document.createElement('script');
+        var configElem = document.createElement('script');
+        mapElem.setAttribute("type","text/javascript");
+        mapElem.setAttribute("src", mapRef);
+        configElem.setAttribute("type","text/javascript");
+        configElem.setAttribute("src", configRef);
+
+        var parent = document.getElementById("data_links");
+        // var children = parent.getElementsByTagName("script");
+
+        while (parent.firstChild) {
+          parent.removeChild(parent.firstChild);
+        }
+
+        parent.appendChild(mapElem);
+        parent.appendChild(configElem);
+}
 
 

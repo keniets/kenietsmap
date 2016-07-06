@@ -44,7 +44,6 @@ function getContents(varName, fileToRead, fileToWrite) {
 
     fs.readFile(fileToRead, 'utf8', 'r', function (err, contents) {
         var data = 'var ' + '_' + varName + ' = ' + contents + '\n\r';
-        var test = 'var ' + '_' + varName + ' = ';
 
         var writableText = fs.readFileSync(fileToWrite, 'utf8');
         varName = '_' + varName;
@@ -66,7 +65,6 @@ function append(data, pathFile, varName){
 clearMap(pathFolder); //Preparating map.js folders to possible new configuration by deleting old data
 read(pathFolder);
 
-
 //This is a node.js script which changes the side menu when
 //the menu folders add and remove.');
 setTimeout(configurator, 1000);
@@ -78,6 +76,8 @@ var menuPath = 'www/templates/side-menu.html';  //the menu file
 var statePath = 'www/js/app.js';
 var dirs = [];
 
+appendResolve();
+
 var content = fs.readFileSync(statePath, 'utf8');
 readStates(content, ',');
 
@@ -87,7 +87,35 @@ String.prototype.capitalize = function(){
 
 rewriteMaps(menuPath, pathFolder, dirs);
 
-rewriteIndex(dirs);
+// rewriteIndex(dirs);
+
+function appendResolve(){
+    var mapFolders = fs.readdirSync('www/json');
+    for(var i = 0; i < mapFolders.length; i++){
+        var content = fs.readFileSync('www/json/' + mapFolders[i] + '/map.js', 'utf8');
+        fs.writeFileSync('www/json/' + mapFolders[i] + '/map.js', content + '\n\rmapDeferred.resolve();');
+
+                //Add geoJson variables
+                content = fs.readFileSync('www/json/' + mapFolders[i] + '/map.js', 'utf8');
+
+                var regexp = new RegExp("_(.*)(?==)", 'gim');
+                var variables = content.match(regexp);
+
+                // var content = fs.readFileSync('www/json/' + stateWord.capitalize() + '/config.js', 'utf8');
+                content = content.split("mapDeferred.resolve();");
+
+                var begin = "\n\t" + mapFolders[i].toLowerCase() + " = [";
+                var end = "\n\t]";
+                content[1] = end + content[1];
+                    for(var k = 0; k < variables.length; k++){
+                        content[1] = '\n\t\t' + "{ " + variables[k].trim() + ": " + variables[k].trim() + " }," + content[1];
+                    }
+                content[1] = begin + content[1];
+                content = content.join("mapDeferred.resolve();");
+                fs.writeFileSync('www/json/' + mapFolders[i] + '/map.js', content, 'utf8');
+        
+    }
+}
 
 //side menu rewriting
 function rewriteMaps(file, baseFolder, dirs){
@@ -226,7 +254,15 @@ function writeStates(statePath, dirs) {
                         "\t\tviews: {\n" +
                           "\t\t'menuContent': {\n" +
                             '\t\ttemplateUrl: "' + stateWord + '.html",\n' +
-                            "\t\tcontroller: '" + stateWord + "Ctrl'\n" +
+                            "\t\tcontroller: '" + stateWord + "Ctrl',\n" +
+                            "\t\tresolve: {\n" +
+                                    "\t\t\tlink: function($q){\n" +
+                                        "\t\t\t\tvar defer = $q.defer();\n" +
+                                        "\t\t\t\twindow.mapDeferred  = defer;\n" +
+                                        "\t\t\t\tlinkCreator('" + stateWord.capitalize() + "');\n" +
+                                        "\t\t\t\treturn defer.promise;\n" + 
+                                  "\t\t\t}\n" +
+                                "\t\t}\n" +
                           "\t\t}\n" +
                           "\t}\n" +
                           "})" + target[2];
@@ -275,15 +311,16 @@ function writeStates(statePath, dirs) {
                 if(count == 0){ 
                     content = content.split("angular.module('MapAble.controllers', [])");
 
-                    content[1] =    '\n\t\t.controller("' + stateWord + 'Ctrl", ["$scope", "jsonVars", "leafletData", \n' +
-                                                '\t\t\tfunction($scope, jsonVars, leafletData){\n' +
+                    content[1] =    '\n\t\t.controller("' + stateWord + 'Ctrl", ["$scope", "leafletData", \n' +
+                                                '\t\t\tfunction($scope, leafletData){\n' +
                                                             '\t\t\tleafletData.getMap("' + stateWord + '").then(function(map) {\n' +
                                             '\t\t\t\tvar layer;\n' +
                                             '\t\t\t\tvar index;\n' +
                                             '\t\t\t\tvar layerLabel;\n' +
                                             '\t\t\t\tvar indexLabel;\n' +
-                                            '\t\t\t\tfor(var i = 0; i < jsonVars.' + stateWord + '.length; i++){\n' +
-                                                '\t\t\t\t\tfor (var name in jsonVars.' + stateWord + '[i]) if(jsonVars.' + stateWord + '[i].hasOwnProperty(name)){\n' +
+                                            '\t\t\t\tvar jsonVars = ' + stateWord + ';\n' +
+                                            '\t\t\t\tfor(var i = 0; i < jsonVars.length; i++){\n' +
+                                                '\t\t\t\t\tfor (var name in jsonVars[i]) if(jsonVars[i].hasOwnProperty(name)){\n' +
                                                     '\t\t\t\t\t\tif(name != "_labels"){\n' +
                                                         '\t\t\t\t\t\t\tlayer = name;\n' +
                                                         '\t\t\t\t\t\t\tindex = i;\n' +
@@ -294,7 +331,7 @@ function writeStates(statePath, dirs) {
                                                     '\t\t\t\t\t\t}\n' +
                                                 '\t\t\t\t\t}\n' +
                                             '\t\t\t\t}\n' +
-                                            '\t\t\t\tL.geoJson(jsonVars.' + stateWord + '[index][layer], {\n' +
+                                            '\t\t\t\tL.geoJson(jsonVars[index][layer], {\n' +
                                                 '\t\t\t\t\tstyle: {\n' +
                                                     '\t\t\t\t\t\tcolor: "grey",\n' +
                                                     '\t\t\t\t\t\tfillColor: "#f5e213",\n' +
@@ -302,7 +339,7 @@ function writeStates(statePath, dirs) {
                                                     '\t\t\t\t\t\tweight: "1"\n' +
                                                 '\t\t\t\t\t}\n' +
                                             '\t\t\t\t}).addTo(map);\n' +
-                                            '\t\t\t\tL.geoJson(jsonVars.' + stateWord + '[indexLabel][layerLabel], {\n' +
+                                            '\t\t\t\tL.geoJson(jsonVars[indexLabel][layerLabel], {\n' +
                                                 '\t\t\t\t\tstyle: {\n' +
                                                     '\t\t\t\t\t\tcolor: "grey",\n' +
                                                     '\t\t\t\t\t\tfillColor: "#f5e213",\n' +
@@ -319,29 +356,12 @@ function writeStates(statePath, dirs) {
                 }
                 count = 0;
 
-                //Add geoJson variables to geoJsonVars service
-                content = fs.readFileSync('www/json/' + dir.split('/').pop() + '/map.js', 'utf8');
-
-                var regexp = new RegExp("_(.*)(?==)", 'gim');
-                var variables = content.match(regexp);
-                console.log('vars: ' + variables);
-
-                content = fs.readFileSync('www/js/geoJson.js', 'utf8');
-                content = content.split(".service('jsonVars', [function(){");
-                var begin = "\n\tvar " + stateWord + " = [";
-                var end = "\n\t];\n\tthis." + stateWord + " = " + stateWord + ";";
-                content[1] = end + content[1];
-                for(var k = 0; k < variables.length; k++){
-                    content[1] = '\n\t\t' + "{ " + variables[k].trim() + ": " + variables[k].trim() + " }," + content[1];
-                }
-                content[1] = begin + content[1];
-                content = content.join(".service('jsonVars', [function(){");
-                fs.writeFileSync('www/js/geoJson.js', content, 'utf8');
-
                 // Add a properties object in attributes.js and set a default color
                 contentAttrs = fs.readFileSync('www/js/attributes.js', 'utf8');
                 var contentSplitted = contentAttrs.split('var layerAttrs = {');
-
+                content = fs.readFileSync('www/json/' + stateWord.capitalize() + '/map.js', 'utf8');
+                var regexp = new RegExp("_(.*)(?==)", 'gim');
+                var variables = content.match(regexp);
                 for(var z = 0; z < variables.length; z++){
                     var targetVar = "LayerPoly" + variables[z].trim();
                     if(contentAttrs.search(targetVar) == -1){
@@ -362,81 +382,9 @@ function writeStates(statePath, dirs) {
 }
 
 }
-// function writeStateItems(oldStates, newStates){
 
-//     //create mutable copies of states arrays
-//     var oldStatesCopy = [];
-//     var newStatesCopy = [];
 
-//     for (var index = 0; index < oldStates.length; index++){
-//         oldStatesCopy.push(oldStates[index]);
-//         newStatesCopy.push(newStates[index]);
-//     }
 
-//     var counter = 0;
-//     var resultPairs = {};
-
-//     for (var i = 0; i < newStates.length; i++){
-//         for (var j = 0; j < oldStates.length; j++){
-//             if (newStates[i] == oldStates[j]){
-//                 delete(newStatesCopy[i]);
-//                 delete(oldStatesCopy[j]);
-//             }
-//         }
-//     }
-
-//     var older;
-//     var newer;
-//     for(var i = 0; i < oldStatesCopy.length; i++){
-//         if(oldStatesCopy[i] !== undefined)
-//             older = oldStatesCopy[i];
-//         if(newStatesCopy[i] !== undefined)
-//             newer = newStatesCopy[i];
-//     }
-
-//     //If map folder name was changed we will accordingly change the references to it
-//     //in ui routes(app.js for now) and index.html
-//     if(older !== undefined && newer != undefined){        //map folder name is changed
-//         var content = fs.readFileSync(statePath, 'utf8');
-//         var pieces = content.split("app.");
-//         for (var i = 1; i < pieces.length; i++) {
-//             var elem = pieces[i].split(',')[0].trim();
-//             elem = elem.substring(0, elem.length - 1).trim();
-//             if(elem == older)
-//                 pieces[i] = pieces[i].replace(older, newer);
-//     }
-
-//         content = pieces.join("app.");
-//         fs.writeFileSync(statePath, content, 'utf8');
-//         console.log("The routes have been rewritten");
-//     }
-// }
-
-function rewriteIndex(dirs){
-    var content = fs.readFileSync('www/index.html', 'utf8');
-    pieces = content.split("<!-- DATA LIBRARY. DON'T TOUCH/REMOVE THIS COMMENT! -->");
-
-    for(var i = 0; i < pieces.length; i++){
-        if(i == 0){
-            fs.writeFileSync('www/index.html', pieces[0] + "<!-- DATA LIBRARY. DON'T TOUCH/REMOVE THIS COMMENT! -->", 'utf8');
-        }
-
-        if(i == 1){
-            pieces[1] = '';
-            for (var dir in dirs) if(dirs.hasOwnProperty(dir)){
-                var pattern = '\n<script src="json/' + dir.split('/').pop() + '/map.js"></script>' +
-                              '\n<script src="json/' + dir.split('/').pop() + '/config.js"></script>';
-                pieces[1] += pattern;
-            }
-            fs.appendFileSync('www/index.html', pieces[1] + "\n<!-- DATA LIBRARY. DON'T TOUCH/REMOVE THIS COMMENT! -->", 'utf8');
-        }
-
-        if(i == 2){
-            fs.appendFileSync('www/index.html', pieces[2], 'utf8');
-        }
-    }
-
-}
 
 
 

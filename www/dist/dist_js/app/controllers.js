@@ -1,5 +1,6 @@
 angular.module('MapAble.controllers', [])
 
+
 /* APP*/
     .controller('AppCtrl', ['$scope', 'lang',
      function($scope, lang) {
@@ -326,8 +327,6 @@ angular.module('MapAble.controllers', [])
 	$scope.checkOpt2 = true;
 	$scope.checkOpt3 = false;
 
-	// $scope.radioChoice = 'en';
-	console.log(localStorage.getItem("language"));
 
 	if(localStorage.getItem("language") == 'ru'){
 		var element = document.getElementById("change_lang");
@@ -338,8 +337,6 @@ angular.module('MapAble.controllers', [])
 		var map = document.getElementById("countries_item");
 		var desc = document.getElementById("countries_desc");
 
-		console.log(localStorage.getItem("countries_item"));
-		console.log(localStorage.getItem("countries_desc"));
 		map.innerHTML = menu["Countries"];
 		desc.innerHTML = menu["Countries map"];
 
@@ -558,35 +555,95 @@ angular.module('MapAble.controllers', [])
 }])
 
 
-.controller("zonesCtrl", [ '$scope', '$log', '$http', 'leafletData', 'attrService', 'jsonVars', '$rootScope',
-	function($scope, $log, $http, leafletData, attrService, jsonVars, $rootScope) {
+.controller("zonesCtrl", [ '$scope', '$log', '$http', 'leafletData', 'attrService', '$rootScope', 'links', 'lang',
+	function($scope, $log, $http, leafletData, attrService, $rootScope, links, lang) {
+
+		if(localStorage.getItem('language') == 'ru'){
+			var translations = lang.langs[localStorage.getItem('language')];
+			angular.element(document).ready(function () {
+
+				var mapNames = lang.langs.ru.mapNames;
+
+				//Change language of map name
+				// var mapName = document.getElementById("map_name");
+				// mapName.innerHTML = mapNames["Climate Zones"];
+
+				//Change language of menu
+				var map = document.getElementById("countries_item");
+				var desc = document.getElementById("countries_desc");
+
+				var menu = lang.langs.ru.menu;
+
+				map.innerHTML = menu["Countries"];
+				desc.innerHTML = menu["Countries map"];
+
+			});
+		}
 
 		leafletData.getMap("zones").then(function(map) {
 			//Add zoom button to the map
 			L.control.zoom().addTo(map);
 		});
 
-		// linkCreator(zones_config.mapName);
+		var jsonVars = zones;
+		for(var i = 0; i < jsonVars.length; i++){
+			for (var name in jsonVars[i]) if(jsonVars[i].hasOwnProperty(name)){
 
-	    for (var i = 0; i < jsonVars.zones.length; i++){
-    		for (var name in jsonVars.zones[i]) if(jsonVars.zones[i].hasOwnProperty(name)){
-    		var layer = geojsonvt(jsonVars.zones[i][name]);
-    		// simplification tolerance (higher means simpler)
-    		// you need set it to 30-40 at least to feel the difference
-    		layer.options.tolerance = 5; 
-    		CenterMap(layer, "LayerPoly" + name, "zones", attrService, leafletData);
-    		}
-    	}
+				var layer = geojsonvt(jsonVars[i][name]);
+					// simplification tolerance (higher means simpler)
+		    		// you need set it to 30-40 at least to feel the difference
+		    		layer.options.tolerance = zones_config.tolerance; 
+		    		//Define max zoom to each level. After this zoom layers won't display
+		    		layer.options.maxZoom = zones_config.layerMaxZoom;
+				CenterMap(layer, "LayerPoly" + name, "zones", attrService, leafletData);
+			}
+		}
 
-	}
-])
+	}])
 
-.controller("nationalitiesCtrl", [ '$scope', '$log', '$http', 'leafletData', 'attrService', '$rootScope', 'jsonVars', 'lang',
-	function($scope, $log, $http, leafletData, attrService, $rootScope, jsonVars, lang) {
+.controller("nationalitiesCtrl", [ '$scope', '$log', '$http', 'leafletData', 'attrService', '$rootScope', 'lang', 'links',
+	function($scope, $log, $http, leafletData, attrService, $rootScope, lang, links) {
 
-		// linkCreator(nationalities_config.mapName);
 
-	angular.extend($scope, {
+
+				//change language of labels
+				angular.element(document).ready(function () {
+					var leafletLabels = document.getElementsByClassName("leaflet-label");
+					for (var i = 0; i < leafletLabels.length; i++){
+						//Defining parameters of map
+						leafletLabels.item(i).style.fontSize = nationalities_config.fontSize;
+						leafletLabels.item(i).style.fontFamily = nationalities_config.fontFamily;
+
+						if(localStorage.getItem('language') == 'ru'){
+							var translations = lang.langs[localStorage.getItem('language')];
+							for(var item in translations.labels) if(translations.labels.hasOwnProperty(item)){
+								if(leafletLabels.item(i).innerHTML == item){
+									leafletLabels.item(i).innerHTML = translations.labels[item];
+								}
+							}
+
+							// Change language of menu
+							var map = document.getElementById("countries_item");
+							var desc = document.getElementById("countries_desc");
+
+							var menu = lang.langs.ru.menu;
+
+							map.innerHTML = menu["Countries"];
+							desc.innerHTML = menu["Countries map"];
+
+							var mapNames = lang.langs.ru.mapNames;
+
+						}
+					}
+				});
+
+
+					// //Change language of map name
+					// var mapName = document.getElementById("map_name");
+					// mapName.innerHTML = mapNames["Nationalities"];
+
+
+		angular.extend($scope, {
 			markers: attrService.mountainPeaks,
 			overlays: {
 				NorthAmerica: {
@@ -628,46 +685,25 @@ angular.module('MapAble.controllers', [])
 			L.control.zoom().addTo(map);
 		});
 
-	    for (var i = 0; i < jsonVars.nationalities.length; i++){
-    		for (var name in jsonVars.nationalities[i]) if(jsonVars.nationalities[i].hasOwnProperty(name)){
-		    		var layer = geojsonvt(jsonVars.nationalities[i][name]);
-		    		CenterMap(layer, "LayerPoly" + name, "nationalities", attrService, leafletData);
-	    	}
-	    }
+		var jsonVars = nationalities;
+		for(var i = 0; i < jsonVars.length; i++){
+			for (var name in jsonVars[i]) if(jsonVars[i].hasOwnProperty(name)){
 
-			fonts = attrService.fonts;
-
-			if(localStorage.getItem('language') != 'en'){
-				var translations = lang.langs[localStorage.getItem('language')];
-
-				//change language of labels
-				angular.element(document).ready(function () {
-					var leafletLabels = document.getElementsByClassName("leaflet-label");
-					for (var i = 0; i < leafletLabels.length; i++){
-						//Defining parameters of map
-						leafletLabels.item(i).style.fontSize = fonts.fontSize;
-						
-						// console.log(translations.labels);
-						for(var item in translations.labels) if(translations.labels.hasOwnProperty(item)){
-							if(leafletLabels.item(i).innerHTML == item){
-								leafletLabels.item(i).innerHTML = translations.labels[item];
-							}
-						}
-
-					}
-
-					//Change language of map name
-					var mapName = document.getElementById("map_name");
-					mapName.innerHTML = translations.mapNames[mapName.innerHTML];
-				});
-
+				var layer = geojsonvt(jsonVars[i][name]);
+					// simplification tolerance (higher means simpler)
+		    		// you need set it to 30-40 at least to feel the difference
+		    		layer.options.tolerance = nationalities_config.tolerance; 
+		    		//Define max zoom to each level. After this zoom layers won't display
+		    		layer.options.maxZoom = nationalities_config.layerMaxZoom;
+				CenterMap(layer, "LayerPoly" + name, "nationalities", attrService, leafletData);
 			}
+		}
 
       }])
 
-	.controller('countriesCtrl', ['$scope', 'leafletData', 'attrService', '$rootScope', 'lang',
-	function($scope, leafletData, attrService, $rootScope, lang){
-
+	.controller('countriesCtrl', ['$scope', 'leafletData', 'attrService', '$rootScope', 'lang', 'links',
+	function($scope, leafletData, attrService, $rootScope, lang, links){
+			
 		angular.extend($scope, {
 			markers: attrService.mountainPeaks,
 			overlays: {
@@ -702,14 +738,14 @@ angular.module('MapAble.controllers', [])
 					visible: true
 				}
 			}
-		}
-	);
+		});
 
 			if(localStorage.getItem('language') == 'ru'){
 				var translations = lang.langs.ru;
 
 				//change language of labels
 				angular.element(document).ready(function () {
+
 					var leafletLabels = document.getElementsByClassName("leaflet-label");
 					for (var i = 0; i < leafletLabels.length; i++){
 						
@@ -717,6 +753,9 @@ angular.module('MapAble.controllers', [])
 							if(leafletLabels.item(i).innerHTML == item){
 								leafletLabels.item(i).innerHTML = translations.labels[item];
 							}
+							//Defining parameters of map
+							leafletLabels.item(i).style.fontSize = countries_config.fontSize;
+							leafletLabels.item(i).style.fontFamily = countries_config.fontFamily;
 						}
 
 					}
@@ -733,28 +772,14 @@ angular.module('MapAble.controllers', [])
 
 					map.innerHTML = menu["Countries"];
 					desc.innerHTML = menu["Countries map"];
+
+					//Change language of map name
+					var mapName = document.getElementById("map_name");
+					mapName.innerHTML = menu["Countries"];
 				});
 
 			}
 
-			if(localStorage.getItem("language") == 'en' || localStorage.getItem("language") === undefined){
-				angular.element(document).ready(function(){
-
-					var map = document.getElementById("countries_item");
-					var desc = document.getElementById("countries_desc");
-					// console.log('map: ' + map.innerHTML);
-					// console.log('desc: ' + desc.innerHTML);
-					// localStorage.setItem("countries_item", map.innerHTML);
-					// localStorage.setItem("countries_desc", map.innerHTML);
-					// map.innerHTML = localStorage.getItem("countries_item");
-					// desc.innerHTML = localStorage.getItem("countries_desc");
-					map.innerHTML = "Countries";
-					desc.innerHTML = "Countries map";
-				});
-			}
-
-
-			// linkCreator(countries_config.mapName);
 
 			leafletData.getMap("countries").then(function(map) {
 
@@ -789,15 +814,15 @@ angular.module('MapAble.controllers', [])
 						fillColor: countries.fillColor,
 						fillOpacity: countries.fillOpacity,
 						weight: countries.weight,
-						color: countries.color
+						color: countries_config.color
 					};
 				}
 
 				//Add an underlying layer
-				geojson = L.geoJson(_countries, {
+				geojson =  L.geoJson(_countries, {
 					style: style,
 					//set simplification by smoothFactor
-					smoothFactor: 0,
+					smoothFactor: countries_config.smoothFactor,
 					//Assigning actions to whether all features or certain one
 					onEachFeature: function (feature, layer) {
 						layer.bindPopup(feature.properties.CNTRY_NAME);
@@ -853,30 +878,7 @@ angular.module('MapAble.controllers', [])
 		
 	}]);
 
-function linkCreator(mapName){
-		var mapRef = 'json/' + mapName + '/map.js';
-		var configRef = 'json/' + mapName + '/config.js';
-        var mapElem = document.createElement('script');
-        var configElem = document.createElement('script');
-        mapElem.setAttribute("type","text/javascript");
-        mapElem.setAttribute("src", mapRef);
-        configElem.setAttribute("type","text/javascript");
-        configElem.setAttribute("src", configRef);
 
-        var parent = document.getElementById("data_links");
-        var children = parent.getElementsByTagName("script");
-  
-        for(var i = 0; i < children.length; i++) {
-        	var child = children[i];
-            child = parent.removeChild(child);
-        	console.log(child);
-        } 
-
-        // parent.appendChild(mapElem);
-        // // parent.appendChild('\n');
-        // parent.appendChild(configElem);
-        // // parent.appendChild('\n');
-}	
 
 function CenterMap(rawData, layerName, mapid, attrService, leafletData	) {
 	var _layer;
@@ -980,4 +982,29 @@ function drawingOnCanvas(canvasOverlay, params) {
 				ctx.stroke();
 			}
 	}
+
+	var creator = function linkCreator(mapName, $scope, $compile){
+		var mapRef = 'json/' + mapName + '/map.js';
+		var configRef = 'json/' + mapName + '/config.js';
+        var mapElem = document.createElement('script');
+        var configElem = document.createElement('script');
+        mapElem.setAttribute("type","text/javascript");
+        mapElem.setAttribute("src", mapRef);
+        configElem.setAttribute("type","text/javascript");
+        configElem.setAttribute("src", configRef);
+
+        var parent = document.getElementById("data_links");
+        // var children = parent.getElementsByTagName("script");
+
+        while (parent.firstChild) {
+          parent.removeChild(parent.firstChild);
+        }
+
+        parent.appendChild(mapElem);
+        parent.appendChild(configElem);
+
+        // $compile(angular.element(mapElem))($scope);
+        // $compile(angular.element(configElem))($scope);
+
+	};
 

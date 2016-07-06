@@ -170,6 +170,24 @@ angular.module('MapAble.directives', [])
 	};
 })
 
+.directive("dynamicMap", function(){
+   return {
+       template:"<script src='json/{{mapName}}/map.js'></script>"
+   };
+})
 
+// .directive('addMap', ['$compile', function ($compile) {
+
+//     var template = "<script src='json/{{mapName}}/map.js'></script>";
+
+//     return function (scope, element, attrs) {
+//     		restrict:'E',
+//             replace:true,
+            
+//             var elm = angular.element(template); //Get the element
+//             element.parent().find("#data_links").append(elm); //Append it to DOM
+//             $compile(elm)(scope); //Now compile it to render the directive.            
+// 	}
+//  }])
 
 ;

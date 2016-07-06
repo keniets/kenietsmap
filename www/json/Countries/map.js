@@ -504,4 +504,9 @@ var _cities = {
 ]
 }
 
-
+
+mapDeferred.resolve();
+	countries = [
+		{ _countries: _countries },
+		{ _cities: _cities },
+	]

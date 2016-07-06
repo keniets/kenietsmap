@@ -25,7 +25,7 @@ angular.module('translate', [])
 
 		  mapNames: {
 		  	"Nationalities": "Народы",
-		  	"Zones": "Зоны",
+		  	"Climate Zones": "Климатические зоны",
 		  	"Lakes": "Озера",
 		  	"Countries": "Страны"
 		  },
