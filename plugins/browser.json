@@ -54,6 +54,9 @@
         },
         "org.pushandplay.cordova.apprate": {
             "PACKAGE_NAME": "com.msuappdeveloper.TheMap"
+        },
+        "cordova-plugin-email-composer": {
+            "PACKAGE_NAME": "com.msuappdeveloper.TheMap"
         }
     },
     "dependent_plugins": {}

@@ -8,7 +8,9 @@ angular.module('underscore', [])
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-angular.module('MapAble', ['ionic', 'angularMoment', 'leaflet-directive', 'MapAble.controllers', 'MapAble.directives', 'MapAble.filters', 'MapAble.services', 'MapAble.factories', 'MapAble.config', 'underscore', 'ngResource', 'ngCordova', 'templates', 'slugifier'])
+angular.module('MapAble', ['ionic', 'angularMoment', 'leaflet-directive', 'MapAble.controllers', 'MapAble.directives',
+  'MapAble.filters', 'MapAble.services', 'MapAble.factories', 'MapAble.config', 'underscore', 'ngResource', 'ngCordova',
+  'templates', 'slugifier', 'dataStorage', 'geoJsonVars', 'translate'])
 
 .run(['$ionicPlatform', 'PushNotificationsService', function($ionicPlatform, PushNotificationsService) {
 
@@ -31,33 +33,11 @@ angular.module('MapAble', ['ionic', 'angularMoment', 'leaflet-directive', 'MapAb
 }])
 
 
-.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
+.config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider',
+ function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
+  $ionicConfigProvider.views.maxCache(0);
   $stateProvider
 
-  // //INTRO
-//   .state('walkthrough', {
-//     url: "/",
-//     templateUrl: "walkthrough.html",
-//     controller: 'WalkthroughCtrl'
-//   })
-//
-//   .state('login', {
-//     url: "/login",
-//     templateUrl: "login.html",
-//     controller: 'LoginCtrl'
-//   })
-//
-//   .state('signup', {
-//     url: "/signup",
-//     templateUrl: "signup.html",
-//     controller: 'SignupCtrl'
-//   })
-//
-//   .state('forgot-password', {
-//     url: "/forgot-password",
-//     templateUrl: "forgot-password.html",
-//     controller: 'ForgotPasswordCtrl'
-//   })
 
   .state('app', {
     url: "/app",
@@ -67,26 +47,15 @@ angular.module('MapAble', ['ionic', 'angularMoment', 'leaflet-directive', 'MapAb
   })
 
   //LAYOUTS
-  .state('app.main', {
+  .state('app.zones', {
     url: "/main",
     views: {
       'menuContent': {
-        templateUrl: "main.html",
-        controller: 'MapController'
+        templateUrl: "zones.html",
+        controller: 'zonesCtrl'
       }
     }
   })
-
-  // //LAYOUTS
-  // .state('app.layouts', {
-  //   url: "/layouts",
-  //   views: {
-  //     'menuContent': {
-  //       templateUrl: "layouts.html",
-  //       controller: 'MapController'
-  //     }
-  //   }
-  // })
 
   //LAYOUTS
   .state('app.population', {
@@ -103,13 +72,21 @@ angular.module('MapAble', ['ionic', 'angularMoment', 'leaflet-directive', 'MapAb
     url: "/layouts/nationalities",
     views: {
       'menuContent': {
-        templateUrl: "Map2.html",
-        controller: 'MapControllerPeaks'
+        templateUrl: "nationalities.html",
+        controller: 'nationalitiesCtrl'
       }
     }
   })
 
-
+.state('app.countries', {
+    url: "/layouts/countries",
+    views: {
+      'menuContent': {
+        templateUrl: "countries.html",
+        controller: "countriesCtrl"
+      }
+    }
+  })
 
   //FEEDS
   .state('app.feeds-categories', {
@@ -208,6 +185,12 @@ angular.module('MapAble', ['ionic', 'angularMoment', 'leaflet-directive', 'MapAb
 
 ;
 
+// $translateProvider
+//     .translations('en', translations)
+//     .preferredLanguage('en');
+
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/app/main');
 }]);
+
+

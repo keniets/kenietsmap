@@ -1,7 +1,9 @@
 angular.module('MapAble.controllers', [])
 
+
 /* APP*/
-    .controller('AppCtrl', ['$scope', function($scope) {
+    .controller('AppCtrl', ['$scope', 'lang',
+     function($scope, lang) {
     angular.extend($scope, {
 		center: {
 			 lat: 20,
@@ -314,7 +316,8 @@ angular.module('MapAble.controllers', [])
 }])
 
 // SETTINGS
-.controller('SettingsCtrl', ['$scope', '$ionicActionSheet', '$state', function($scope, $ionicActionSheet, $state) {
+.controller('SettingsCtrl', ['$scope', '$ionicActionSheet', '$state', '$rootScope', 'lang',
+ function($scope, $ionicActionSheet, $state, $rootScope, lang) {
 	$scope.airplaneMode = true;
 	$scope.wifi = false;
 	$scope.bluetooth = true;
@@ -324,7 +327,63 @@ angular.module('MapAble.controllers', [])
 	$scope.checkOpt2 = true;
 	$scope.checkOpt3 = false;
 
-	$scope.radioChoice = 'B';
+
+	if(localStorage.getItem("language") == 'ru'){
+		var element = document.getElementById("change_lang");
+		element.innerHTML = "Язык";
+
+		var menu = lang.langs.ru.menu;
+
+		var map = document.getElementById("countries_item");
+		var desc = document.getElementById("countries_desc");
+
+		map.innerHTML = menu["Countries"];
+		desc.innerHTML = menu["Countries map"];
+
+	}
+
+	if(localStorage.getItem("language") == 'en' || localStorage.getItem("language") === undefined){
+		var elem = document.getElementById("change_lang");
+		elem.innerHTML = "Language";
+
+		var menu = lang.langs.ru.menu;
+
+		var map = document.getElementById("countries_item");
+		var desc = document.getElementById("countries_desc");
+
+		map.innerHTML = "Countries";
+		desc.innerHTML = "Countries map";
+	}
+
+	$scope.changeLang = function(value){
+		localStorage.setItem('language', value);
+
+		if(value == 'ru'){
+			var elem = document.getElementById("change_lang");
+			localStorage.setItem("change_lang", elem.innerHTML);
+			elem.innerHTML = lang.langs[value].settings[elem.innerHTML];
+
+		var menu = lang.langs[localStorage.getItem('language')].menu;
+
+			var map = document.getElementById("countries_item");
+			var desc = document.getElementById("countries_desc");
+
+			map.innerHTML = menu["Countries"];
+			desc.innerHTML = menu["Countries map"];
+
+		}
+		else if(value == 'en'){
+			var elem = document.getElementById("change_lang");
+			elem.innerHTML = localStorage.getItem("change_lang");
+
+		var map = document.getElementById("countries_item");
+		var desc = document.getElementById("countries_desc");
+
+		map.innerHTML = "Countries";
+		desc.innerHTML = "Countries map";
+		}
+		
+	}
 
 	// Triggered on a the logOut button click
 	$scope.showLogOutMenu = function() {
@@ -496,87 +555,96 @@ angular.module('MapAble.controllers', [])
 }])
 
 
-.controller("MapController", [ '$scope', '$log', '$http', 'leafletData', function($scope, $log, $http, leafletData) {
+.controller("zonesCtrl", [ '$scope', '$log', '$http', 'leafletData', 'attrService', '$rootScope', 'links', 'lang',
+	function($scope, $log, $http, leafletData, attrService, $rootScope, links, lang) {
 
-		//angular.extend($scope, {
-		//		markers: mountainPeaks,
-		//		overlays: {
-		//			NorthAmerica: {
-		//				name: "North America",
-		//				type: "markercluster",
-		//				visible: true
-		//			},
-		//			eastafrica: {
-		//				name: "East Africa",
-		//				type: "markercluster",
-		//				visible: true
-		//			},
-		//			tibet: {
-		//				name: "East Africa",
-		//				type: "markercluster",
-		//				visible: true
-		//			},
-		//			wasia: {
-		//				name: "East Africa",
-		//				type: "markercluster",
-		//				visible: true
-		//			},
-		//			SouthAmerica: {
-		//				name: "North America",
-		//				type: "markercluster",
-		//				visible: true
-		//			},
-		//			Eurasia: {
-		//				name: "North America",
-		//				type: "markercluster",
-		//				visible: true
-		//			}
-		//		}
-		//	}
-		//);
+		if(localStorage.getItem('language') == 'ru'){
+			var translations = lang.langs[localStorage.getItem('language')];
+			angular.element(document).ready(function () {
 
-		var _Layerpoly0 = 	geojsonvt(_coastline);
-		var _Layerpoly200 = geojsonvt(_poly200);
-		var _Layerpoly500 = geojsonvt(_poly500);
-		var _Layerpoly1000 = geojsonvt(_poly1000);
-		var _Layerpoly2000 = geojsonvt(_poly2000);
-		var _Layerpoly3000 = geojsonvt(_poly3000);
-		var _Layerpoly4000 = geojsonvt(_poly4000);
-		var _Layerpoly5000 = geojsonvt(_poly5000);
-		var _LayerIce = 	geojsonvt(_ice);
+				var mapNames = lang.langs.ru.mapNames;
 
+				//Change language of map name
+				// var mapName = document.getElementById("map_name");
+				// mapName.innerHTML = mapNames["Climate Zones"];
 
-		CenterMap(_Layerpoly0,	  	"LayerPoly0", 	"map1")
-		CenterMap(_Layerpoly200, 	"LayerPoly200", "map1")
-		CenterMap(_Layerpoly500, 	"LayerPoly500", "map1")
-		CenterMap(_Layerpoly1000, 	"LayerPoly1000", "map1")
-		CenterMap(_Layerpoly2000,	"LayerPoly2000", "map1")
-		CenterMap(_Layerpoly3000, 	"LayerPoly3000", "map1")
-		CenterMap(_Layerpoly4000, 	"LayerPoly4000", "map1")
-		CenterMap(_Layerpoly5000, 	"LayerPoly5000", "map1")
-		CenterMap(_LayerIce, 		"Layerice", 	"map1")
+				//Change language of menu
+				var map = document.getElementById("countries_item");
+				var desc = document.getElementById("countries_desc");
+
+				var menu = lang.langs.ru.menu;
+
+				map.innerHTML = menu["Countries"];
+				desc.innerHTML = menu["Countries map"];
+
+			});
+		}
+
+		leafletData.getMap("zones").then(function(map) {
+			//Add zoom button to the map
+			L.control.zoom().addTo(map);
+		});
+
+		var jsonVars = zones;
+		for(var i = 0; i < jsonVars.length; i++){
+			for (var name in jsonVars[i]) if(jsonVars[i].hasOwnProperty(name)){
+
+				var layer = geojsonvt(jsonVars[i][name]);
+					// simplification tolerance (higher means simpler)
+		    		// you need set it to 30-40 at least to feel the difference
+		    		layer.options.tolerance = zones_config.tolerance; 
+		    		//Define max zoom to each level. After this zoom layers won't display
+		    		layer.options.maxZoom = zones_config.layerMaxZoom;
+				CenterMap(layer, "LayerPoly" + name, "zones", attrService, leafletData);
+			}
+		}
+
+	}])
+
+.controller("nationalitiesCtrl", [ '$scope', '$log', '$http', 'leafletData', 'attrService', '$rootScope', 'lang', 'links',
+	function($scope, $log, $http, leafletData, attrService, $rootScope, lang, links) {
 
 
-		function CenterMap(rawData, layerName, mapid) {
-			var _layer;
-			_layer = getGeojsonVectorTiles(rawData, layerName);
-			leafletData.getMap(mapid).then(function(map) {
-				_layer.addTo(map)
-		   });
-		};
 
-		function getGeojsonVectorTiles (rawData, layerName) {
-				return  L.canvasTiles()
-						.params({ debug: false, padding: 5 , layer: rawData, LayerName: layerName })
-						.drawing(drawingOnCanvas);
-		};
-	}
-])
+				//change language of labels
+				angular.element(document).ready(function () {
+					var leafletLabels = document.getElementsByClassName("leaflet-label");
+					for (var i = 0; i < leafletLabels.length; i++){
+						//Defining parameters of map
+						leafletLabels.item(i).style.fontSize = nationalities_config.fontSize;
+						leafletLabels.item(i).style.fontFamily = nationalities_config.fontFamily;
 
-.controller("MapControllerPeaks", [ '$scope', '$log', '$http', 'leafletData', function($scope, $log, $http, leafletData) {
+						if(localStorage.getItem('language') == 'ru'){
+							var translations = lang.langs[localStorage.getItem('language')];
+							for(var item in translations.labels) if(translations.labels.hasOwnProperty(item)){
+								if(leafletLabels.item(i).innerHTML == item){
+									leafletLabels.item(i).innerHTML = translations.labels[item];
+								}
+							}
 
-	angular.extend($scope, {
-			markers: mountainPeaks,
+							// Change language of menu
+							var map = document.getElementById("countries_item");
+							var desc = document.getElementById("countries_desc");
+
+							var menu = lang.langs.ru.menu;
+
+							map.innerHTML = menu["Countries"];
+							desc.innerHTML = menu["Countries map"];
+
+							var mapNames = lang.langs.ru.mapNames;
+
+						}
+					}
+				});
+
+
+					// //Change language of map name
+					// var mapName = document.getElementById("map_name");
+					// mapName.innerHTML = mapNames["Nationalities"];
+
+
+		angular.extend($scope, {
+			markers: attrService.mountainPeaks,
 			overlays: {
 				NorthAmerica: {
 					name: "North America",
@@ -612,30 +680,224 @@ angular.module('MapAble.controllers', [])
 		}
 	);
 
-
-	var _Layerpoly0 = geojsonvt(_coastline);
-	CenterMap(_Layerpoly0, "LayerPoly0", "MapPeaks")
-
-	function CenterMap(rawData, layerName, mapid) {
-		var _layer;
-		_layer = getGeojsonVectorTiles(rawData, layerName);
-		leafletData.getMap(mapid).then(function(map) {
-			_layer.addTo(map)
+		leafletData.getMap("nationalities").then(function(map) {
+			//Add zoom button to the map
+			L.control.zoom().addTo(map);
 		});
-	};
 
-	function getGeojsonVectorTiles (rawData, layerName) {
-		return  L.canvasTiles()
-			.params({ debug: false, padding: 5 , layer: rawData, LayerName: layerName })
-			.drawing(drawingOnCanvas);
-	};
-      }
-	]
-)
+		var jsonVars = nationalities;
+		for(var i = 0; i < jsonVars.length; i++){
+			for (var name in jsonVars[i]) if(jsonVars[i].hasOwnProperty(name)){
 
+				var layer = geojsonvt(jsonVars[i][name]);
+					// simplification tolerance (higher means simpler)
+		    		// you need set it to 30-40 at least to feel the difference
+		    		layer.options.tolerance = nationalities_config.tolerance; 
+		    		//Define max zoom to each level. After this zoom layers won't display
+		    		layer.options.maxZoom = nationalities_config.layerMaxZoom;
+				CenterMap(layer, "LayerPoly" + name, "nationalities", attrService, leafletData);
+			}
+		}
+
+      }])
+
+	.controller('countriesCtrl', ['$scope', 'leafletData', 'attrService', '$rootScope', 'lang', 'links',
+	function($scope, leafletData, attrService, $rootScope, lang, links){
+			
+		angular.extend($scope, {
+			markers: attrService.mountainPeaks,
+			overlays: {
+				NorthAmerica: {
+					name: "North America",
+					type: "markercluster",
+					visible: true
+				},
+				eastafrica: {
+					name: "East Africa",
+					type: "markercluster",
+					visible: true
+				},
+				tibet: {
+					name: "East Africa",
+					type: "markercluster",
+					visible: true
+				},
+				wasia: {
+					name: "East Africa",
+					type: "markercluster",
+					visible: true
+				},
+				SouthAmerica: {
+					name: "North America",
+					type: "markercluster",
+					visible: true
+				},
+				Eurasia: {
+					name: "North America",
+					type: "markercluster",
+					visible: true
+				}
+			}
+		});
+
+			if(localStorage.getItem('language') == 'ru'){
+				var translations = lang.langs.ru;
+
+				//change language of labels
+				angular.element(document).ready(function () {
+
+					var leafletLabels = document.getElementsByClassName("leaflet-label");
+					for (var i = 0; i < leafletLabels.length; i++){
+						
+						for(var item in translations.labels) if(translations.labels.hasOwnProperty(item)){
+							if(leafletLabels.item(i).innerHTML == item){
+								leafletLabels.item(i).innerHTML = translations.labels[item];
+							}
+							//Defining parameters of map
+							leafletLabels.item(i).style.fontSize = countries_config.fontSize;
+							leafletLabels.item(i).style.fontFamily = countries_config.fontFamily;
+						}
+
+					}
+
+					//Change language of map name
+					var mapName = document.getElementById("map_name");
+					mapName.innerHTML = translations.mapNames[mapName.innerHTML];
+
+					//Change language of menu
+					var map = document.getElementById("countries_item");
+					var desc = document.getElementById("countries_desc");
+
+					var menu = lang.langs.ru.menu;
+
+					map.innerHTML = menu["Countries"];
+					desc.innerHTML = menu["Countries map"];
+
+					//Change language of map name
+					var mapName = document.getElementById("map_name");
+					mapName.innerHTML = menu["Countries"];
+				});
+
+			}
+
+
+			leafletData.getMap("countries").then(function(map) {
+
+				//Add zoom button to the map
+				L.control.zoom().addTo(map);
+
+				//Zoom level
+				map.options.maxZoom=10;
+				map.options.minZoom=2;
+
+				//Creating a control to display feature parameters
+				info = L.control();
+
+				info.onAdd = function (map) {
+					this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
+					this.update();
+					return this._div;
+				};
+
+				// method that we will use to update the control based on feature properties passed
+				info.update = function (props) {
+					this._div.innerHTML = '<h4>Country state</h4>' +  (props ?
+						'<b>' + props.CNTRY_NAME + '</b><br />' + props.world_bo_1 : 'Define country');
+				};
+
+				info.addTo(map);
+
+				var countries = attrService.attrs.LayerPoly_countries;
+
+				function style(feature) {
+					return {
+						fillColor: countries.fillColor,
+						fillOpacity: countries.fillOpacity,
+						weight: countries.weight,
+						color: countries_config.color
+					};
+				}
+
+				//Add an underlying layer
+				geojson =  L.geoJson(_countries, {
+					style: style,
+					//set simplification by smoothFactor
+					smoothFactor: countries_config.smoothFactor,
+					//Assigning actions to whether all features or certain one
+					onEachFeature: function (feature, layer) {
+						layer.bindPopup(feature.properties.CNTRY_NAME);
+						//Not working properly
+					    // var label = L.marker(layer.getBounds().getCenter(), {
+					    //   icon: L.divIcon({
+					    //     className: 'label',
+					    //     html: feature.properties.CNTRY_NAME,
+					    //     iconSize: [100, 40]
+					    //   })
+					    // }).addTo(map);
+						layer.on({
+							mouseover: highlightFeature,
+							mouseout: resetHighlight
+						});
+					}
+				}).addTo(map);
+
+				//Add some labels of cities
+				L.geoJson(_cities, {
+					onEachFeature: function (feature, layer) {
+						layer.bindPopup(feature.properties.Name);
+						//Define your condition in which icons will be customized
+						if(feature){
+							var chelyabinskAsteroid = L.icon(attrService.icons.asteroid);
+							L.marker([60.505, 80.57], {icon: chelyabinskAsteroid}).addTo(map);
+						}
+					}
+				}).addTo(map);
+
+		});
+
+		function highlightFeature(e){
+			var layer = e.target;
+
+			layer.setStyle({
+				color: '#666',
+				dashArray: '',
+				fillOpacity: 0.9
+			});
+
+			if (!L.Browser.ie && !L.Browser.opera) {
+				layer.bringToFront();
+			}
+
+			info.update(layer.feature.properties);
+		}
+
+		function resetHighlight(e) {
+			geojson.resetStyle(e.target);
+			info.update();
+		}
+		
+	}]);
+
+
+
+function CenterMap(rawData, layerName, mapid, attrService, leafletData	) {
+	var _layer;
+	_layer = getGeojsonVectorTiles(rawData, layerName, attrService);
+	leafletData.getMap(mapid).then(function(map) {
+		//Zoom level
+		map.options.maxZoom = 10;
+		map.options.minZoom = 2;
+		_layer.addTo(map);
+	});
+}
+
+function getGeojsonVectorTiles (rawData, layerName, attrService) {
+	return  L.canvasTiles()
+		.params({ debug: false, padding: 5 , layer: rawData, LayerName: layerName, attributes: attrService.attrs[layerName] })
+		.drawing(drawingOnCanvas);
+}
 
 function drawingOnCanvas(canvasOverlay, params) {
-
     var pad = 0;
 	params.tilePoint.z = params.zoom;
 	var _canvas = params.canvas;
@@ -676,7 +938,7 @@ function drawingOnCanvas(canvasOverlay, params) {
 		  _canvas.height *=2;
 		  ctx.scale(2,2);
 	  }
-  };
+  }
 	var tile = params.layer.getTile(zParam, xParam, params.tilePoint.y);
 
     if (!tile) {
@@ -688,24 +950,25 @@ function drawingOnCanvas(canvasOverlay, params) {
 			ctx.strokeStyle = '#b9b991';
 			ctx.lineWidth = 0.5;
 
+
 			var features = tile.features;
 
 			for (var i = 0; i < features.length; i++) {
-				var feature = features[i],
+				var feature = features[i];
+
 				type = feature.type;
 
 				ctx.beginPath();
 
 				for (var j = 0; j < feature.geometry.length; j++) {
 					//window.alert(feature.tags.FIPS_CNTRY)
-					var color = GetFeatureColor(params.layerName, feature.tags)
-					ctx.fillStyle = feature.tags.color ? feature.tags.color :  color;//'rgba( 12,155,155,0.5)';
+					ctx.fillStyle = feature.tags.color ? feature.tags.color :  params.options.attributes.color;//'rgba( 12,155,155,0.5)';
 
 					var geom = feature.geometry[j];
-					if (type === 1) {
-							ctx.arc(geom[0] * ratio + pad, geom[1] * ratio + pad, 2, 0, 2 * Math.PI, false);
-							continue;
-					}
+					// if (type === 1) {
+					// 		ctx.arc(geom[0] * ratio + pad, geom[1] * ratio + pad, 2, 0, 2 * Math.PI, false);
+					// 		continue;
+					// }
 					for (var k = 0; k < geom.length; k++) {
 							var p = geom[k];
 							var extent = 4096;
@@ -718,43 +981,30 @@ function drawingOnCanvas(canvasOverlay, params) {
 				if (type === 3 || type === 1) ctx.fill('evenodd');
 				ctx.stroke();
 			}
+	}
+
+	var creator = function linkCreator(mapName, $scope, $compile){
+		var mapRef = 'json/' + mapName + '/map.js';
+		var configRef = 'json/' + mapName + '/config.js';
+        var mapElem = document.createElement('script');
+        var configElem = document.createElement('script');
+        mapElem.setAttribute("type","text/javascript");
+        mapElem.setAttribute("src", mapRef);
+        configElem.setAttribute("type","text/javascript");
+        configElem.setAttribute("src", configRef);
+
+        var parent = document.getElementById("data_links");
+        // var children = parent.getElementsByTagName("script");
+
+        while (parent.firstChild) {
+          parent.removeChild(parent.firstChild);
+        }
+
+        parent.appendChild(mapElem);
+        parent.appendChild(configElem);
+
+        // $compile(angular.element(mapElem))($scope);
+        // $compile(angular.element(configElem))($scope);
+
 	};
 
-//apply styles
-function GetFeatureColor(LayerName, tags){
-	var color
-
-		switch(LayerName){
-			 case "LayerPoly0":
-				  color = 'rgba(204,231,140,1)';
-				  break;
-			 case "LayerPoly200":
-					color = 'rgba(245,247,210,1)';
-					break;
-			 case "LayerPoly500":
-				 color = 'rgba(237,242,80,1)';
-				 break;
-			 case "LayerPoly1000":
-				 color = 'rgba(245,226,19,1)';
-				 break;
-			 case "LayerPoly2000":
-				 color = 'rgba(227,207,26,1)';
-				 break;
-			 case "LayerPoly3000":
-				 color = 'rgba(221,191,56,1)';
-				 break;
-			 case "LayerPoly4000":
-				color = 'rgba(214,179,36,1)';
-				break;
-			 case "LayerPoly5000":
-  				color = 'rgba(214,156,36,1)';
-  				break;
-			 case "Layerice":
-				color = 'rgba(214,242,237,1)';
-				break;
-			 default:
-				 color = 'rgba(160,160,160,1)';
-				 break;
-	}
-	return color;
-}

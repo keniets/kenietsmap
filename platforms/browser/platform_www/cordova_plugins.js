@@ -164,6 +164,21 @@ module.exports = [
         "id": "org.pushandplay.cordova.apprate.locales",
         "pluginId": "org.pushandplay.cordova.apprate",
         "runs": true
+    },
+    {
+        "file": "plugins/cordova-plugin-email-composer/www/email_composer.js",
+        "id": "cordova-plugin-email-composer.EmailComposer",
+        "pluginId": "cordova-plugin-email-composer",
+        "clobbers": [
+            "cordova.plugins.email",
+            "plugin.email"
+        ]
+    },
+    {
+        "file": "plugins/cordova-plugin-email-composer/src/browser/EmailComposerProxy.js",
+        "id": "cordova-plugin-email-composer.EmailComposerProxy",
+        "pluginId": "cordova-plugin-email-composer",
+        "runs": true
     }
 ];
 module.exports.metadata = 
@@ -184,7 +199,8 @@ module.exports.metadata =
     "cordova-plugin-whitelist": "1.0.0",
     "de.appplant.cordova.plugin.email-composer": "0.8.3dev",
     "nl.x-services.plugins.socialsharing": "4.3.19",
-    "org.pushandplay.cordova.apprate": "1.1.7"
+    "org.pushandplay.cordova.apprate": "1.1.7",
+    "cordova-plugin-email-composer": "0.8.3"
 }
 // BOTTOM OF METADATA
 });

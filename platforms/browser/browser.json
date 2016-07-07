@@ -20,7 +20,7 @@
                     "/*": [
                         {
                             "xml": "<feature name=\"EmailComposer\"><param name=\"browser-package\" value=\"de.appplant.cordova.emailcomposer.EmailComposer\" /></feature>",
-                            "count": 1
+                            "count": 2
                         }
                     ]
                 }
@@ -74,6 +74,9 @@
             "PACKAGE_NAME": "com.msuappdeveloper.TheMap"
         },
         "org.pushandplay.cordova.apprate": {
+            "PACKAGE_NAME": "com.msuappdeveloper.TheMap"
+        },
+        "cordova-plugin-email-composer": {
             "PACKAGE_NAME": "com.msuappdeveloper.TheMap"
         }
     },
@@ -243,6 +246,21 @@
             "id": "org.pushandplay.cordova.apprate.locales",
             "pluginId": "org.pushandplay.cordova.apprate",
             "runs": true
+        },
+        {
+            "file": "plugins/cordova-plugin-email-composer/www/email_composer.js",
+            "id": "cordova-plugin-email-composer.EmailComposer",
+            "pluginId": "cordova-plugin-email-composer",
+            "clobbers": [
+                "cordova.plugins.email",
+                "plugin.email"
+            ]
+        },
+        {
+            "file": "plugins/cordova-plugin-email-composer/src/browser/EmailComposerProxy.js",
+            "id": "cordova-plugin-email-composer.EmailComposerProxy",
+            "pluginId": "cordova-plugin-email-composer",
+            "runs": true
         }
     ],
     "plugin_metadata": {
@@ -261,6 +279,7 @@
         "cordova-plugin-whitelist": "1.0.0",
         "de.appplant.cordova.plugin.email-composer": "0.8.3dev",
         "nl.x-services.plugins.socialsharing": "4.3.19",
-        "org.pushandplay.cordova.apprate": "1.1.7"
+        "org.pushandplay.cordova.apprate": "1.1.7",
+        "cordova-plugin-email-composer": "0.8.3"
     }
 }

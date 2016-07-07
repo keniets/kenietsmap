@@ -6,7 +6,7 @@
 (function(window, document, undefined) {'use strict';
 
 /**
- * @description
+ * @description.txt
  *
  * This object provides a utility for producing rich Error messages within
  * Angular. It can be called as follows:
@@ -187,7 +187,7 @@ function minErr(module) {
  * @module ng
  * @kind function
  *
- * @description Converts the specified string to lowercase.
+ * @description.txt Converts the specified string to lowercase.
  * @param {string} string String to be converted to lowercase.
  * @returns {string} Lowercased string.
  */
@@ -200,7 +200,7 @@ var hasOwnProperty = Object.prototype.hasOwnProperty;
  * @module ng
  * @kind function
  *
- * @description Converts the specified string to uppercase.
+ * @description.txt Converts the specified string to uppercase.
  * @param {string} string String to be converted to uppercase.
  * @returns {string} Uppercased string.
  */
@@ -282,7 +282,7 @@ function isArrayLike(obj) {
  * @module ng
  * @kind function
  *
- * @description
+ * @description.txt
  * Invokes the `iterator` function once for each item in `obj` collection, which can be either an
  * object or an array. The `iterator` function is invoked with `iterator(value, key)`, where `value`
  * is the value of an object property or an array element and `key` is the object property key or
@@ -411,7 +411,7 @@ function setHashKey(obj, h) {
  * @module ng
  * @kind function
  *
- * @description
+ * @description.txt
  * Extends the destination object `dst` by copying all of the properties from the `src` object(s)
  * to `dst`. You can specify multiple `src` objects.
  *
@@ -448,7 +448,7 @@ function inherit(parent, extra) {
  * @module ng
  * @kind function
  *
- * @description
+ * @description.txt
  * A function that performs no operations. This function can be useful when writing code in the
  * functional style.
    ```js
@@ -468,7 +468,7 @@ noop.$inject = [];
  * @module ng
  * @kind function
  *
- * @description
+ * @description.txt
  * A function that returns its first argument. This function is useful when writing code in the
  * functional style.
  *
@@ -490,7 +490,7 @@ function valueFn(value) {return function() {return value;};}
  * @module ng
  * @kind function
  *
- * @description
+ * @description.txt
  * Determines if a reference is undefined.
  *
  * @param {*} value Reference to check.
@@ -505,7 +505,7 @@ function isUndefined(value){return typeof value === 'undefined';}
  * @module ng
  * @kind function
  *
- * @description
+ * @description.txt
  * Determines if a reference is defined.
  *
  * @param {*} value Reference to check.
@@ -520,7 +520,7 @@ function isDefined(value){return typeof value !== 'undefined';}
  * @module ng
  * @kind function
  *
- * @description
+ * @description.txt
  * Determines if a reference is an `Object`. Unlike `typeof` in JavaScript, `null`s are not
  * considered to be objects. Note that JavaScript arrays are objects.
  *
@@ -536,7 +536,7 @@ function isObject(value){return value != null && typeof value === 'object';}
  * @module ng
  * @kind function
  *
- * @description
+ * @description.txt
  * Determines if a reference is a `String`.
  *
  * @param {*} value Reference to check.
@@ -551,7 +551,7 @@ function isString(value){return typeof value === 'string';}
  * @module ng
  * @kind function
  *
- * @description
+ * @description.txt
  * Determines if a reference is a `Number`.
  *
  * @param {*} value Reference to check.
@@ -566,7 +566,7 @@ function isNumber(value){return typeof value === 'number';}
  * @module ng
  * @kind function
  *
- * @description
+ * @description.txt
  * Determines if a value is a date.
  *
  * @param {*} value Reference to check.
@@ -583,7 +583,7 @@ function isDate(value) {
  * @module ng
  * @kind function
  *
- * @description
+ * @description.txt
  * Determines if a reference is an `Array`.
  *
  * @param {*} value Reference to check.
@@ -600,7 +600,7 @@ function isArray(value) {
  * @module ng
  * @kind function
  *
- * @description
+ * @description.txt
  * Determines if a reference is a `Function`.
  *
  * @param {*} value Reference to check.
@@ -674,7 +674,7 @@ var trim = (function() {
  * @module ng
  * @kind function
  *
- * @description
+ * @description.txt
  * Determines if a reference is a DOM element (or wrapped jQuery element).
  *
  * @param {*} value Reference to check.
@@ -721,7 +721,7 @@ function map(obj, iterator, context) {
 
 
 /**
- * @description
+ * @description.txt
  * Determines the number of elements in an array, the number of properties an object has, or
  * the length of a string.
  *
@@ -931,7 +931,7 @@ function shallowCopy(src, dst) {
  * @module ng
  * @kind function
  *
- * @description
+ * @description.txt
  * Determines if two objects or two values are equivalent. Supports value types, regular
  * expressions, arrays and objects.
  *
@@ -1074,7 +1074,7 @@ function toJsonReplacer(key, value) {
  * @module ng
  * @kind function
  *
- * @description
+ * @description.txt
  * Serializes input into a JSON-formatted string. Properties with leading $ characters will be
  * stripped since angular uses this notation internally.
  *
@@ -1094,7 +1094,7 @@ function toJson(obj, pretty) {
  * @module ng
  * @kind function
  *
- * @description
+ * @description.txt
  * Deserializes a JSON string.
  *
  * @param {string} json JSON string to deserialize.
@@ -1660,7 +1660,7 @@ function setupModuleLoader(window) {
            * @name angular.Module#requires
            * @module ng
            * @returns {Array.<string>} List of module names which must be loaded before this module.
-           * @description
+           * @description.txt
            * Holds the list of modules which the injector will load before the current module is
            * loaded.
            */
@@ -1671,7 +1671,7 @@ function setupModuleLoader(window) {
            * @name angular.Module#name
            * @module ng
            * @returns {string} Name of the module.
-           * @description
+           * @description.txt
            */
           name: name,
 
@@ -1683,7 +1683,7 @@ function setupModuleLoader(window) {
            * @param {string} name service name
            * @param {Function} providerType Construction function for creating new instance of the
            *                                service.
-           * @description
+           * @description.txt
            * See {@link auto.$provide#provider $provide.provider()}.
            */
           provider: invokeLater('$provide', 'provider'),
@@ -1694,7 +1694,7 @@ function setupModuleLoader(window) {
            * @module ng
            * @param {string} name service name
            * @param {Function} providerFunction Function for creating new instance of the service.
-           * @description
+           * @description.txt
            * See {@link auto.$provide#factory $provide.factory()}.
            */
           factory: invokeLater('$provide', 'factory'),
@@ -1705,7 +1705,7 @@ function setupModuleLoader(window) {
            * @module ng
            * @param {string} name service name
            * @param {Function} constructor A constructor function that will be instantiated.
-           * @description
+           * @description.txt
            * See {@link auto.$provide#service $provide.service()}.
            */
           service: invokeLater('$provide', 'service'),
@@ -1716,7 +1716,7 @@ function setupModuleLoader(window) {
            * @module ng
            * @param {string} name service name
            * @param {*} object Service instance object.
-           * @description
+           * @description.txt
            * See {@link auto.$provide#value $provide.value()}.
            */
           value: invokeLater('$provide', 'value'),
@@ -1727,7 +1727,7 @@ function setupModuleLoader(window) {
            * @module ng
            * @param {string} name constant name
            * @param {*} object Constant value.
-           * @description
+           * @description.txt
            * Because the constant are fixed, they get applied before other provide methods.
            * See {@link auto.$provide#constant $provide.constant()}.
            */
@@ -1740,7 +1740,7 @@ function setupModuleLoader(window) {
            * @param {string} name animation name
            * @param {Function} animationFactory Factory function for creating new instance of an
            *                                    animation.
-           * @description
+           * @description.txt
            *
            * **NOTE**: animations take effect only if the **ngAnimate** module is loaded.
            *
@@ -1773,7 +1773,7 @@ function setupModuleLoader(window) {
            * @module ng
            * @param {string} name Filter name.
            * @param {Function} filterFactory Factory function for creating new instance of filter.
-           * @description
+           * @description.txt
            * See {@link ng.$filterProvider#register $filterProvider.register()}.
            */
           filter: invokeLater('$filterProvider', 'register'),
@@ -1785,7 +1785,7 @@ function setupModuleLoader(window) {
            * @param {string|Object} name Controller name, or an object map of controllers where the
            *    keys are the names and the values are the constructors.
            * @param {Function} constructor Controller constructor function.
-           * @description
+           * @description.txt
            * See {@link ng.$controllerProvider#register $controllerProvider.register()}.
            */
           controller: invokeLater('$controllerProvider', 'register'),
@@ -1798,7 +1798,7 @@ function setupModuleLoader(window) {
            *    keys are the names and the values are the factories.
            * @param {Function} directiveFactory Factory function for creating new instance of
            * directives.
-           * @description
+           * @description.txt
            * See {@link ng.$compileProvider#directive $compileProvider.directive()}.
            */
           directive: invokeLater('$compileProvider', 'directive'),
@@ -1809,7 +1809,7 @@ function setupModuleLoader(window) {
            * @module ng
            * @param {Function} configFn Execute this function on module load. Useful for service
            *    configuration.
-           * @description
+           * @description.txt
            * Use this method to register work which needs to be performed on module loading.
            * For more about how to configure services, see
            * {@link providers#providers_provider-recipe Provider Recipe}.
@@ -1822,7 +1822,7 @@ function setupModuleLoader(window) {
            * @module ng
            * @param {Function} initializationFn Execute this function after injector creation.
            *    Useful for application initialization.
-           * @description
+           * @description.txt
            * Use this method to register work which should be performed when the injector is done
            * loading all modules.
            */
@@ -1938,7 +1938,7 @@ function setupModuleLoader(window) {
  * @ngdoc object
  * @name angular.version
  * @module ng
- * @description
+ * @description.txt
  * An object that contains information about the current AngularJS version. This object has the
  * following properties:
  *
@@ -4050,7 +4050,7 @@ var $AnimateProvider = ['$provide', function($provide) {
    * @ngdoc method
    * @name $animateProvider#register
    *
-   * @description
+   * @description.txt
    * Registers a new injectable animation factory function. The factory function produces the
    * animation object which contains callback functions for each event that is expected to be
    * animated.
@@ -4089,7 +4089,7 @@ var $AnimateProvider = ['$provide', function($provide) {
    * @ngdoc method
    * @name $animateProvider#classNameFilter
    *
-   * @description
+   * @description.txt
    * Sets and/or returns the CSS class regular expression that is checked when performing
    * an animation. Upon bootstrap the classNameFilter value is not set at all and will
    * therefore enable $animate to attempt to perform an animation on any element.
@@ -4136,7 +4136,7 @@ var $AnimateProvider = ['$provide', function($provide) {
        * @ngdoc method
        * @name $animate#enter
        * @kind function
-       * @description Inserts the element into the DOM either after the `after` element or within
+       * @description.txt Inserts the element into the DOM either after the `after` element or within
        *   the `parent` element. Once complete, the done() callback will be fired (if provided).
        * @param {DOMElement} element the element which will be inserted into the DOM
        * @param {DOMElement} parent the parent element which will append the element as
@@ -4163,7 +4163,7 @@ var $AnimateProvider = ['$provide', function($provide) {
        * @ngdoc method
        * @name $animate#leave
        * @kind function
-       * @description Removes the element from the DOM. Once complete, the done() callback will be
+       * @description.txt Removes the element from the DOM. Once complete, the done() callback will be
        *   fired (if provided).
        * @param {DOMElement} element the element which will be removed from the DOM
        * @param {Function=} done callback function that will be called after the element has been
@@ -4179,7 +4179,7 @@ var $AnimateProvider = ['$provide', function($provide) {
        * @ngdoc method
        * @name $animate#move
        * @kind function
-       * @description Moves the position of the provided element within the DOM to be placed
+       * @description.txt Moves the position of the provided element within the DOM to be placed
        * either after the `after` element or inside of the `parent` element. Once complete, the
        * done() callback will be fired (if provided).
        *
@@ -4203,7 +4203,7 @@ var $AnimateProvider = ['$provide', function($provide) {
        * @ngdoc method
        * @name $animate#addClass
        * @kind function
-       * @description Adds the provided className CSS class value to the provided element. Once
+       * @description.txt Adds the provided className CSS class value to the provided element. Once
        * complete, the done() callback will be fired (if provided).
        * @param {DOMElement} element the element which will have the className value
        *   added to it
@@ -4226,7 +4226,7 @@ var $AnimateProvider = ['$provide', function($provide) {
        * @ngdoc method
        * @name $animate#removeClass
        * @kind function
-       * @description Removes the provided className CSS class value from the provided element.
+       * @description.txt Removes the provided className CSS class value from the provided element.
        * Once complete, the done() callback will be fired (if provided).
        * @param {DOMElement} element the element which will have the className value
        *   removed from it
@@ -4249,7 +4249,7 @@ var $AnimateProvider = ['$provide', function($provide) {
        * @ngdoc method
        * @name $animate#setClass
        * @kind function
-       * @description Adds and/or removes the given CSS classes to and from the element.
+       * @description.txt Adds and/or removes the given CSS classes to and from the element.
        * Once complete, the done() callback will be fired (if provided).
        * @param {DOMElement} element the element which will have its CSS classes changed
        *   removed from it
@@ -4372,7 +4372,7 @@ function Browser(window, document, $log, $sniffer) {
    *
    * @param {function()} fn Poll function to add
    *
-   * @description
+   * @description.txt
    * Adds a function to the list of functions that poller periodically executes,
    * and starts polling if not started yet.
    *
@@ -4388,7 +4388,7 @@ function Browser(window, document, $log, $sniffer) {
    * @param {number} interval How often should browser call poll functions (ms)
    * @param {function()} setTimeout Reference to a real or fake `setTimeout` function.
    *
-   * @description
+   * @description.txt
    * Configures the poller to run in the specified intervals, using the specified
    * setTimeout fn and kicks it off.
    */
@@ -4410,7 +4410,7 @@ function Browser(window, document, $log, $sniffer) {
   /**
    * @name $browser#url
    *
-   * @description
+   * @description.txt
    * GETTER:
    * Without any argument, this method just returns current value of location.href.
    *
@@ -4476,7 +4476,7 @@ function Browser(window, document, $log, $sniffer) {
   /**
    * @name $browser#onUrlChange
    *
-   * @description
+   * @description.txt
    * Register callback function that will be called, when url changes.
    *
    * It's only called when the url is changed from outside of angular:
@@ -4522,7 +4522,7 @@ function Browser(window, document, $log, $sniffer) {
   /**
    * @name $browser#baseHref
    *
-   * @description
+   * @description.txt
    * Returns current <base href>
    * (always relative - without domain)
    *
@@ -4546,7 +4546,7 @@ function Browser(window, document, $log, $sniffer) {
    * @param {string=} name Cookie name
    * @param {string=} value Cookie value
    *
-   * @description
+   * @description.txt
    * The cookies method provides a 'private' low level access to browser cookies.
    * It is not meant to be used directly, use the $cookie service instead.
    *
@@ -4615,7 +4615,7 @@ function Browser(window, document, $log, $sniffer) {
    * @param {number=} [delay=0] of milliseconds to defer the function execution.
    * @returns {*} DeferId that can be used to cancel the task via `$browser.defer.cancel()`.
    *
-   * @description
+   * @description.txt
    * Executes a fn asynchronously via `setTimeout(fn, delay)`.
    *
    * Unlike when calling `setTimeout` directly, in test this function is mocked and instead of using
@@ -4638,7 +4638,7 @@ function Browser(window, document, $log, $sniffer) {
   /**
    * @name $browser#defer.cancel
    *
-   * @description
+   * @description.txt
    * Cancels a deferred task identified with `deferId`.
    *
    * @param {*} deferId Token returned by the `$browser.defer` function.
@@ -4807,7 +4807,7 @@ function $CacheFactoryProvider() {
          * @name $cacheFactory.Cache#put
          * @kind function
          *
-         * @description
+         * @description.txt
          * Inserts a named entry into the {@link $cacheFactory.Cache Cache} object to be
          * retrieved later, and incrementing the size of the cache if the key was not already
          * present in the cache. If behaving like an LRU cache, it will also remove stale
@@ -4843,7 +4843,7 @@ function $CacheFactoryProvider() {
          * @name $cacheFactory.Cache#get
          * @kind function
          *
-         * @description
+         * @description.txt
          * Retrieves named data stored in the {@link $cacheFactory.Cache Cache} object.
          *
          * @param {string} key the key of the data to be retrieved
@@ -4867,7 +4867,7 @@ function $CacheFactoryProvider() {
          * @name $cacheFactory.Cache#remove
          * @kind function
          *
-         * @description
+         * @description.txt
          * Removes an entry from the {@link $cacheFactory.Cache Cache} object.
          *
          * @param {string} key the key of the entry to be removed
@@ -4895,7 +4895,7 @@ function $CacheFactoryProvider() {
          * @name $cacheFactory.Cache#removeAll
          * @kind function
          *
-         * @description
+         * @description.txt
          * Clears the cache object of any entries.
          */
         removeAll: function() {
@@ -4911,7 +4911,7 @@ function $CacheFactoryProvider() {
          * @name $cacheFactory.Cache#destroy
          * @kind function
          *
-         * @description
+         * @description.txt
          * Destroys the {@link $cacheFactory.Cache Cache} object entirely,
          * removing it from the {@link $cacheFactory $cacheFactory} set.
          */
@@ -4928,7 +4928,7 @@ function $CacheFactoryProvider() {
          * @name $cacheFactory.Cache#info
          * @kind function
          *
-         * @description
+         * @description.txt
          * Retrieve information regarding a particular {@link $cacheFactory.Cache Cache}.
          *
          * @returns {object} an object with the following properties:
@@ -4980,7 +4980,7 @@ function $CacheFactoryProvider() {
    * @ngdoc method
    * @name $cacheFactory#info
    *
-   * @description
+   * @description.txt
    * Get information about all the caches that have been created
    *
    * @returns {Object} - key-value map of `cacheId` to the result of calling `cache#info`
@@ -4998,7 +4998,7 @@ function $CacheFactoryProvider() {
    * @ngdoc method
    * @name $cacheFactory#get
    *
-   * @description
+   * @description.txt
    * Get access to a cache object by the `cacheId` used when it was created.
    *
    * @param {string} cacheId Name or id of a cache to access.
@@ -5581,7 +5581,7 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
    * @name $compileProvider#directive
    * @kind function
    *
-   * @description
+   * @description.txt
    * Register a new directive with the compiler.
    *
    * @param {string|Object} name Name of the directive in camel-case (i.e. <code>ngBind</code> which
@@ -5634,7 +5634,7 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
    * @name $compileProvider#aHrefSanitizationWhitelist
    * @kind function
    *
-   * @description
+   * @description.txt
    * Retrieves or overrides the default regular expression that is used for whitelisting of safe
    * urls during a[href] sanitization.
    *
@@ -5664,7 +5664,7 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
    * @name $compileProvider#imgSrcSanitizationWhitelist
    * @kind function
    *
-   * @description
+   * @description.txt
    * Retrieves or overrides the default regular expression that is used for whitelisting of safe
    * urls during img[src] sanitization.
    *
@@ -5708,7 +5708,7 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
        * @name $compile.directive.Attributes#$addClass
        * @kind function
        *
-       * @description
+       * @description.txt
        * Adds the CSS class value specified by the classVal parameter to the element. If animations
        * are enabled then an animation will be triggered for the class addition.
        *
@@ -5725,7 +5725,7 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
        * @name $compile.directive.Attributes#$removeClass
        * @kind function
        *
-       * @description
+       * @description.txt
        * Removes the CSS class value specified by the classVal parameter from the element. If
        * animations are enabled then an animation will be triggered for the class removal.
        *
@@ -5742,7 +5742,7 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
        * @name $compile.directive.Attributes#$updateClass
        * @kind function
        *
-       * @description
+       * @description.txt
        * Adds and removes the appropriate CSS class values to the element based on the difference
        * between the new and old CSS class values (specified as newClasses and oldClasses).
        *
@@ -5830,7 +5830,7 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
        * @name $compile.directive.Attributes#$observe
        * @kind function
        *
-       * @description
+       * @description.txt
        * Observes an interpolated attribute.
        *
        * The observer function will be invoked once during the next `$digest` following
@@ -8124,7 +8124,7 @@ function $HttpProvider() {
          * @ngdoc property
          * @name $http#defaults
          *
-         * @description
+         * @description.txt
          * Runtime equivalent of the `$httpProvider.defaults` property. Allows configuration of
          * default headers, withCredentials as well as request and response transformations.
          *
@@ -8535,7 +8535,7 @@ function $InterpolateProvider() {
   /**
    * @ngdoc method
    * @name $interpolateProvider#startSymbol
-   * @description
+   * @description.txt
    * Symbol to denote start of expression in the interpolated string. Defaults to `{{`.
    *
    * @param {string=} value new value to set the starting symbol to.
@@ -8553,7 +8553,7 @@ function $InterpolateProvider() {
   /**
    * @ngdoc method
    * @name $interpolateProvider#endSymbol
-   * @description
+   * @description.txt
    * Symbol to denote the end of expression in the interpolated string. Defaults to `}}`.
    *
    * @param {string=} value new value to set the ending symbol to.
@@ -8581,7 +8581,7 @@ function $InterpolateProvider() {
      * @requires $parse
      * @requires $sce
      *
-     * @description
+     * @description.txt
      *
      * Compiles a string with markup into an interpolation function. This service is used by the
      * HTML {@link ng.$compile $compile} service for data binding. See
@@ -8708,7 +8708,7 @@ function $InterpolateProvider() {
     /**
      * @ngdoc method
      * @name $interpolate#startSymbol
-     * @description
+     * @description.txt
      * Symbol to denote the start of expression in the interpolated string. Defaults to `{{`.
      *
      * Use {@link ng.$interpolateProvider#startSymbol $interpolateProvider#startSymbol} to change
@@ -8724,7 +8724,7 @@ function $InterpolateProvider() {
     /**
      * @ngdoc method
      * @name $interpolate#endSymbol
-     * @description
+     * @description.txt
      * Symbol to denote the end of expression in the interpolated string. Defaults to `}}`.
      *
      * Use {@link ng.$interpolateProvider#endSymbol $interpolateProvider#endSymbol} to change
@@ -8904,7 +8904,7 @@ function $IntervalProvider() {
       * @ngdoc method
       * @name $interval#cancel
       *
-      * @description
+      * @description.txt
       * Cancels a task associated with the `promise`.
       *
       * @param {promise} promise returned by the `$interval` function.
@@ -9294,7 +9294,7 @@ LocationHashbangInHtml5Url.prototype =
    * @ngdoc method
    * @name $location#absUrl
    *
-   * @description
+   * @description.txt
    * This method is getter only.
    *
    * Return full url representation with all segments encoded according to rules specified in
@@ -9308,7 +9308,7 @@ LocationHashbangInHtml5Url.prototype =
    * @ngdoc method
    * @name $location#url
    *
-   * @description
+   * @description.txt
    * This method is getter / setter.
    *
    * Return url (e.g. `/path?a=b#hash`) when called without any parameter.
@@ -9335,7 +9335,7 @@ LocationHashbangInHtml5Url.prototype =
    * @ngdoc method
    * @name $location#protocol
    *
-   * @description
+   * @description.txt
    * This method is getter only.
    *
    * Return protocol of current url.
@@ -9348,7 +9348,7 @@ LocationHashbangInHtml5Url.prototype =
    * @ngdoc method
    * @name $location#host
    *
-   * @description
+   * @description.txt
    * This method is getter only.
    *
    * Return host of current url.
@@ -9361,7 +9361,7 @@ LocationHashbangInHtml5Url.prototype =
    * @ngdoc method
    * @name $location#port
    *
-   * @description
+   * @description.txt
    * This method is getter only.
    *
    * Return port of current url.
@@ -9374,7 +9374,7 @@ LocationHashbangInHtml5Url.prototype =
    * @ngdoc method
    * @name $location#path
    *
-   * @description
+   * @description.txt
    * This method is getter / setter.
    *
    * Return path of current url when called without any parameter.
@@ -9395,7 +9395,7 @@ LocationHashbangInHtml5Url.prototype =
    * @ngdoc method
    * @name $location#search
    *
-   * @description
+   * @description.txt
    * This method is getter / setter.
    *
    * Return search part (as object) of current url when called without any parameter.
@@ -9464,7 +9464,7 @@ LocationHashbangInHtml5Url.prototype =
    * @ngdoc method
    * @name $location#hash
    *
-   * @description
+   * @description.txt
    * This method is getter / setter.
    *
    * Return hash fragment when called without any parameter.
@@ -9480,7 +9480,7 @@ LocationHashbangInHtml5Url.prototype =
    * @ngdoc method
    * @name $location#replace
    *
-   * @description
+   * @description.txt
    * If called, all changes to $location during current `$digest` will be replacing current history
    * record, instead of adding new one.
    */
@@ -9549,7 +9549,7 @@ function $LocationProvider(){
   /**
    * @ngdoc property
    * @name $locationProvider#hashPrefix
-   * @description
+   * @description.txt
    * @param {string=} prefix Prefix for hash part (containing path and search)
    * @returns {*} current value if used as getter or itself (chaining) if used as setter
    */
@@ -9565,7 +9565,7 @@ function $LocationProvider(){
   /**
    * @ngdoc property
    * @name $locationProvider#html5Mode
-   * @description
+   * @description.txt
    * @param {boolean=} mode Use HTML5 strategy if available.
    * @returns {*} current value if used as getter or itself (chaining) if used as setter
    */
@@ -9797,7 +9797,7 @@ function $LogProvider(){
   /**
    * @ngdoc property
    * @name $logProvider#debugEnabled
-   * @description
+   * @description.txt
    * @param {boolean=} flag enable or disable debug level messages
    * @returns {*} current value if used as getter or itself (chaining) if used as setter
    */
@@ -9816,7 +9816,7 @@ function $LogProvider(){
        * @ngdoc method
        * @name $log#log
        *
-       * @description
+       * @description.txt
        * Write a log message
        */
       log: consoleLog('log'),
@@ -9825,7 +9825,7 @@ function $LogProvider(){
        * @ngdoc method
        * @name $log#info
        *
-       * @description
+       * @description.txt
        * Write an information message
        */
       info: consoleLog('info'),
@@ -9834,7 +9834,7 @@ function $LogProvider(){
        * @ngdoc method
        * @name $log#warn
        *
-       * @description
+       * @description.txt
        * Write a warning message
        */
       warn: consoleLog('warn'),
@@ -9843,7 +9843,7 @@ function $LogProvider(){
        * @ngdoc method
        * @name $log#error
        *
-       * @description
+       * @description.txt
        * Write an error message
        */
       error: consoleLog('error'),
@@ -9852,7 +9852,7 @@ function $LogProvider(){
        * @ngdoc method
        * @name $log#debug
        *
-       * @description
+       * @description.txt
        * Write a debug message
        */
       debug: (function () {
@@ -11036,7 +11036,7 @@ function $ParseProvider() {
    *
    * @ngdoc method
    * @name $parseProvider#unwrapPromises
-   * @description
+   * @description.txt
    *
    * **This feature is deprecated, see deprecation notes below for more info**
    *
@@ -11090,7 +11090,7 @@ function $ParseProvider() {
    *
    * @ngdoc method
    * @name $parseProvider#logPromiseWarnings
-   * @description
+   * @description.txt
    *
    * Controls whether Angular should log a warning on any encounter of a promise in an expression.
    *
@@ -11347,7 +11347,7 @@ function qFactory(nextTick, exceptionHandler) {
    * @name $q#defer
    * @kind function
    *
-   * @description
+   * @description.txt
    * Creates a `Deferred` object which represents a task which will finish in the future.
    *
    * @returns {Deferred} Returns a new instance of deferred.
@@ -11504,7 +11504,7 @@ function qFactory(nextTick, exceptionHandler) {
    * @name $q#reject
    * @kind function
    *
-   * @description
+   * @description.txt
    * Creates a promise that is resolved as rejected with the specified `reason`. This api should be
    * used to forward rejection in a chain of promises. If you are dealing with the last promise in
    * a promise chain, you don't need to worry about it.
@@ -11564,7 +11564,7 @@ function qFactory(nextTick, exceptionHandler) {
    * @name $q#when
    * @kind function
    *
-   * @description
+   * @description.txt
    * Wraps an object that might be a value or a (3rd party) then-able promise into a $q promise.
    * This is useful when you are dealing with an object that might or might not be a promise, or if
    * the promise comes from a source that can't be trusted.
@@ -11636,7 +11636,7 @@ function qFactory(nextTick, exceptionHandler) {
    * @name $q#all
    * @kind function
    *
-   * @description
+   * @description.txt
    * Combines multiple promises into a single promise that is resolved when all of the input
    * promises are resolved.
    *
@@ -11796,7 +11796,7 @@ function $RootScopeProvider(){
      * @ngdoc type
      * @name $rootScope.Scope
      *
-     * @description
+     * @description.txt
      * A root scope can be retrieved using the {@link ng.$rootScope $rootScope} key from the
      * {@link auto.$injector $injector}. Child scopes are created using the
      * {@link ng.$rootScope.Scope#$new $new()} method. (Most scopes are created automatically when
@@ -11861,7 +11861,7 @@ function $RootScopeProvider(){
        * @name $rootScope.Scope#$new
        * @kind function
        *
-       * @description
+       * @description.txt
        * Creates a new child {@link ng.$rootScope.Scope scope}.
        *
        * The parent scope will propagate the {@link ng.$rootScope.Scope#$digest $digest()} and
@@ -11923,7 +11923,7 @@ function $RootScopeProvider(){
        * @name $rootScope.Scope#$watch
        * @kind function
        *
-       * @description
+       * @description.txt
        * Registers a `listener` callback to be executed whenever the `watchExpression` changes.
        *
        * - The `watchExpression` is called on every call to {@link ng.$rootScope.Scope#$digest
@@ -12083,7 +12083,7 @@ function $RootScopeProvider(){
        * @name $rootScope.Scope#$watchCollection
        * @kind function
        *
-       * @description
+       * @description.txt
        * Shallow watches the properties of an object and fires whenever any of the properties change
        * (for arrays, this implies watching the array items; for object maps, this implies watching
        * the properties). If a change is detected, the `listener` callback is fired.
@@ -12259,7 +12259,7 @@ function $RootScopeProvider(){
        * @name $rootScope.Scope#$digest
        * @kind function
        *
-       * @description
+       * @description.txt
        * Processes all of the {@link ng.$rootScope.Scope#$watch watchers} of the current scope and
        * its children. Because a {@link ng.$rootScope.Scope#$watch watcher}'s listener can change
        * the model, the `$digest()` keeps calling the {@link ng.$rootScope.Scope#$watch watchers}
@@ -12430,7 +12430,7 @@ function $RootScopeProvider(){
        * @name $rootScope.Scope#$destroy
        * @kind function
        *
-       * @description
+       * @description.txt
        * Removes the current scope (and all of its children) from the parent scope. Removal implies
        * that calls to {@link ng.$rootScope.Scope#$digest $digest()} will no longer
        * propagate to the current scope and its children. Removal also implies that the current
@@ -12491,7 +12491,7 @@ function $RootScopeProvider(){
        * @name $rootScope.Scope#$eval
        * @kind function
        *
-       * @description
+       * @description.txt
        * Executes the `expression` on the current scope and returns the result. Any exceptions in
        * the expression are propagated (uncaught). This is useful when evaluating Angular
        * expressions.
@@ -12523,7 +12523,7 @@ function $RootScopeProvider(){
        * @name $rootScope.Scope#$evalAsync
        * @kind function
        *
-       * @description
+       * @description.txt
        * Executes the expression on the current scope at a later point in time.
        *
        * The `$evalAsync` makes no guarantees as to when the `expression` will be executed, only
@@ -12570,7 +12570,7 @@ function $RootScopeProvider(){
        * @name $rootScope.Scope#$apply
        * @kind function
        *
-       * @description
+       * @description.txt
        * `$apply()` is used to execute an expression in angular from outside of the angular
        * framework. (For example from browser DOM events, setTimeout, XHR or third party libraries).
        * Because we are calling into the angular framework we need to perform proper scope life
@@ -12632,7 +12632,7 @@ function $RootScopeProvider(){
        * @name $rootScope.Scope#$on
        * @kind function
        *
-       * @description
+       * @description.txt
        * Listens on events of a given type. See {@link ng.$rootScope.Scope#$emit $emit} for
        * discussion of event life cycle.
        *
@@ -12681,7 +12681,7 @@ function $RootScopeProvider(){
        * @name $rootScope.Scope#$emit
        * @kind function
        *
-       * @description
+       * @description.txt
        * Dispatches an event `name` upwards through the scope hierarchy notifying the
        * registered {@link ng.$rootScope.Scope#$on} listeners.
        *
@@ -12749,7 +12749,7 @@ function $RootScopeProvider(){
        * @name $rootScope.Scope#$broadcast
        * @kind function
        *
-       * @description
+       * @description.txt
        * Dispatches an event `name` downwards to all child scopes (and their children) notifying the
        * registered {@link ng.$rootScope.Scope#$on} listeners.
        *
@@ -12858,7 +12858,7 @@ function $RootScopeProvider(){
 }
 
 /**
- * @description
+ * @description.txt
  * Private service to sanitize uris for links and images. Used by $compile and $sanitize.
  */
 function $$SanitizeUriProvider() {
@@ -12866,7 +12866,7 @@ function $$SanitizeUriProvider() {
     imgSrcSanitizationWhitelist = /^\s*(https?|ftp|file):|data:image\//;
 
   /**
-   * @description
+   * @description.txt
    * Retrieves or overrides the default regular expression that is used for whitelisting of safe
    * urls during a[href] sanitization.
    *
@@ -12891,7 +12891,7 @@ function $$SanitizeUriProvider() {
 
 
   /**
-   * @description
+   * @description.txt
    * Retrieves or overrides the default regular expression that is used for whitelisting of safe
    * urls during img[src] sanitization.
    *
@@ -13073,7 +13073,7 @@ function $SceDelegateProvider() {
    *     provided.  This must be an array or null.  A snapshot of this array is used so further
    *     changes to the array are ignored.
    *
-   *     Follow {@link ng.$sce#resourceUrlPatternItem this link} for a description of the items
+   *     Follow {@link ng.$sce#resourceUrlPatternItem this link} for a description.txt of the items
    *     allowed in this array.
    *
    *     Note: **an empty whitelist array will block all URLs**!
@@ -13083,7 +13083,7 @@ function $SceDelegateProvider() {
    * The **default value** when no whitelist has been explicitly set is `['self']` allowing only
    * same origin resource requests.
    *
-   * @description
+   * @description.txt
    * Sets/Gets the whitelist of trusted resource URLs.
    */
   this.resourceUrlWhitelist = function (value) {
@@ -13102,7 +13102,7 @@ function $SceDelegateProvider() {
    *     provided.  This must be an array or null.  A snapshot of this array is used so further
    *     changes to the array are ignored.
    *
-   *     Follow {@link ng.$sce#resourceUrlPatternItem this link} for a description of the items
+   *     Follow {@link ng.$sce#resourceUrlPatternItem this link} for a description.txt of the items
    *     allowed in this array.
    *
    *     The typical usage for the blacklist is to **block
@@ -13116,7 +13116,7 @@ function $SceDelegateProvider() {
    * The **default value** when no whitelist has been explicitly set is the empty array (i.e. there
    * is no blacklist.)
    *
-   * @description
+   * @description.txt
    * Sets/Gets the blacklist of trusted resource URLs.
    */
 
@@ -13200,7 +13200,7 @@ function $SceDelegateProvider() {
      * @ngdoc method
      * @name $sceDelegate#trustAs
      *
-     * @description
+     * @description.txt
      * Returns an object that is trusted by angular for use in specified strict
      * contextual escaping contexts (such as ng-bind-html, ng-include, any src
      * attribute interpolation, any dom event binding attribute interpolation
@@ -13237,7 +13237,7 @@ function $SceDelegateProvider() {
      * @ngdoc method
      * @name $sceDelegate#valueOf
      *
-     * @description
+     * @description.txt
      * If the passed parameter had been returned by a prior call to {@link ng.$sceDelegate#trustAs
      * `$sceDelegate.trustAs`}, returns the value that had been passed to {@link
      * ng.$sceDelegate#trustAs `$sceDelegate.trustAs`}.
@@ -13263,7 +13263,7 @@ function $SceDelegateProvider() {
      * @ngdoc method
      * @name $sceDelegate#getTrusted
      *
-     * @description
+     * @description.txt
      * Takes the result of a {@link ng.$sceDelegate#trustAs `$sceDelegate.trustAs`} call and
      * returns the originally supplied value if the queried context type is a supertype of the
      * created type.  If this condition isn't satisfied, throws an exception.
@@ -13599,7 +13599,7 @@ function $SceProvider() {
    * @param {boolean=} value If provided, then enables/disables SCE.
    * @return {boolean} true if SCE is enabled, false otherwise.
    *
-   * @description
+   * @description.txt
    * Enables/disables SCE and returns the current value.
    */
   this.enabled = function (value) {
@@ -13677,7 +13677,7 @@ function $SceProvider() {
      * @return {Boolean} true if SCE is enabled, false otherwise.  If you want to set the value, you
      * have to do it at module config time on {@link ng.$sceProvider $sceProvider}.
      *
-     * @description
+     * @description.txt
      * Returns a boolean indicating if SCE is enabled.
      */
     sce.isEnabled = function () {
@@ -14140,7 +14140,7 @@ function $TimeoutProvider() {
       * @ngdoc method
       * @name $timeout#cancel
       *
-      * @description
+      * @description.txt
       * Cancels a task associated with the `promise`. As a result of this, the promise will be
       * resolved with a rejection.
       *
@@ -14209,7 +14209,7 @@ var originUrl = urlResolve(window.location.href, true);
  *
  * @kind function
  * @param {string} url The URL to be parsed.
- * @description Normalizes and parses a URL.
+ * @description.txt Normalizes and parses a URL.
  * @returns {object} Returns the normalized URL as a dictionary.
  *
  *   | member name   | Description    |
@@ -15966,7 +15966,7 @@ function FormController(element, attrs, $scope, $animate) {
    * @ngdoc method
    * @name form.FormController#$addControl
    *
-   * @description
+   * @description.txt
    * Register a control with the form.
    *
    * Input elements using ngModelController do this automatically when they are linked.
@@ -15986,7 +15986,7 @@ function FormController(element, attrs, $scope, $animate) {
    * @ngdoc method
    * @name form.FormController#$removeControl
    *
-   * @description
+   * @description.txt
    * Deregister a control from the form.
    *
    * Input elements using ngModelController do this automatically when they are destroyed.
@@ -16006,7 +16006,7 @@ function FormController(element, attrs, $scope, $animate) {
    * @ngdoc method
    * @name form.FormController#$setValidity
    *
-   * @description
+   * @description.txt
    * Sets the validity of a form control.
    *
    * This method will also propagate to parent forms.
@@ -16053,7 +16053,7 @@ function FormController(element, attrs, $scope, $animate) {
    * @ngdoc method
    * @name form.FormController#$setDirty
    *
-   * @description
+   * @description.txt
    * Sets the form to a dirty state.
    *
    * This method can be called to add the 'ng-dirty' class and set the form to a dirty
@@ -16071,7 +16071,7 @@ function FormController(element, attrs, $scope, $animate) {
    * @ngdoc method
    * @name form.FormController#$setPristine
    *
-   * @description
+   * @description.txt
    * Sets the form to its pristine state.
    *
    * This method can be called to remove the 'ng-dirty' class and set the form to its pristine
@@ -17357,7 +17357,7 @@ var NgModelController = ['$scope', '$exceptionHandler', '$attrs', '$element', '$
    * @ngdoc method
    * @name ngModel.NgModelController#$render
    *
-   * @description
+   * @description.txt
    * Called when the view needs to be updated. It is expected that the user of the ng-model
    * directive will implement this method.
    */
@@ -17367,7 +17367,7 @@ var NgModelController = ['$scope', '$exceptionHandler', '$attrs', '$element', '$
    * @ngdoc method
    * @name ngModel.NgModelController#$isEmpty
    *
-   * @description
+   * @description.txt
    * This is called when we need to determine if the value of the input is empty.
    *
    * For instance, the required directive does this to work out if the input has data or not.
@@ -17404,7 +17404,7 @@ var NgModelController = ['$scope', '$exceptionHandler', '$attrs', '$element', '$
    * @ngdoc method
    * @name ngModel.NgModelController#$setValidity
    *
-   * @description
+   * @description.txt
    * Change the validity state, and notifies the form when the control changes validity. (i.e. it
    * does not notify form if given validator is already marked as invalid).
    *
@@ -17447,7 +17447,7 @@ var NgModelController = ['$scope', '$exceptionHandler', '$attrs', '$element', '$
    * @ngdoc method
    * @name ngModel.NgModelController#$setPristine
    *
-   * @description
+   * @description.txt
    * Sets the control to its pristine state.
    *
    * This method can be called to remove the 'ng-dirty' class and set the control to its pristine
@@ -17464,7 +17464,7 @@ var NgModelController = ['$scope', '$exceptionHandler', '$attrs', '$element', '$
    * @ngdoc method
    * @name ngModel.NgModelController#$setViewValue
    *
-   * @description
+   * @description.txt
    * Update the view value.
    *
    * This method should be called when the view value changes, typically from within a DOM event handler.

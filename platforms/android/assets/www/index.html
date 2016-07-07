@@ -4,26 +4,69 @@
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
     <title></title>
+    <!-- build:css dist_css/styles.css -->
+    <link href="css/ionic.app.css" rel="stylesheet">
+    <link href="lib/leaflet/dist/leaflet.css" rel="stylesheet"  />
+    <link href="lib/leaflet/dist/leaflet.label.css" rel="stylesheet"  />
+    <link href="lib/leaflet/dist/MarkerCluster.css" rel="stylesheet"  />
+    <link href="lib/leaflet/dist/MarkerCluster.Default.css" rel="stylesheet"  />
 
-    <link rel="stylesheet" href="dist_css/styles.css">
-    <script src="dist_js/modules.js"></script>
+    <!-- endbuild -->
+    <!-- build:js dist_js/modules.js -->
+    <script src="lib/ionic/js/ionic.bundle.js"></script>
+    <script src="lib/angular-resource/angular-resource.min.js"></script>
+    <script src="lib/underscore/underscore-min.js"></script>
+    <script src="lib/ngCordova/dist/ng-cordova.min.js"></script>
+    <script src="lib/moment/min/moment.min.js"></script>
+    <script src="lib/angular-moment/angular-moment.min.js"></script>
+    <script src="lib/angular-slugify/dist/angular-slugify.min.js"></script>
+    <script src="lib/collide/collide.js"></script>
+
+    <!-- endbuild -->
+
+        <div id="data_links">
+<!-- DATA LIBRARY. DON'T TOUCH/REMOVE THIS COMMENT! -->
+<!-- <script src="json/Countries/map.js"></script>
+<script src="json/Countries/config.js"></script>
+<script src="json/Nationalities/map.js"></script>
+<script src="json/Nationalities/config.js"></script> -->
+<!-- <script src="json/Zones/map.js"></script>
+<script src="json/Zones/config.js"></script> -->
+<add-map></add-map>
+<dinamicMap></dinamicMap>
+<!-- DATA LIBRARY. DON'T TOUCH/REMOVE THIS COMMENT! -->
+        </div>
 
     <!-- cordova script (this will be a 404 during development) -->
-    <script src="cordova.js"></script>
+<!--     <script src="cordova.js"></script> -->
 
     <!-- MAP LIBRARIES -->
     <script src="lib/leaflet/dist/leaflet.js"></script>
     <script src="lib/angular-leaflet-directive/dist/angular-leaflet-directive.min.js"></script>
     <script src="lib/geojson-vt/geojson-vt-dev.js"></script>
     <script src="lib/geojson-vt/L.CanvasTiles.js"></script>
+    <script src="lib/leaflet/dist/leaflet.label.js"></script>
+    <script src="lib/leaflet/dist/leaflet.markercluster.js"></script>
 
-    <script src="json/Countries.js"></script>
-    <script src="json/USStates.js"></script>
 
-    <script src="dist_js/app.js"></script>
+    <!-- build:js dist_js/app.js -->
+    <script src="dist/dist_js/app/app.js"></script>
+    <script src="dist/dist_js/app/attributes.js"></script>
+    <script src="dist/dist_js/app/translation.js"></script>
+    <script src="dist/dist_js/app/geoJson.js"></script>
+    <script src="dist/dist_js/app/controllers.js"></script>
+    <script src="dist/dist_js/app/linkCreator.js"></script>
+    <script src="dist/dist_js/app/directives.js"></script>
+    <script src="dist/dist_js/app/filters.js"></script>
+    <script src="dist/dist_js/app/services.js"></script>
+    <script src="dist/dist_js/app/factories.js"></script>
+    <script src="dist/dist_js/app/templates.js"></script>
+    <script src="dist/dist_js/app/config.js"></script>
+    <!-- endbuild -->
 
   </head>
   <body ng-app="MapAble" ng-strict-di>
     <ion-nav-view></ion-nav-view>
+    <!-- <script src="lib/requirejs/require.js" data-main="js/main.js"></script> -->
   </body>
 </html>

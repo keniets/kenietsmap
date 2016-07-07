@@ -1,8 +1,8 @@
-<ion-side-menus enable-menu-with-back-views="false">
+<ion-side-menus enable-menu-with-back-views="true">
   <ion-side-menu-content class="post-size-14px">
     <ion-nav-bar class="bar-dark">
       <ion-nav-buttons side="left">
-          <button menu-toggle="left" class="button button-icon"><i class="icon ion-navicon light"></i></button>
+        <button menu-toggle="left" class="button button-icon"><i class="icon ion-navicon light"></i></button>
       </ion-nav-buttons>
     </ion-nav-bar>
     <ion-nav-view name="menuContent"></ion-nav-view>
@@ -19,14 +19,30 @@
           <i class="icon ion-social-wordpress"></i>
           <h2 class="menu-text">MapADay</h2>
        </ion-item> -->
-       <ion-item class="item-icon-left" nav-clear menu-close ui-sref="app.main">
-         <i class="icon ion-wand"></i>
-         <h2 class="menu-text">Main</h2>
-       </ion-item>
-       <!-- <ion-item class="item-icon-left" nav-clear menu-close ui-sref="app.bookmarks">
-         <i class="icon ion-wand"></i>
-         <h2 class="menu-text">Bookmarks</h2>
-       </ion-item> -->
+        <!-- <ion-item class="item-icon-left" nav-clear menu-close ui-sref="app.bookmarks">
+          <i class="icon ion-wand"></i>
+          <h2 class="menu-text">Bookmarks</h2>
+        </ion-item> -->
+<!-- Regular expression mark. Don't remove! -->
+              <ion-item class="item-icon-left" nav-clear menu-close ui-sref="app.countries">
+                <i class="icon ion-wand"></i>
+                <h2 id="countries_item" class="menu-text map_item">Countries</h2>
+                <small id="countries_desc">Countries map</small>
+              </ion-item>
+
+              <ion-item class="item-icon-left" nav-clear menu-close ui-sref="app.nationalities">
+                <i class="icon ion-wand"></i>
+                <h2 id="nationalities_item" class="menu-text map_item">Nationalities</h2>
+                <small id="nationalities_desc">Nationalities map</small>
+              </ion-item>
+
+              <ion-item class="item-icon-left" nav-clear menu-close ui-sref="app.zones">
+                <i class="icon ion-wand"></i>
+                <h2 id="zones_item" class="menu-text map_item">Zones</h2>
+                <small id="zones_desc">Zones map</small>
+              </ion-item>
+<!-- Regular expression mark. Don't remove! -->
+
         <ion-item class="item-icon-left" nav-clear menu-close ui-sref="app.population">
           <i class="icon ion-wand"></i>
           <h2 class="menu-text">Population</h2>
@@ -43,7 +59,7 @@
           <i class="icon ion-gear-a"></i>
           <h2 class="menu-text">Settings</h2>
         </ion-item>
-    </ion-list>
+      </ion-list>
     </ion-content>
   </ion-side-menu>
 </ion-side-menus>
