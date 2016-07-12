@@ -37,6 +37,24 @@ angular.module('MapAble', ['ionic', 'angularMoment', 'leaflet-directive', 'MapAb
   $ionicConfigProvider.views.maxCache(0);
   $stateProvider
 
+  .state('app.oceans', {
+		url: '/layouts/oceans',
+		views: {
+		'menuContent': {
+		templateUrl: "oceans.html",
+		controller: 'oceansCtrl',
+		resolve: {
+			link: ['$q', function($q){
+				var defer = $q.defer();
+				window.mapDeferred  = defer;
+				linkCreator('Oceans');
+				return defer.promise;
+			}]
+		}
+		}
+	}
+})
+
 
   .state('app', {
     url: "/app",

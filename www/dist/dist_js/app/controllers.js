@@ -1,4 +1,55 @@
 angular.module('MapAble.controllers', [])
+		.controller("oceansCtrl", ["$scope", "leafletData", 
+			function($scope, leafletData){
+			leafletData.getMap("oceans").then(function(map) {
+				var layer;
+				var index;
+				var layerLabel;
+				var indexLabel;
+				var jsonVars = oceans;
+				for(var i = 0; i < jsonVars.length; i++){
+					for (var name in jsonVars[i]) if(jsonVars[i].hasOwnProperty(name)){
+						if(name != "_labels"){
+							layer = name;
+							index = i;
+						}
+						else if(name == "_labels"){
+							layerLabel = name;
+							indexLabel = i;
+						}
+					}
+				}
+
+				for(var i = 0; i < jsonVars.length; i++){
+					for (var name in jsonVars[i]) if(jsonVars[i].hasOwnProperty(name) && name != "_labels"){
+
+						var layer = geojsonvt(jsonVars[i][name]);
+						// simplification tolerance (higher means simpler)
+						// you need set it to 30-40 at least to feel the difference
+						layer.options.tolerance = 5 // zones_config.tolerance;
+						//Define max zoom to each level. After this zoom layers won't display
+						layer.options.maxZoom = 9 //zones_config.layerMaxZoom;
+						CenterMap(layer, "LayerPoly" + name,"oceans", leafletData);
+					}
+				}
+				//L.geoJson(jsonVars[index][layer], {
+				//	style: {
+				//		color: "red",
+				//		fillColor: "#11c1f3",
+				//		fillOpacity: 0.1,
+				//		weight: "1"
+				//	}
+				//}).addTo(map);
+				L.geoJson(jsonVars[indexLabel][layerLabel], {
+					style: {
+						color: "red",
+						fillColor: "#11c1f3",
+						fillOpacity: 0.5,
+						weight: "1"
+					}
+				}).addTo(map);
+			})
+		}])
 
 
 /* APP*/
@@ -595,7 +646,7 @@ angular.module('MapAble.controllers', [])
 		    		layer.options.tolerance = zones_config.tolerance; 
 		    		//Define max zoom to each level. After this zoom layers won't display
 		    		layer.options.maxZoom = zones_config.layerMaxZoom;
-				CenterMap(layer, "LayerPoly" + name, "zones", attrService, leafletData);
+				CenterMap(layer, "LayerPoly" + name, "zones", leafletData);
 			}
 		}
 
@@ -695,7 +746,7 @@ angular.module('MapAble.controllers', [])
 		    		layer.options.tolerance = nationalities_config.tolerance; 
 		    		//Define max zoom to each level. After this zoom layers won't display
 		    		layer.options.maxZoom = nationalities_config.layerMaxZoom;
-				CenterMap(layer, "LayerPoly" + name, "nationalities", attrService, leafletData);
+				CenterMap(layer, "LayerPoly" + name, "nationalities", leafletData);
 			}
 		}
 
@@ -880,9 +931,9 @@ angular.module('MapAble.controllers', [])
 
 
 
-function CenterMap(rawData, layerName, mapid, attrService, leafletData	) {
+function CenterMap(rawData, layerName, mapid, leafletData	) {
 	var _layer;
-	_layer = getGeojsonVectorTiles(rawData, layerName, attrService);
+	_layer = getGeojsonVectorTiles(rawData, layerName);
 	leafletData.getMap(mapid).then(function(map) {
 		//Zoom level
 		map.options.maxZoom = 10;
@@ -891,9 +942,10 @@ function CenterMap(rawData, layerName, mapid, attrService, leafletData	) {
 	});
 }
 
-function getGeojsonVectorTiles (rawData, layerName, attrService) {
+function getGeojsonVectorTiles (rawData, layerName) {
 	return  L.canvasTiles()
-		.params({ debug: false, padding: 5 , layer: rawData, LayerName: layerName, attributes: attrService.attrs[layerName] })
+		//.params({ debug: false, padding: 5 , layer: rawData, LayerName: layerName, attributes: attrService.attrs[layerName] })
+		.params({ debug: false, padding: 5 , layer: rawData, LayerName: layerName, attributes: null })
 		.drawing(drawingOnCanvas);
 }
 
@@ -962,7 +1014,7 @@ function drawingOnCanvas(canvasOverlay, params) {
 
 				for (var j = 0; j < feature.geometry.length; j++) {
 					//window.alert(feature.tags.FIPS_CNTRY)
-					ctx.fillStyle = feature.tags.color ? feature.tags.color :  params.options.attributes.color;//'rgba( 12,155,155,0.5)';
+					ctx.fillStyle = feature.tags.color ? feature.tags.color : 'rgba( 12,155,155,0.5)' ; // params.options.attributes.color
 
 					var geom = feature.geometry[j];
 					// if (type === 1) {

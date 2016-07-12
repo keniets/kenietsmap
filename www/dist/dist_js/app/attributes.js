@@ -9,6 +9,10 @@ angular.module('dataStorage', [])
         };
 
         var layerAttrs = {
+			LayerPoly_oceans: {
+				color: "rgba(214,242,237,1)",
+				dataName: "_oceans"
+			},
 
 			LayerPoly_lakes: {
 				color: "rgba(204,231,140,1)",
